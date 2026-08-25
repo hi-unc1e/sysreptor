@@ -21,7 +21,7 @@
           <s-btn-icon
             v-if="unusedLanguageInfos.length > 0"
             :disabled="props.readonly"
-            v-tooltip="'Add translation'"
+            v-tooltip="$t('Add translation')"
           >
             <v-icon icon="mdi-plus" />
             <v-menu activator="parent" location="bottom" class="menu-max-height">
@@ -112,8 +112,8 @@
               >
                 <v-icon size="small" icon="mdi-pencil-off" />
                 <v-tooltip activator="parent">
-                  Reset field to inherit text from the main language {{ mainLanguageInfo.name }}.
-                  Currently it is overridden for the {{ currentLanguageInfo.name }} translation.<br>
+                  {{ $t('Reset field to inherit text from the main language {main}.', { main: mainLanguageInfo.name }) }}<br>
+                  {{ $t('Currently it is overridden for the {current} translation.', { current: currentLanguageInfo.name }) }}<br>
                 </v-tooltip>
               </s-btn-secondary>
               <s-btn-secondary
@@ -125,8 +125,8 @@
               >
                 <v-icon size="small" icon="mdi-pencil" />
                 <v-tooltip activator="parent">
-                  Override field in {{ currentLanguageInfo.name }} translation.<br>
-                  Currently it is inherited from the main language {{ mainLanguageInfo.name }}.
+                  {{ $t('Override field in {current} translation.', { current: currentLanguageInfo.name }) }}<br>
+                  {{ $t('Currently it is inherited from the main language {main}.', { main: mainLanguageInfo.name }) }}
                 </v-tooltip>
               </s-btn-secondary>
             </div>
@@ -180,7 +180,7 @@ const visibleFieldDefinitionsExceptTitle = computed(() => visibleFieldDefinition
 const fieldDefinitionTitle = computed(() => (props.fieldDefinitionList || templateStore.fieldDefinitionList).find(f => f.id === 'title')!);
 
 function languageInfo(languageCode: string) {
-  return apiSettings.settings!.languages.find(l => l.code === languageCode) || { code: '??-??', name: 'Unknown' } as Language;
+  return apiSettings.settings!.languages.find(l => l.code === languageCode) || { code: '??-??', name: t('Unknown') } as Language;
 }
 const availableLanguageInfos = computed(() => apiSettings.settings!.languages.filter(l => l.enabled || initialLanguages.value.includes(l.code)));
 const unusedLanguageInfos = computed(() => availableLanguageInfos.value.filter(l => !template.value.translations.some(tr => tr.language === l.code)));

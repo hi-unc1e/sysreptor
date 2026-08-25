@@ -15,14 +15,14 @@
           <s-btn-secondary
             v-if="canEdit"
             :to="`/users/${user.id}/reset-password/`"
-            text="Reset Password"
+            :text="$t('Reset Password')"
             class="mr-2"
           />
           <btn-confirm
             v-if="apiSettings.settings!.features.forgot_password"
             :action="performSendPasswordResetEmail"
             :confirm="false"
-            button-text="Send password reset email"
+            :button-text="$t('Send password reset email')"
             :disabled="!user.email || !user.is_active"
           />
         </div>
@@ -32,8 +32,8 @@
             <s-checkbox
               v-model="user.is_active"
               :disabled="!canEdit || user.id === auth.user.value!.id"
-              label="User is active"
-              hint="Inactive users cannot log in"
+              :label="$t('User is active')"
+              :hint="$t('Inactive users cannot log in')"
               density="compact"
             />
           </v-col>
@@ -41,10 +41,10 @@
             <s-checkbox
               v-model="user.must_change_password"
               :disabled="!canEdit || !apiSettings.isProfessionalLicense || !canLoginLocal"
-              hint="The user has to change the password at the next login."
+              :hint="$t('The user has to change the password at the next login.')"
               density="compact"
             >
-              <template #label><pro-info>Must change password</pro-info></template>
+              <template #label><pro-info>{{ $t('Must change password') }}</pro-info></template>
             </s-checkbox>
           </v-col>
         </v-row>
@@ -54,8 +54,8 @@
               :model-value="apiSettings.isLocalUserAuthEnabled ? user.can_login_local : false"
               @update:model-value="user.can_login_local = $event"
               :disabled="!canEdit || !apiSettings.isLocalUserAuthEnabled || !apiSettings.isProfessionalLicense"
-              label="Can login via username/password"
-              hint="The user can log in with username and password. Disable to force SSO login for this user."
+              :label="$t('Can login via username/password')"
+              :hint="$t('The user can log in with username and password. Disable to force SSO login for this user.')"
               density="compact"
             />
           </v-col>
@@ -63,10 +63,10 @@
             <s-checkbox
               v-model="user.can_login_sso"
               :disabled="true"
-              hint="The user can login with an authentication provider. Linked identities are configured."
+              :hint="$t('The user can login with an authentication provider. Linked identities are configured.')"
               density="compact"
             >
-              <template #label><pro-info>Can login via SSO</pro-info></template>
+              <template #label><pro-info>{{ $t('Can login via SSO') }}</pro-info></template>
             </s-checkbox>
           </v-col>
         </v-row>
@@ -75,7 +75,7 @@
             <s-checkbox
               v-if="apiSettings.isLocalUserAuthEnabled && !user.is_system_user"
               v-model="user.is_mfa_enabled"
-              label="Is Multi Factor Authentication enabled"
+              :label="$t('Is Multi Factor Authentication enabled')"
               disabled
               density="compact"
             />
@@ -83,7 +83,7 @@
         </v-row>
 
         <p v-if="!user.is_system_user" class="mt-4">
-          Last login: <chip-date :value="user.last_login" />
+          {{ $t('Last login:') }} <chip-date :value="user.last_login" />
         </p>
       </template>
     </user-info-form>
@@ -127,7 +127,7 @@ async function performSave(data: User) {
 
 async function performDelete() {
   await $fetch(apiUrl, { method: 'DELETE' });
-  successToast('User deleted');
+  successToast(t('User deleted'));
   await navigateTo('/users/');
 }
 
@@ -138,6 +138,6 @@ async function performSendPasswordResetEmail() {
       email: user.value.email,
     },
   });
-  successToast('Password reset email sent. The user has to click the link in the email to reset the password.');
+  successToast(t('Password reset email sent. The user has to click the link in the email to reset the password.'));
 }
 </script>

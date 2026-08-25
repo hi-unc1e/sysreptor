@@ -1,13 +1,13 @@
 <template>
   <s-card class="mt-4">
-    <v-card-title>Archiving Public Keys</v-card-title>
+    <v-card-title>{{ $t('Archiving Public Keys') }}</v-card-title>
     <v-card-text>
       <v-list>
         <v-list-item v-for="publicKey in publicKeys" :key="publicKey.id">
           <v-list-item-title>
             {{ publicKey.name }}
             <template v-if="!publicKey.enabled">
-              <v-chip size="small" class="ml-3" text="Disabled" />
+              <v-chip size="small" class="ml-3" :text="$t('Disabled')" />
             </template>
           </v-list-item-title>
           <template #append>
@@ -20,21 +20,21 @@
                   v-bind="dialogProps"
                 />
               </template>
-              <template #title>Edit Public Key</template>
+              <template #title>{{ $t('Edit Public Key') }}</template>
               <template #default>
                 <v-card-text>
                   <s-text-field
                     v-model="editWizard.form.name"
-                    label="Name"
+                    :label="$t('Name')"
                     spellcheck="false"
                   />
                   <s-checkbox
                     v-model="editWizard.form.enabled"
-                    label="Enabled"
-                    hint="If disabled, this key cannot be used to encrypt archives. But it can still be used to decrypt existing archives."
+                    :label="$t('Enabled')"
+                    :hint="$t('If disabled, this key cannot be used to encrypt archives. But it can still be used to decrypt existing archives.')"
                   />
 
-                  <h4 class="text-title-medium mt-4 mb-0">Public Key</h4>
+                  <h4 class="text-title-medium mt-4 mb-0">{{ $t('Public Key') }}</h4>
                   <div v-if="encryptionKeyInfo" class="mb-1">
                     <v-chip size="small" v-if="['1', '2'].includes(encryptionKeyInfo.algo)">RSA {{ encryptionKeyInfo.length }} bit</v-chip>
                     <v-chip size="small" v-else-if="encryptionKeyInfo.algo === '16'">ElGamal {{ encryptionKeyInfo.length }} bit</v-chip>
@@ -50,7 +50,7 @@
                   <s-btn-primary
                     @click="editWizardSave"
                     :loading="actionInProgress"
-                    text="Save"
+                    :text="$t('Save')"
                   />
                 </v-card-actions>
               </template>
@@ -61,7 +61,7 @@
         </v-list-item>
         <v-list-item
           v-if="publicKeys.length === 0"
-          title="No archiving public keys configured"
+          :title="$t('No archiving public keys configured')"
         />
 
         <v-list-item>
@@ -71,28 +71,28 @@
                 @click="openSetupWizard"
                 v-bind="dialogProps"
                 prepend-icon="mdi-plus"
-                text="Add"
+                :text="$t('Add')"
               />
             </template>
-            <template #title>Setup Public Key</template>
+            <template #title>{{ $t('Setup Public Key') }}</template>
 
             <template #default>
               <template v-if="setupWizard.step === SetupWizardStep.CREATE">
                 <v-card-text>
                   <p>
-                    To encrypt archives, you need to create a OpenPGP public key for encryption. You can use an existing key or create a new one.<br>
-                    You can also generate the key on a YubiKey to use hardware encryption.
+                    {{ $t('To encrypt archives, you need to create a OpenPGP public key for encryption. You can use an existing key or create a new one.') }}<br>
+                    {{ $t('You can also generate the key on a YubiKey to use hardware encryption.') }}
                   </p>
 
                   <v-tabs v-model="setupWizard.tab" grow height="2.5em" class="mt-4">
-                    <v-tab value="software" text="Generate key" />
-                    <v-tab value="yubikey" text="Generate hardware key (YubiKey 5)" />
+                    <v-tab value="software" :text="$t('Generate key')" />
+                    <v-tab value="yubikey" :text="$t('Generate hardware key (YubiKey 5)')" />
                   </v-tabs>
                   <v-window v-model="setupWizard.tab">
                     <v-window-item value="software">
                       <p>
-                        Use the following command to generate a new Elliptic Curve key pair. <br>
-                        Pro-Tip: You can also use <s-code>gpg --full-generate-key</s-code> to customize ciphers and other configs.
+                        {{ $t('Use the following command to generate a new Elliptic Curve key pair.') }} <br>
+                        {{ $t('Pro-Tip: You can also use') }} <s-code>gpg --full-generate-key</s-code> {{ $t('to customize ciphers and other configs.') }}
                       </p>
                       <s-code class="code-snippet">
                         cat &lt;&lt; EOF &gt; config.txt<br>
@@ -254,8 +254,8 @@
 
                   <s-codeblock-field
                     v-model="setupWizard.form.public_key"
-                    label="Public Key"
-                    hint="OpenPGP public key for encryption. It does not has to be publicly trusted and can be a key only used for archiving."
+                    :label="$t('Public Key')"
+                    :hint="$t('OpenPGP public key for encryption. It does not has to be publicly trusted and can be a key only used for archiving.')"
                     :error-messages="error || []"
                     class="mt-4"
                   />
@@ -266,7 +266,7 @@
                     @click="setupWizardRegisterBegin"
                     :disabled="!setupWizard.form.public_key"
                     :loading="actionInProgress"
-                    text="Next"
+                    :text="$t('Next')"
                   />
                 </v-card-actions>
               </template>
@@ -279,8 +279,8 @@
                     :error-messages="error"
                   >
                     <template #message>
-                      We need to verify that you own the private key for the provided public key.<br>
-                      Please decrypt the following message with your private key.
+                      {{ $t('We need to verify that you own the private key for the provided public key.') }}<br>
+                      {{ $t('Please decrypt the following message with your private key.') }}
                     </template>
                   </decrypt-form>
                 </v-card-text>
@@ -290,19 +290,19 @@
                     @click="setupWizardRegisterComplete"
                     :disabled="!setupWizard.form.verification"
                     :loading="actionInProgress"
-                    text="Activate"
+                    :text="$t('Activate')"
                   />
                 </v-card-actions>
               </template>
               <template v-else-if="setupWizard.step === SetupWizardStep.SET_NAME">
                 <v-card-text>
                   <p>
-                    Set a name for the new public key to identify it later.
+                    {{ $t('Set a name for the new public key to identify it later.') }}
                   </p>
 
                   <s-text-field
                     v-model="setupWizard.form.name"
-                    label="Name"
+                    :label="$t('Name')"
                     spellcheck="false"
                   />
                 </v-card-text>
@@ -311,7 +311,7 @@
                   <s-btn-primary
                     @click="setupWizardSetName"
                     :loading="actionInProgress"
-                    text="Save"
+                    :text="$t('Save')"
                   />
                 </v-card-actions>
               </template>
@@ -424,7 +424,7 @@ async function setupWizardSetName() {
     });
     publicKeys.value = [obj].concat(publicKeys.value);
     setupWizard.value.visible = false;
-    successToast('Archiving Public Key setup completed');
+    successToast(t('Archiving Public Key setup completed'));
   });
 }
 

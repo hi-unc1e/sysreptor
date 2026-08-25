@@ -15,7 +15,7 @@
               :to="`/templates/${fetchState.data.value.templateCurrent!.id}/`" exact
               class="ml-1 mr-1"
               prepend-icon="mdi-undo"
-              text="Close Version History"
+              :text="$t('Close Version History')"
             />
           </template>
         </template-editor-diff>
@@ -85,7 +85,7 @@ const editorDiffAttrs = computed(() => ({
   toolbarAttrs: {
     data: fetchState.data.value?.templateHistoric,
     editMode: EditMode.READONLY,
-    errorMessage: `You are comparing a historic version from ${formatISO9075(new Date(route.params.historyDate as string))} to the current version.`,
+    errorMessage: t('You are comparing a historic version from {date} to the current version.', { date: formatISO9075(new Date(route.params.historyDate as string)) }),
   },
   fieldDefinitionList: fieldDefinitionList.value,
   historyDate: route.params.historyDate as string,

@@ -3,15 +3,15 @@
     v-if="apiSettings.settings!.features.private_designs"
     :value="props.value"
     :items="[
-      { 
-        value: 'global', 
-        title: 'Global', 
+      {
+        value: 'global',
+        title: $t('Global'),
         icon: 'mdi-earth',
         to: { path: '/designs/', query: route.query },
       },
-      { 
-        value: 'private', 
-        title: 'Private', 
+      {
+        value: 'private',
+        title: $t('Private'),
         icon: 'mdi-account',
         disabled: !apiSettings.settings!.features.private_designs,
         to: { path: '/designs/private/', query: route.query },

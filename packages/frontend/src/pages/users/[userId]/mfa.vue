@@ -1,9 +1,9 @@
 <template>
   <s-card class="mt-4">
-    <v-card-title>Multi Factor Authentication</v-card-title>
+    <v-card-title>{{ $t('Multi Factor Authentication') }}</v-card-title>
     <v-card-text>
       <p>
-        If this user lost all its MFA methods and cannot log in anymore, you can remove all MFA devices to disable MFA.
+        {{ $t('If this user lost all its MFA methods and cannot log in anymore, you can remove all MFA devices to disable MFA.') }}
       </p>
 
       <v-list>
@@ -15,7 +15,7 @@
           <v-list-item-title>
             {{ mfaMethod.name }}
             <template v-if="mfaMethod.is_primary">
-              <v-chip size="small" class="ml-3">Primary</v-chip>
+              <v-chip size="small" class="ml-3">{{ $t('Primary') }}</v-chip>
             </template>
           </v-list-item-title>
           <template #append>
@@ -24,7 +24,7 @@
         </v-list-item>
         <v-list-item
           v-if="mfaMethods.length === 0"
-          title="Multi Factor Authentication is disabled"
+          :title="$t('Multi Factor Authentication is disabled')"
         />
       </v-list>
     </v-card-text>

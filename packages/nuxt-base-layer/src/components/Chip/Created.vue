@@ -2,7 +2,7 @@
   <chip-date
     :value="props.value"
     icon="mdi-file-document-plus"
-    tooltip-prefix-text="Created: "
+    :tooltip-prefix-text="$t('Created: ')"
   />
 </template>
 

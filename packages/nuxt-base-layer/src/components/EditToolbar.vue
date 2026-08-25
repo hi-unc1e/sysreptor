@@ -28,7 +28,7 @@
           activator="parent"
           location="bottom"
           data-testid="save-tooltip"
-          :text="hasChanges ? 'Save with Ctrl+S' : 'Everything saved'"
+          :text="hasChanges ? $t('Save with Ctrl+S') : $t('Everything saved')"
         />
       </s-btn-icon>
 
@@ -42,7 +42,7 @@
               @click="autoSaveEnabled = !autoSaveEnabled"
               :disabled="!canSave"
               link
-              title="Auto Save"
+              :title="$t('Auto Save')"
             >
               <template #prepend>
                 <v-switch
@@ -75,17 +75,17 @@
         <span v-else>{{ props.errorMessage }}</span>
       </span>
       <span v-else-if="!lockInfo">
-        Could not lock resource for editing.
+        {{ $t('Could not lock resource for editing.') }}
       </span>
       <span v-else-if="lockInfo.user.id !== auth.user.value!.id">
-        {{ lockInfo.user.name }} is currently editing this page.
-        To prevent overwriting changes, only one user has write access at a time.
-        Please wait until they are finished or ask them to leave this page.
+        {{ $t('{name} is currently editing this page.', { name: lockInfo.user.name }) }}
+        {{ $t('To prevent overwriting changes, only one user has write access at a time.') }}
+        {{ $t('Please wait until they are finished or ask them to leave this page.') }}
       </span>
       <span v-else-if="lockInfo.user.id === auth.user.value!.id">
-        It seems like you are editing this page in another tab or browser session.
-        To prevent overwriting changes, only one instance has write access at a time.
-        <v-btn @click="selfLockedEditAnyway" variant="text" size="small">Edit Anyway</v-btn>
+        {{ $t('It seems like you are editing this page in another tab or browser session.') }}
+        {{ $t('To prevent overwriting changes, only one instance has write access at a time.') }}
+        <v-btn @click="selfLockedEditAnyway" variant="text" size="small">{{ $t('Edit Anyway') }}</v-btn>
       </span>
     </v-alert>
 
@@ -308,7 +308,7 @@ async function performLock(forceLock = false) {
       hasLock.value = false;
       emit('update:editMode', EditMode.READONLY);
     } else {
-      requestErrorToast({ error, message: 'Locking failed' });
+      requestErrorToast({ error, message: t('Locking failed') });
     }
   } finally {
     lockingInProgress.value = false;
@@ -383,7 +383,7 @@ async function beforeLeave(_to: RouteLocationNormalized, _from: RouteLocationNor
     return true;
   } else {
     // vue-router navigation event: user navigates to a different SPA page
-    const answer = window.confirm('Do you really want to leave? You have unsaved changes!');
+    const answer = window.confirm(t('Do you really want to leave? You have unsaved changes!'));
     if (answer) {
       await resetComponent();
       return true;

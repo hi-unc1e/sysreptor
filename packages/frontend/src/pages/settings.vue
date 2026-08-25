@@ -12,11 +12,11 @@
             </component>
           </v-card-title>
           <v-card-text>
-            <v-alert 
+            <v-alert
               v-if="group.danger"
               type="warning"
-              title="Danger Zone"
-              text="Changing these settings might prevent users from accessing the application."
+              :title="$t('Danger Zone')"
+              :text="$t('Changing these settings might prevent users from accessing the application.')"
               density="compact"
               class="mb-6"
             />
@@ -40,9 +40,9 @@
                       </span>
                     </template>
                     <template #default>
-                      This setting is configured as environment variable.<br>
-                      Update the value of the environment variable <v-code>{{ field.id }}</v-code> in <v-code>app.env</v-code><br>
-                      or remove it from <v-code>app.env</v-code> to be able to change it here.
+                      {{ $t('This setting is configured as environment variable.') }}<br>
+                      {{ $t('Update the value of the environment variable') }} <v-code>{{ field.id }}</v-code> {{ $t('in') }} <v-code>app.env</v-code><br>
+                      {{ $t('or remove it from') }} <v-code>app.env</v-code> {{ $t('to be able to change it here.') }}
                     </template>
                   </v-tooltip>
                 </template>
@@ -57,7 +57,7 @@
           <v-card-title>
             <component :is="plugin.professional_only ? ProInfo : 'span'">
               <v-icon start icon="mdi-puzzle" />
-              Plugin {{ plugin.name }}
+              {{ $t('Plugin {name}', { name: plugin.name }) }}
             </component>
           </v-card-title>
           <v-card-text v-if="plugin.description" class="pb-0">
@@ -68,23 +68,23 @@
               :model-value="isPluginEnabled(plugin)"
               @update:model-value="setPluginEnabled(plugin, $event)"
               :disabled="enabledPluginsSetInEnv || (plugin.professional_only && !apiSettings.isProfessionalLicense)"
-              label="Is plugin enabled?"
+              :label="$t('Is plugin enabled?')"
             >
               <template #label>
                 <v-tooltip>
                   <template #activator="{props: tooltipProps}">
                     <span :class="{'info-env': enabledPluginsSetInEnv}" v-bind="tooltipProps">
-                      Is plugin enabled?
+                      {{ $t('Is plugin enabled?') }}
                       <v-icon v-if="enabledPluginsSetInEnv" end icon="mdi-cog-off" />
                     </span>
                   </template>
                   <template #default>
                     <template v-if="enabledPluginsSetInEnv">
-                      Plugins can be enabled by configuring the environment variable <v-code>ENABLED_PLUGINS</v-code> in <v-code>app.env</v-code>.<br>
-                      Add the plugin name to the environment variable: e.g. <v-code>ENABLED_PLUGINS="{{ plugin.name }},other-plugin,..."</v-code>
+                      {{ $t('Plugins can be enabled by configuring the environment variable') }} <v-code>ENABLED_PLUGINS</v-code> {{ $t('in') }} <v-code>app.env</v-code>{{ $t('.') }}<br>
+                      {{ $t('Add the plugin name to the environment variable: e.g.') }} <v-code>ENABLED_PLUGINS="{{ plugin.name }},other-plugin,..."</v-code>
                     </template>
                     <template v-else>
-                      Enable or disable this plugin for the application.
+                      {{ $t('Enable or disable this plugin for the application.') }}
                     </template>
                   </template>
                 </v-tooltip>
@@ -110,9 +110,9 @@
                       </span>
                     </template>
                     <template #default>
-                      This setting is configured as environment variable.<br>
-                      Update the value of the environment variable <v-code>{{ field.id }}</v-code> in <v-code>app.env</v-code><br>
-                      or remove it from <v-code>app.env</v-code> to be able to change it here.
+                      {{ $t('This setting is configured as environment variable.') }}<br>
+                      {{ $t('Update the value of the environment variable') }} <v-code>{{ field.id }}</v-code> {{ $t('in') }} <v-code>app.env</v-code><br>
+                      {{ $t('or remove it from') }} <v-code>app.env</v-code> {{ $t('to be able to change it here.') }}
                     </template>
                   </v-tooltip>
                 </template>
@@ -199,42 +199,42 @@ const coreConfigGroups = computed(() => {
   const coreGroups = [
     {
       group: 'other',
-      title: 'Application Settings',
+      title: t('Application Settings'),
       professional_only: false,
     },
     {
       group: 'sharing',
-      title: 'Sharing Settings',
+      title: t('Sharing Settings'),
       icon: 'mdi-share-variant',
       professional_only: false,
     },
     {
       group: 'language',
-      title: 'Language and Spellcheck Settings',
+      title: t('Language and Spellcheck Settings'),
       icon: 'mdi-translate',
       professional_only: false,
     },
     {
       group: 'archiving',
-      title: 'Archiving Settings',
+      title: t('Archiving Settings'),
       icon: 'mdi-folder-lock',
       professional_only: true,
     },
     {
       group: 'auth',
-      title: 'Authentication Settings',
+      title: t('Authentication Settings'),
       icon: 'mdi-account',
       professional_only: true,
       danger: true,
     },
     {
       group: 'permissions',
-      title: 'Permission Settings',
+      title: t('Permission Settings'),
       professional_only: true,
     },
     {
       group: 'ai_agent',
-      title: 'AI Agent Settings',
+      title: t('AI Agent Settings'),
       professional_only: true,
     },
   ]
@@ -290,9 +290,9 @@ async function performSave(data: Record<string, any>) {
 
 function configurationFieldDefault(field: FieldDefinition) {
   if ([FieldDataType.BOOLEAN, FieldDataType.NUMBER].includes(field.type) || (field.type === FieldDataType.STRING && field.default === null)) {
-    return `(default: ${field.default})`;
+    return t('(default: {value})', { value: String(field.default) });
   } else if ([FieldDataType.STRING].includes(field.type)) {
-    return `(default: "${field.default}")`;
+    return t('(default: "{value}")', { value: String(field.default) });
   }
   return null;
 }

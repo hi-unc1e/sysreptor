@@ -3,7 +3,7 @@
     <div v-if="['headline', 'section-create'].includes(form.form)">
       <s-text-field
         v-model="form.headline.text"
-        label="Headline"
+        :label="$t('Headline')"
         :disabled="props.disabled"
         spellcheck="false"
         class="mb-4"
@@ -11,17 +11,17 @@
       <s-select
         v-model.number="form.headline.tag"
         :items="['h1', 'h2', 'h3', 'h4', 'h5', 'h6']"
-        label="Tag"
+        :label="$t('Tag')"
         :disabled="props.disabled"
       />
       <s-checkbox
         v-model="form.headline.intoc"
-        label="Include in Table of Contents"
+        :label="$t('Include in Table of Contents')"
         :disabled="props.disabled"
       />
       <s-checkbox
         v-model="form.headline.numbered"
-        label="Prepend chapter number"
+        :label="$t('Prepend chapter number')"
         :disabled="props.disabled"
         class="mb-4"
       />
@@ -30,7 +30,7 @@
       <s-select
         v-model="form.markdown.form"
         :items="['text', 'variable']"
-        label="Markdown Type"
+        :label="$t('Markdown Type')"
         :disabled="props.disabled"
         class="mb-4"
       />
@@ -38,7 +38,7 @@
     <div v-if="form.form === 'markdown-text' || (['markdown-create', 'section-create'].includes(form.form) && form.markdown.form === 'text')">
       <markdown-field
         v-model="form.markdown.text"
-        label="Markdown"
+        :label="$t('Markdown')"
         v-bind="markdownProps"
         class="mb-4"
       />
@@ -47,8 +47,8 @@
       <!-- TODO: autocomplete report/finding variables (ComboBox - allow other values) -->
       <s-text-field
         v-model="form.markdown.variable"
-        label="Markdown Variable"
-        hint="Variable name of report or finding field (e.g. report.executive_summary, finding.description)"
+        :label="$t('Markdown Variable')"
+        :hint="$t('Variable name of report or finding field (e.g. report.executive_summary, finding.description)')"
         :disabled="props.disabled"
         spellcheck="false"
         class="mb-4"
@@ -58,13 +58,13 @@
       <s-select
         v-model="form.chart.chartType"
         :items="['bar (horizontal)', 'bar (vertical)', 'pie', 'doughnut', 'line', 'radar', 'polarArea']"
-        label="Chart Type"
+        :label="$t('Chart Type')"
         class="mb-4"
         :disabled="props.disabled"
       />
       <s-text-field
         v-model="form.chart.caption"
-        label="Caption"
+        :label="$t('Caption')"
         :disabled="props.disabled"
         spellcheck="false"
         class="mb-4"
@@ -73,22 +73,22 @@
     <div v-if="form.form === 'footer-create'">
       <s-text-field
         v-model="form.footer.textLeft"
-        label="Footer Text Left (optional)"
+        :label="$t('Footer Text Left (optional)')"
         spellcheck="false"
         class="mb-4"
         :disabled="props.disabled"
       />
       <s-text-field
         v-model="form.footer.textCenter"
-        label="Footer Text Center (optional)"
+        :label="$t('Footer Text Center (optional)')"
         spellcheck="false"
         class="mb-4"
         :disabled="props.disabled"
       />
       <s-select
         v-model="form.footer.pageNumberStyle"
-        :items="[{value: 'page', title: 'page'}, {value: 'page-of', title: 'page / pages'}, {value: 'none', title: 'no page number'}]"
-        label="Page Number Style"
+        :items="[{value: 'page', title: $t('page')}, {value: 'page-of', title: $t('page / pages')}, {value: 'none', title: $t('no page number')}]"
+        :label="$t('Page Number Style')"
         :disabled="props.disabled"
         class="mb-4"
       />
@@ -96,23 +96,23 @@
     <div v-if="form.form === 'header-create'">
       <s-select
         v-model="form.header.left"
-        :items="[ {value: null, title: 'none'}, {value: 'text', title: 'Text'}, {value: 'logo', title: 'Logo'}]"
-        label="Header Left"
-        :hint="form.header.left === 'logo' ? 'Logo image must be uploaded in assets as logo.png' : ''"
+        :items="[ {value: null, title: $t('none')}, {value: 'text', title: $t('Text')}, {value: 'logo', title: $t('Logo')}]"
+        :label="$t('Header Left')"
+        :hint="form.header.left === 'logo' ? $t('Logo image must be uploaded in assets as logo.png') : ''"
         class="mb-4"
         :disabled="props.disabled"
       />
       <s-select
         v-model="form.header.right"
-        :items="[ {value: null, title: 'none'}, {value: 'text', title: 'Text'}, {value: 'logo', title: 'Logo'}]"
-        label="Header Right"
+        :items="[ {value: null, title: $t('none')}, {value: 'text', title: $t('Text')}, {value: 'logo', title: $t('Logo')}]"
+        :label="$t('Header Right')"
         class="mb-4"
         :disabled="props.disabled"
       />
       <s-text-field
         v-model="form.header.backgroundColor"
-        label="Header background color (optional)"
-        hint="CSS value: #ff0000 or rgb(255, 0, 0) or red"
+        :label="$t('Header background color (optional)')"
+        :hint="$t('CSS value: #ff0000 or rgb(255, 0, 0) or red')"
         spellcheck="false"
         class="mb-4"
         :disabled="props.disabled"
@@ -121,7 +121,7 @@
     <div v-if="form.form === 'toc-create'">
       <s-text-field
         v-model="form.toc.headline"
-        label="Headline"
+        :label="$t('Headline')"
         spellcheck="false"
         class="mb-4"
         :disabled="props.disabled"
@@ -129,14 +129,14 @@
       <s-select
         v-model="form.toc.variant"
         :items="['default', 'compact']"
-        label="ToC Variant"
-        hint="Choose between some predefined styles"
+        :label="$t('ToC Variant')"
+        :hint="$t('Choose between some predefined styles')"
         class="mb-4"
         :disabled="props.disabled"
       />
       <s-checkbox
         v-model="form.toc.leader"
-        label="Show dot leader (line of dots) between chapter title and page number"
+        :label="$t('Show dot leader (line of dots) between chapter title and page number')"
         :disabled="props.disabled"
         class="mb-4"
       />
@@ -144,7 +144,7 @@
     <div v-if="form.form === 'finding-list-create'">
       <s-text-field
         v-model="form.findingList.headline"
-        label="Chapter Headline"
+        :label="$t('Chapter Headline')"
         :disabled="props.disabled"
         spellcheck="false"
         class="mb-4"
@@ -152,32 +152,32 @@
       <s-select
         v-model="form.findingList.headerVariant"
         :items="['default', 'table']"
-        label="Finding List Variant"
-        hint="Choose between some predefined styles"
+        :label="$t('Finding List Variant')"
+        :hint="$t('Choose between some predefined styles')"
         :disabled="props.disabled"
       />
 
       <p>
-        Markdown fields from the finding field definition will be added to HTML.
-        You can add and style the remaining fields afterwards in HTML.
+        {{ $t('Markdown fields from the finding field definition will be added to HTML.') }}
+        {{ $t('You can add and style the remaining fields afterwards in HTML.') }}
       </p>
     </div>
     <div v-if="form.form === 'page-cover-create'">
-      <s-select 
+      <s-select
         v-model="form.coverPage.background"
-        label="Page Background"
-        :items="[{value: null, title: 'none'}, {value: 'color', title: 'Color'}, {value: 'image', title: 'Image'}]"
-        :hint="form.coverPage.background === 'image' ? 'Image must be uploaded in assets as background.png. The background image can later be customized in CSS code.' : form.coverPage.background === 'color' ? 'The color can be customized later in CSS code' : ''"
+        :label="$t('Page Background')"
+        :items="[{value: null, title: $t('none')}, {value: 'color', title: $t('Color')}, {value: 'image', title: $t('Image')}]"
+        :hint="form.coverPage.background === 'image' ? $t('Image must be uploaded in assets as background.png. The background image can later be customized in CSS code.') : form.coverPage.background === 'color' ? $t('The color can be customized later in CSS code') : ''"
         :disabled="props.disabled"
       />
       <s-checkbox
         v-model="form.coverPage.hideHeader"
-        label="Hide header on page"
+        :label="$t('Hide header on page')"
         :disabled="props.disabled"
       />
       <s-checkbox
         v-model="form.coverPage.hideFooter"
-        label="Hide footer on page"
+        :label="$t('Hide footer on page')"
         :disabled="props.disabled"
       />
     </div>

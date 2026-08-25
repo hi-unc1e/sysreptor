@@ -54,6 +54,59 @@ recommendation = """
 """
 short_recommendation = "Make sure that randomly generated CSRF tokens with high entropy are included in all state-changing HTTP requests and validated in the backend."
 references = [
-    "https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html",
+    "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Request_Forgery_Prevention_Cheat_Sheet.html",
+]
+affected_components = []
+
+[[translations]]
+id = "14ab2fa5-4965-4352-b163-4c5485d84b3f"
+is_main = false
+language = "zh-CN"
+status = "finished"
+
+[translations.data]
+title = "跨站请求伪造（CSRF）"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N"
+summary = """
+该 Web 应用存在跨站请求伪造（CSRF）漏洞。
+CSRF 是一种诱使用户在不知情的情况下，向其当前已通过身份认证的 Web 应用发送 HTTP 请求的攻击方式。
+攻击者可借此部分绕过浏览器的同源策略，以受影响用户的身份执行会改变状态的操作。
+视操作性质而定，攻击者可能借此完全接管用户的账户。
+若受影响账户为管理员账户，CSRF 还可能导致整个 Web 应用被攻陷。
+"""
+description = """
+我们在该 Web 应用中发现了一个 CSRF 漏洞，攻击者可借此以其他用户的身份执行操作。
+
+**TODO：技术描述补充**
+
+跨站请求伪造（CSRF）是一种 Web 安全漏洞，攻击者可以诱骗已认证的用户在不知情的情况下，向存在漏洞的 Web 应用发送会改变状态的 HTTP 请求。
+在 CSRF 攻击中，攻击者冒用受害者的身份及其访问权限，代替其执行非预期操作（例如更改电子邮件地址）。
+若缺乏相应的 CSRF 防护，Web 应用将无法区分攻击者构造的请求与受害者发起的合法请求。
+
+CSRF 攻击的发生需要满足若干前提条件。
+首先，Web 应用中必须存在对攻击者有价值、值得利用的操作。
+例如，这类操作可以是特权操作，如更改用户的访问权限或修改密码。
+另一个前提是，除基于 Cookie 的身份认证之外，不存在其他可用于区分不同用户 HTTP 请求的机制。
+当用户已通过认证并持有有效的会话 Cookie 时，Web 应用便无法区分来自攻击者的恶意伪造请求与来自受害者的合法请求。
+最后，还需确保相关操作不要求攻击者无法确定或预测其值的特定参数。
+例如，若修改密码功能要求提供当前密码，则该功能不存在 CSRF 漏洞，因为攻击者必须知道原密码的值。
+
+利用 CSRF 漏洞的常见方式是钓鱼邮件。
+攻击者事先构造恶意链接，意图将改变状态的请求强加给受害者。
+随后，攻击者通过电子邮件将恶意链接分发给受害者。
+当用户在浏览器中打开该链接且正处于已认证状态时，请求便会被发送至存在漏洞的 Web 应用。
+攻击一旦成功，就会以受害者的身份及其权限级别执行相应的操作。
+"""
+recommendation = """
+* 检查所用框架是否内置 CSRF 防护机制并加以启用。若无，须确保所有会改变状态的请求均包含随机生成的高熵 CSRF 令牌，并确保在后端对 CSRF 令牌进行正确校验。
+* 考虑采取多种额外的安全措施：
+    * 例如，为会话 Cookie 设置 SameSite 属性。浏览器将依据该属性决定是否在跨站请求中携带 Cookie。
+    * 使用自定义请求头（Custom Request Headers）。默认情况下，浏览器的同源策略会限制 JavaScript 发起携带自定义请求头的跨站请求。
+    * 对于高度敏感的操作，还可以考虑将 CAPTCHA 验证码、一次性令牌、重新认证等用户交互方式作为额外的 CSRF 防护。
+* 有关防范 CSRF 漏洞的详细信息和指导，请参阅 OWASP 的跨站请求伪造防范速查表（Cross-Site Request Forgery Prevention Cheat Sheet）。
+"""
+short_recommendation = "确保所有会改变状态的 HTTP 请求均包含随机生成的高熵 CSRF 令牌，并在后端对其进行校验。"
+references = [
+    "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Request_Forgery_Prevention_Cheat_Sheet.html",
 ]
 affected_components = []

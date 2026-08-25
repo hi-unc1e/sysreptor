@@ -15,9 +15,9 @@ useLazyAsyncData(async () => {
       method: 'POST',
       body: {}
     });
-    successToast('Superuser permissions disabled');
+    successToast(t('Superuser permissions disabled'));
   } catch (error) {
-    requestErrorToast({ message: 'Failed to disable superuser permissions', error });
+    requestErrorToast({ message: t('Failed to disable superuser permissions'), error });
   } finally {
     auth.redirect(route.query.next);
   }

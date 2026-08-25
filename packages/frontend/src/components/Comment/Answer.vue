@@ -5,7 +5,7 @@
     :delete="() => projectStore.deleteCommentAnswer(props.project, props.comment, props.answer)"
     :readonly="props.readonly"
     :selectable-users="props.selectableUsers"
-    placeholder="Answer..."
+    :placeholder="$t('Answer...')"
     class="answer-content"
   />
 </template>

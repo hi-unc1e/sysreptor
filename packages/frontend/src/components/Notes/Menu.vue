@@ -6,12 +6,12 @@
   >
     <v-list density="compact" class="pb-0 pt-0 h-100 d-flex flex-column">
       <v-list-subheader v-if="!isInSearchMode" class="pr-2">
-        <span>{{ props.title || 'Notes' }}</span>
+        <span>{{ props.title || $t('Notes') }}</span>
         <s-btn-icon
           @click="createNoteBtnRef?.click()"
           :disabled="!canCreate"
           icon="mdi-plus"
-          v-tooltip.top="'Add Note (Ctrl+J)'"
+          v-tooltip.top="$t('Add Note (Ctrl+J)')"
           size="small"
           variant="flat"
           color="secondary"
@@ -47,7 +47,7 @@
               />
               <btn-export
                 v-if="props.exportUrl && props.selectedNotes"
-                button-text="Export Selected"
+                :button-text="$t('Export Selected')"
                 :export-url="props.exportUrl"
                 :options="{ids: props.selectedNotes.map(n => n.id)}"
                 :name="props.exportName"
@@ -55,7 +55,7 @@
               />
               <btn-export
                 v-if="props.exportPdfUrl && props.selectedNotes"
-                button-text="Export as PDF"
+                :button-text="$t('Export as PDF')"
                 name="notes"
                 extension=".pdf"
                 :export-url="props.exportPdfUrl"
@@ -67,16 +67,16 @@
                 :delete="() => deleteNotes(props.selectedNotes)"
                 :disabled="props.readonly || props.selectedNotes.length === 0"
                 button-variant="list-item"
-                :dialog-text="`Do you really want to delete ${props.selectedNotes.length} note(s)?`"
+                :dialog-text="$t('Do you really want to delete {count} note(s)?', { count: props.selectedNotes.length })"
               />
             </v-list>
           </v-menu>
         </s-btn-icon>
       </v-list-subheader>
       <v-list-subheader v-else class="mt-0 pr-2">
-        <s-text-field 
+        <s-text-field
           v-model="search"
-          placeholder="Search..."
+          :placeholder="$t('Search...')"
           density="compact"
           variant="underlined"
           prepend-inner-icon="mdi-magnify"
@@ -161,7 +161,7 @@ async function deleteNotes(notes?: NoteBase[]) {
   }
 
   // Optimize delete: skip deleting children if parent is also being deleted
-  await bulkAction(filterParentNotes(notes), props.performDelete, n => `Failed to delete note "${n.title}"`);
+  await bulkAction(filterParentNotes(notes), props.performDelete, n => t('Failed to delete note "{title}"', { title: n.title }));
 }
 
 async function copyNotes(notes?: NoteBase[]) {
@@ -169,7 +169,7 @@ async function copyNotes(notes?: NoteBase[]) {
     return;
   }
 
-  await bulkAction(filterParentNotes(notes), props.performCopy, n => `Failed to copy note "${n.title}"`);
+  await bulkAction(filterParentNotes(notes), props.performCopy, n => t('Failed to copy note "{title}"', { title: n.title }));
 }
 
 useKeyboardShortcut('ctrl+shift+f', () => showSearch());

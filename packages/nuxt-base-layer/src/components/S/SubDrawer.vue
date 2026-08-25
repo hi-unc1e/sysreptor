@@ -18,7 +18,7 @@
       <v-list-item 
         @click="localSettings.subDrawerExpanded = !localSettings.subDrawerExpanded"
         class="pa-0 ma-0"
-        title="Collapse"
+        :title="$t('Collapse')"
         :prepend-icon="isExpanded ? 'mdi-chevron-left' : 'mdi-chevron-right'" 
       />
     </v-list>

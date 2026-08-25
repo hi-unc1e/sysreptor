@@ -2,24 +2,24 @@
   <navigation-dropdown
     :value="props.value"
     :items="[
-      { 
-        value: 'active', 
-        title: 'Active', 
-        icon: 'mdi-file-document', 
-        to: { path: '/projects/', query: route.query } 
-      },
-      { 
-        value: 'finished', 
-        title: 'Finished', 
-        icon: 'mdi-flag-checkered', 
-        to: { path: '/projects/finished/', query: route.query } 
+      {
+        value: 'active',
+        title: $t('Active Projects'),
+        icon: 'mdi-file-document',
+        to: { path: '/projects/', query: route.query }
       },
       {
-        value: 'archived', 
-        title: 'Archived', 
+        value: 'finished',
+        title: $t('Finished'),
+        icon: 'mdi-flag-checkered',
+        to: { path: '/projects/finished/', query: route.query }
+      },
+      {
+        value: 'archived',
+        title: $t('Archived'),
         icon: 'mdi-folder-lock-outline',
         disabled: !apiSettings.settings!.features.archiving,
-        to: { path: '/projects/archived/', query: route.query } 
+        to: { path: '/projects/archived/', query: route.query }
       },
     ]"
   />

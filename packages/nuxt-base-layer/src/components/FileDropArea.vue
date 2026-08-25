@@ -15,7 +15,7 @@
       content-class="w-100 h-100"
     >
       <div class="h-100 d-flex justify-center align-center text-white">
-        <span class="text-headline-small font-weight-bold ma-0">Drop files to upload</span>
+        <span class="text-headline-small font-weight-bold ma-0">{{ $t('Drop files to upload') }}</span>
       </div>
     </v-overlay>
   </div>
@@ -59,7 +59,7 @@ function onDrop(event: DragEvent) {
 
   const files = Array.from(event.dataTransfer?.files || []);
   if (!props.multiple && files.length > 1) {
-    errorToast('Only one file can be uploaded at a time');
+    errorToast(t('Only one file can be uploaded at a time'));
     return;
   }
   emit('drop', files);

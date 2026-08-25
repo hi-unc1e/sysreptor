@@ -1,7 +1,7 @@
 <template>
   <s-card>
     <v-toolbar color="header" flat>
-      <v-toolbar-title><slot name="title">Login</slot></v-toolbar-title>
+      <v-toolbar-title><slot name="title">{{ $t('Login') }}</slot></v-toolbar-title>
     </v-toolbar>
 
     <v-card-text>
@@ -9,7 +9,7 @@
         <v-form v-for="oidcProvider in oidcAuthProviders" :key="oidcProvider.id" @submit.prevent="auth.authProviderLoginBegin(oidcProvider, { reauth: props.reauth })">
           <v-list-item>
             <s-btn-primary :key="oidcProvider.id" type="submit" block>
-              Login with {{ oidcProvider.name }}
+              {{ $t('Login with {name}', { name: oidcProvider.name }) }}
             </s-btn-primary>
           </v-list-item>
         </v-form>
@@ -17,7 +17,7 @@
         <slot v-if="remoteUserAuthProvider" name="remote">
           <v-list-item>
             <s-btn-primary @click="auth.authProviderLoginBegin(remoteUserAuthProvider, { reauth: props.reauth })" block>
-              Login with {{ remoteUserAuthProvider.name }}
+              {{ $t('Login with {name}', { name: remoteUserAuthProvider.name }) }}
             </s-btn-primary>
           </v-list-item>
         </slot>
@@ -25,7 +25,7 @@
         <slot v-if="isLocalUserAuthEnabled" name="local">
           <v-list-item>
             <s-btn-secondary to="/login/local" block>
-              Login with local user
+              {{ $t('Login with local user') }}
             </s-btn-secondary>
           </v-list-item>
         </slot>

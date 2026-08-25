@@ -17,7 +17,7 @@
       :is-new="props.isNew"
       :readonly="props.readonly"
       :selectable-users="props.selectableUsers"
-      placeholder="Comment text..."
+      :placeholder="$t('Comment text...')"
       class="comment-content"
     >
       <template #menu>
@@ -28,8 +28,8 @@
           :confirm="false"
           button-variant="icon"
           button-icon="mdi-circle-outline"
-          button-text="Resolve"
-          tooltip-text="Resolve comment"
+          :button-text="$t('Resolve')"
+          :tooltip-text="$t('Resolve comment')"
           density="compact"
         />
         <btn-confirm
@@ -39,8 +39,8 @@
           :confirm="false"
           button-variant="icon"
           button-icon="mdi-checkbox-marked-circle-outline"
-          button-text="Un-resolve"
-          tooltip-text="Mark as open (unresolved)"
+          :button-text="$t('Un-resolve')"
+          :tooltip-text="$t('Mark as open (unresolved)')"
           :button-color="'success'"
           density="compact"
         />
@@ -64,7 +64,7 @@
         :project="props.project"
         :readonly="props.readonly"
         :selectable-users="props.selectableUsers"
-        placeholder="Answer..."
+        :placeholder="$t('Answer...')"
         class="answer-content"
       />
     </div>

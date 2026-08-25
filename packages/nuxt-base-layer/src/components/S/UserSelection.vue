@@ -14,7 +14,7 @@
         </template>
         <template #title>
           {{ itemProps.title }}
-          <v-chip v-if="!user.is_active" size="small" text="Inactive" />
+          <v-chip v-if="!user.is_active" size="small" :text="$t('Inactive')" />
         </template>
       </v-list-item>
     </template>
@@ -67,8 +67,8 @@ const items = useSearchableCursorPaginationFetcher<UserShortInfo>({
   }
 });
 const rules = {
-  single: [(v: UserShortInfo|string|null) => !!v || 'Item is required'],
-  multiple: [(v: UserShortInfo[]|null) => (v && v.length > 0) || 'Item is required'],
+  single: [(v: UserShortInfo|string|null) => !!v || t('Item is required')],
+  multiple: [(v: UserShortInfo[]|null) => (v && v.length > 0) || t('Item is required')],
 };
 
 const initialUsers = ref<UserShortInfo[]>([]);
@@ -121,11 +121,11 @@ const autocompleteAttrs = computed(() =>
   Object.assign({}, attrs, {
     modelValue: typeof props.modelValue === 'string' ? (allItems.value.find(u => u.id === props.modelValue) || { id: props.modelValue }) : props.modelValue,
     'onUpdate:modelValue': (e: any) => emit('update:modelValue', e),
-    label: props.label,
+    label: t(props.label),
     hideNoData: false,
     items: allItems.value,
     itemValue: 'id',
-    itemTitle: (u: UserShortInfo) => (u.username && u.name) ? `${u.username} (${u.name})` : (u.username || u.name || 'Unknown User'),
+    itemTitle: (u: UserShortInfo) => (u.username && u.name) ? `${u.username} (${u.name})` : (u.username || u.name || t('Unknown User')),
     itemProps: (u: UserShortInfo) => {
       const preventUnselect = props.preventUnselectingSelf && u.id === auth.user.value!.id && (Array.isArray(props.modelValue) && props.modelValue.some(v => v.id === u.id));
       return {

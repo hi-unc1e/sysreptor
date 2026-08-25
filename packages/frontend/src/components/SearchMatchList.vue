@@ -18,7 +18,7 @@
       :ripple="false"
     >
       <v-list-item-title class="text-disabled">
-        {{ moreMatchesCount }} more match{{ moreMatchesCount === 1 ? '' : 'es' }}
+        {{ $t(moreMatchesCount === 1 ? '1 more match' : '{count} more matches', { count: moreMatchesCount }) }}
       </v-list-item-title>
     </v-list-item>
   </v-list>

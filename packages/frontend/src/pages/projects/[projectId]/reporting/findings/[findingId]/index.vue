@@ -7,7 +7,7 @@
           prepend-icon="mdi-view-compact"
           :disabled="!auth.permissions.value.template_editor"
         >
-          <template #title><permission-info :value="auth.permissions.value.template_editor" permission-name="Template Editor">Save as template</permission-info></template>
+          <template #title><permission-info :value="auth.permissions.value.template_editor" permission-name="Template Editor">{{ $t('Save as template') }}</permission-info></template>
         </v-list-item>
         <btn-copy 
           :copy="performCopy"
@@ -20,7 +20,7 @@
         :to="`/templates/${finding.template}/`"
         target="_blank"
         icon="mdi-view-compact"
-        v-tooltip="'This finding was created from a template: show template'"
+        v-tooltip="$t('This finding was created from a template: show template')"
         class="ml-1 mr-1"
       />
       <div class="status-container ml-1 mr-1">
@@ -94,8 +94,8 @@ const { inputFieldAttrs, errorMessage } = useProjectEditBase({
 });
 const toolbarAttrs = computed(() => ({
   data: finding.value,
-  errorMessage: errorMessage.value || 
-    (!reportingCollab.hasLock.value ? 'This finding is locked by another user. Upgrade to SysReptor Professional for lock-free collaborative editing.' : null),
+  errorMessage: errorMessage.value ||
+    (!reportingCollab.hasLock.value ? t('This finding is locked by another user. Upgrade to SysReptor Professional for lock-free collaborative editing.') : null),
   delete: async (finding: PentestFinding) => {
     await projectStore.deleteFinding(project.value, finding);
     await navigateTo(`/projects/${project.value.id}/reporting/`);

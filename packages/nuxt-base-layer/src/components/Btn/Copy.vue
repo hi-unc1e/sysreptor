@@ -1,8 +1,8 @@
 <template>
   <btn-confirm
-    button-text="Duplicate"
+    :button-text="$t('Duplicate')"
     button-icon="mdi-content-copy"
-    dialog-title="Confirm Duplication"
+    :dialog-title="$t('Confirm Duplication')"
     :button-variant="props.buttonVariant"
     :dialog-text="props.confirmText"
     :action="performCopy"
@@ -23,6 +23,6 @@ const props = withDefaults(defineProps<{
 
 async function performCopy() {
   await Promise.resolve(props.copy());
-  successToast('Duplicated successfully');
+  successToast(t('Duplicated successfully'));
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <list-view :url="apiSettings.isProfessionalLicense ? `/api/v1/pentestprojects/${project.id}/history-timeline/?mode=medium` : null">
     <template #title>
-      <pro-info>Version History</pro-info>
+      <pro-info>{{ $t('Version History') }}</pro-info>
     </template>
     <template #searchbar>
       <!-- hide searchbar -->
@@ -18,7 +18,7 @@
         class="history-timeline-content"
       >
         <history-timeline-item
-          :value="{history_type: '~', history_change_reason: 'Current Version'} as unknown as HistoryTimelineRecord"
+          :value="{history_type: '~', history_change_reason: $t('Current Version')} as unknown as HistoryTimelineRecord"
           :to="`/projects/${project.id}/reporting/`"
         >
           <template #info><span /></template>
@@ -32,8 +32,8 @@
         />
       </v-timeline>
       <v-list-item v-else>
-        Version history is available in SysReptor Professional.<br><br>
-        See <a href="https://sysreptor.com/pricing" target="_blank" class="text-primary">https://sysreptor.com/pricing</a>
+        {{ $t('Version history is available in SysReptor Professional.') }}<br><br>
+        {{ $t('See') }} <a href="https://sysreptor.com/pricing" target="_blank" class="text-primary">https://sysreptor.com/pricing</a>
       </v-list-item>
     </template>
   </list-view>

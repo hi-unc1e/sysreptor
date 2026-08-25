@@ -1,0 +1,47 @@
+format = "templates/v2"
+id = "3b85ed06-ddb5-47b7-b7f1-154b84eaffa0"
+tags = [
+    "web",
+    "logic",
+]
+images = []
+
+[[translations]]
+id = "e0b72ca4-cc82-438a-b999-9aa66cfc3ee1"
+is_main = true
+language = "zh-CN"
+status = "finished"
+
+[translations.data]
+title = "越权访问（IDOR / 水平越权）"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N"
+summary = """
+应用在处理用户请求时未对资源归属进行校验，导致普通用户可以通过修改请求中的对象标识（如用户 ID、订单号、文档 ID）访问或操作其他用户的数据。该漏洞可造成跨用户敏感数据泄露、业务数据篡改，严重时可导致全部用户数据被遍历导出。
+"""
+description = """
+我们在应用中发现了不安全的直接对象引用（IDOR，Insecure Direct Object Reference）漏洞。登录后修改请求中的资源标识参数，即可访问不属于当前账户的数据。
+
+**TODO：技术描述补充**
+
+IDOR 漏洞的典型场景：
+
+- 接口以数字递增 ID 标识资源：`GET /api/v1/orders/1001`，修改为 1002、1003 即可查看他人订单；
+- 以用户 ID 为参数查询信息：`GET /api/v1/users/42/profile` 可枚举查看任意用户资料；
+- 修改/删除操作同样未校验归属：`DELETE /api/v1/documents/88` 可删除他人文档；
+- 文件下载接口直接拼接路径：`/download?file=report_2024.pdf` 可下载他人报表；
+- 隐藏字段或前端不展示的接口仍可调用（前端隐藏≠后端鉴权）。
+
+该漏洞的根本原因是应用仅在认证层面确认了"你是谁"，但未在授权层面确认"你能否访问该资源"，即缺少对象级访问控制（Broken Object Level Authorization，OWASP API Security Top 10 之首）。
+
+由于资源标识多具有规律性（自增 ID、时间戳、手机号等），攻击者可编写脚本批量遍历，导致全量数据泄露。
+"""
+recommendation = """
+- 在每个涉及资源访问的后端接口中校验资源归属：从会话中获取当前用户身份，而非信任请求参数中的用户标识；
+- 优先使用不可预测的随机标识（UUID）代替自增 ID，增加遍历难度（不能替代授权校验）；
+- 对写操作（修改/删除）额外校验资源归属与权限，遵循最小权限原则；
+- 编写自动化测试覆盖越权场景（用户 A 的凭证访问用户 B 的资源应返回 403/404）；
+- 在 API 网关或框架层统一实现对象级访问控制中间件，避免逐接口遗漏。
+"""
+short_recommendation = "后端接口必须校验资源归属（对象级授权），不信任请求参数中的用户/资源标识。"
+references = []
+affected_components = []

@@ -5,16 +5,16 @@
       url="/api/v1/projecttypes/?scope=global"
       v-model:ordering="localSettings.designListOrdering"
       :ordering-options="[
-        {id: 'usage', title: 'Usage', value: 'status,-usage,name'},
-        {id: 'name', title: 'Name', value: 'name'},
-        {id: 'created', title: 'Created', value: '-created'},
-        {id: 'updated', title: 'Updated', value: '-updated'},
+        {id: 'usage', title: $t('Usage'), value: 'status,-usage,name'},
+        {id: 'name', title: $t('Name'), value: 'name'},
+        {id: 'created', title: $t('Created'), value: '-created'},
+        {id: 'updated', title: $t('Updated'), value: '-updated'},
       ]"
       v-model:pinned-filters="localSettings.designListPinnedFilters"
       :filter-properties="filterProperties"
       :selectable="true"
     >
-      <template #title>Designs</template>
+      <template #title>{{ $t('Designs') }}</template>
       <template #navigation>
         <design-navigation-dropdown value="global" />
       </template>
@@ -29,7 +29,7 @@
             :options="{ids: selectedItems.map(p => p.id)}"
             name="designs"
             extension=".tar.gz"
-            tooltip-text="Export selected"
+            :tooltip-text="$t('Export selected')"
             button-variant="icon"
             variant="flat"
             density="comfortable"
@@ -38,14 +38,14 @@
             <btn-delete
               :delete="() => performDeleteSelected(selectedItems)"
               :disabled="!auth.permissions.value.designer"
-              :confirm-input="`delete ${selectedItems.length} designs`"
-              tooltip-text="Delete selected"
+              :confirm-input="$t('delete {count} designs', { count: selectedItems.length })"
+              :tooltip-text="$t('Delete selected')"
               icon="mdi-delete"
               density="comfortable"
             >
               <template #dialog-text>
                 <p class="mt-0">
-                  Do you really want to delete {{ selectedItems.length }} designs?
+                  {{ $t('Do you really want to delete {count} designs?', { count: selectedItems.length }) }}
                 </p>
                 <ul class="mt-0">
                   <li v-for="p in selectedItems" :key="p.id">
@@ -89,15 +89,15 @@ const listViewRef = useTemplateRef('listViewRef');
 const statusOptions = computed(() => apiSettings.settings?.statuses?.map(status => ({title: status.label, value: status.id, icon: status.icon})) || []);
 const suggestedTags = useProjectTypeTags();
 const filterProperties = computed((): FilterProperties[] => [
-  { id: 'status', name: 'Status', icon: 'mdi-flag', type: 'select', options: statusOptions.value, allow_exclude: true, allow_regex: false, default: '', multiple: true },
-  { id: 'tag', name: 'Tag', icon: 'mdi-tag', type: 'combobox', options: suggestedTags.getTags, allow_exclude: true, allow_regex: false, default: '', multiple: true },
-  { id: 'timerange', name: 'Time Created', icon: 'mdi-calendar', type: 'daterange', options: [], allow_exclude: true, default: '', multiple: true },
-  { id: 'language', name: 'Language', icon: 'mdi-translate', type: 'select', options: apiSettings.settings!.languages.map(l => l.code), allow_exclude: true, default: '', multiple: true },
-  { id: 'name', name: 'Name', type: 'text', options: [], allow_exclude: true, allow_regex: false, default: '', multiple: true },
+  { id: 'status', name: t('Status'), icon: 'mdi-flag', type: 'select', options: statusOptions.value, allow_exclude: true, allow_regex: false, default: '', multiple: true },
+  { id: 'tag', name: t('Tag'), icon: 'mdi-tag', type: 'combobox', options: suggestedTags.getTags, allow_exclude: true, allow_regex: false, default: '', multiple: true },
+  { id: 'timerange', name: t('Time Created'), icon: 'mdi-calendar', type: 'daterange', options: [], allow_exclude: true, default: '', multiple: true },
+  { id: 'language', name: t('Language'), icon: 'mdi-translate', type: 'select', options: apiSettings.settings!.languages.map(l => l.code), allow_exclude: true, default: '', multiple: true },
+  { id: 'name', name: t('Name'), type: 'text', options: [], allow_exclude: true, allow_regex: false, default: '', multiple: true },
 ]);
 
 async function performDeleteSelected(projectTypes: ProjectType[]) {
-  await bulkAction(projectTypes, projectTypeStore.delete, p => `Failed to delete design "${p.name}"`);
+  await bulkAction(projectTypes, projectTypeStore.delete, p => t('Failed to delete design "{name}"', { name: p.name }));
   await listViewRef.value?.refresh();
 }
 </script>

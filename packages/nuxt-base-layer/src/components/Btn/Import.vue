@@ -19,7 +19,7 @@
       :disabled="disabled || props.loading || importInProgress"
     />
 
-    <v-tooltip activator="parent" location="bottom" text="Import from file" />
+    <v-tooltip activator="parent" location="bottom" :text="$t('Import from file')" />
   </s-btn-icon>
   <v-list-item
     v-else
@@ -32,7 +32,7 @@
       <v-icon v-else icon="mdi-upload" />
     </template>
     <template #default>
-      <v-list-item-title>Import</v-list-item-title>
+      <v-list-item-title>{{ $t('Import') }}</v-list-item-title>
       <input
         ref="fileInput"
         type="file"
@@ -71,7 +71,7 @@ async function performImport(files?: FileList|File[]|null) {
 
     await props.import(file);
   } catch (error: any) {
-    let message = 'Import failed';
+    let message = t('Import failed');
     if (error?.status === 400 && error?.data?.format) {
       message += ': ' + (Array.isArray(error.data.format) ? error.data.format[0] : error.data.format);
     }

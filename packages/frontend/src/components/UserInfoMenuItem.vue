@@ -16,14 +16,14 @@
         </v-list-item>
         <v-list-item
           v-else
-          title="Logged out"
+          :title="$t('Logged out')"
         />
         <v-divider />
         <v-list-item
-          v-if="auth.loggedIn.value"  
+          v-if="auth.loggedIn.value"
           to="/users/self/"
           prepend-icon="mdi-account"
-          title="Profile"
+          :title="$t('Profile')"
           data-testid="profile-button"
         />
         <template v-if="auth.loggedIn.value && apiSettings.isProfessionalLicense">
@@ -31,32 +31,37 @@
             v-if="auth.permissions.value.admin"
             :to="{path: '/users/self/admin/disable/', query: { next: route.fullPath }}"
             prepend-icon="mdi-account-arrow-down"
-            title="Disable Superuser Permissions"
+            :title="$t('Disable Superuser Permissions')"
           />
           <v-list-item
             v-else-if="auth.permissions.value.superuser"
             :to="{path: '/users/self/admin/enable/', query: { next: route.fullPath }}"
             prepend-icon="mdi-account-arrow-up"
-            title="Enable Superuser Permissions"
+            :title="$t('Enable Superuser Permissions')"
           />
         </template>
         <v-list-item
           @click.stop="localSettings.theme = localSettings.theme === 'light' ? 'dark' : localSettings.theme === 'dark' ? null : 'light'"
           :prepend-icon="localSettings.theme === 'dark' ? 'mdi-weather-night' : localSettings.theme === 'light' ? 'mdi-weather-sunny' : 'mdi-theme-light-dark'"
-          :title="localSettings.theme === 'dark' ? 'Theme: Dark' : localSettings.theme === 'light' ? 'Theme: Light' : 'Theme: System'"
+          :title="localSettings.theme === 'dark' ? $t('Theme: Dark') : localSettings.theme === 'light' ? $t('Theme: Light') : $t('Theme: System')"
         />
+        <v-list-item prepend-icon="mdi-translate" :title="$t('Language')">
+          <template #append>
+            <s-locale-switcher hide-label style="max-width: 150px;" />
+          </template>
+        </v-list-item>
         <v-list-item
           v-if="auth.loggedIn.value"
           @click="auth.logout"
           prepend-icon="mdi-logout"
-          title="Log out"
+          :title="$t('Log out')"
           link
         />
         <v-list-item
           v-else
           to="/login/"
           prepend-icon="mdi-login"
-          title="Log in"
+          :title="$t('Log in')"
           link
         />
       </v-list>

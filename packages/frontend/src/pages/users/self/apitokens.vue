@@ -1,31 +1,31 @@
 <template>
   <div>
     <s-dialog v-model="reauthDialogVisible">
-      <template #title>Re-Authentication required</template>
+      <template #title>{{ $t('Re-Authentication required') }}</template>
       <template #default>
         <v-card-text>
-          This operation requires a re-authentication.
+          {{ $t('This operation requires a re-authentication.') }}
         </v-card-text>
         <v-card-actions>
           <v-spacer />
           <s-btn-other
             @click="reauthDialogVisible = false"
-            text="Cancel"
+            :text="$t('Cancel')"
           />
           <s-btn-primary
             @click="auth.redirectToReAuth()"
-            text="Re-Authenticate"
+            :text="$t('Re-Authenticate')"
           />
         </v-card-actions>
       </template>
     </s-dialog>
 
     <s-card class="mt-4">
-      <v-card-title>API Tokens</v-card-title>
+      <v-card-title>{{ $t('API Tokens') }}</v-card-title>
       <v-card-text>
         <p>
-          Use the <a href="https://docs.sysreptor.com/cli/getting-started/" target="_blank" class="text-primary">reptor CLI</a>, 
-          or the <a href="/api/public/utils/swagger-ui/" target="_blank" class="text-primary">SysReptor REST API</a> (unstable).
+          {{ $t('Use the') }} <a href="https://docs.sysreptor.com/cli/getting-started/" target="_blank" class="text-primary">reptor CLI</a>{{ $t(', or the') }}
+          <a href="/api/public/utils/swagger-ui/" target="_blank" class="text-primary">SysReptor REST API</a>{{ $t(' (unstable)') }}.
         </p>
         <pre class="token-preview mt-2"><s-code>Authorization: Bearer &lt;api_token&gt;</s-code></pre>
 
@@ -41,10 +41,10 @@
                 size="small"
                 class="ml-3"
               >
-                Admin
+                {{ $t('Admin') }}
               </v-chip>
               <chip-expires class="ml-3" :value="apiToken.expire_date" />
-              <chip-date :value="apiToken.last_used" label="Last Used" />
+              <chip-date :value="apiToken.last_used" :label="$t('Last Used')" />
               <chip-created :value="apiToken.created" />
             </v-list-item-title>
             <template #append>
@@ -58,16 +58,16 @@
                   @click="openSetupWizard"
                   v-bind="dialogProps"
                   prepend-icon="mdi-plus"
-                  text="Add"
+                  :text="$t('Add')"
                 />
               </template>
-              <template #title>Create API Token</template>
+              <template #title>{{ $t('Create API Token') }}</template>
               <template #default>
                 <template v-if="setupWizard.step === SetupWizardStep.INFO">
                   <v-card-text>
                     <s-text-field
                       v-model="setupWizard.form.name"
-                      label="Name"
+                      :label="$t('Name')"
                       :error-messages="setupWizard.errors?.name"
                       class="mb-4"
                       autofocus
@@ -75,25 +75,25 @@
                     />
                     <s-date-picker
                       v-model="setupWizard.form.expire_date"
-                      label="Expire Date (optional)"
+                      :label="$t('Expire Date (optional)')"
                       :error-messages="setupWizard.errors?.expire_date"
                       :min-date="formatISO9075(new Date(), { representation: 'date' })"
                       :disabled="!apiSettings.isProfessionalLicense"
                     >
-                      <template #label><pro-info>Expire Date (optional)</pro-info></template>
+                      <template #label><pro-info>{{ $t('Expire Date (optional)') }}</pro-info></template>
                     </s-date-picker>
 
                     <s-checkbox
                       v-if="auth.permissions.value.superuser"
                       v-model="setupWizard.form.admin_permissions_enabled"
-                      hint="Grant this API token full admin permissions. Requires enabled admin permissions."
+                      :hint="$t('Grant this API token full admin permissions. Requires enabled admin permissions.')"
                       :error-messages="setupWizard.errors?.admin_permissions_enabled"
                       :disabled="!auth.permissions.value.admin || !apiSettings.isProfessionalLicense"
                       density="compact"
                       class="mt-2"
                     >
                       <template #label>
-                        <pro-info>Enable admin permissions</pro-info>
+                        <pro-info>{{ $t('Enable admin permissions') }}</pro-info>
                       </template>
                     </s-checkbox>
 
@@ -105,39 +105,38 @@
                     <v-spacer />
                     <s-btn-other
                       @click="setupWizard.visible = false"
-                      text="Cancel"
+                      :text="$t('Cancel')"
                     />
                     <s-btn-primary
                       @click="createApiToken"
                       :loading="setupWizard.actionInProgress"
-                      text="Create"
+                      :text="$t('Create')"
                     />
                   </v-card-actions>
                 </template>
                 <template v-else-if="setupWizard.step === SetupWizardStep.TOKEN">
                   <v-card-text>
                     <p>
-                      The API token <s-code>{{ setupWizard.newApiToken?.name }}</s-code> has been created successfully.<br>
-                      Please copy the token and store it in a safe place.
-                      You will not be able to see it again.
+                      {{ $t('The API token') }} <s-code>{{ setupWizard.newApiToken?.name }}</s-code> {{ $t('has been created successfully.') }}<br>
+                      {{ $t('Please copy the token and store it in a safe place. You will not be able to see it again.') }}
                     </p>
                     <s-code class="token-preview">
                       Authorization: Bearer {{ setupWizard.newApiToken?.token }}
-                      <s-btn-icon 
-                        @click="copyToClipboard(setupWizard.newApiToken?.token || '')" 
-                        icon="mdi-content-copy" 
+                      <s-btn-icon
+                        @click="copyToClipboard(setupWizard.newApiToken?.token || '')"
+                        icon="mdi-content-copy"
                         size="small"
                         density="compact"
                         class="ml-2"
                       />
                     </s-code>
-                    
+
                   </v-card-text>
                   <v-card-actions>
                     <v-spacer />
                     <s-btn-primary
                       @click="setupWizard.visible = false"
-                      text="Done"
+                      :text="$t('Done')"
                     />
                   </v-card-actions>
                 </template>

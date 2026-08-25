@@ -5,9 +5,9 @@
     class="pb-0 pt-0 h-100 d-flex flex-column"
   >
     <v-list-subheader v-if="isInSearchMode" class="subheader-section pr-2">
-      <s-text-field 
+      <s-text-field
         v-model="search"
-        placeholder="Search..."
+        :placeholder="$t('Search...')"
         density="compact"
         variant="underlined"
         prepend-inner-icon="mdi-magnify"
@@ -28,7 +28,7 @@
 
     <div v-if="!showSearchResults" class="flex-grow-1 overflow-y-auto">
       <v-list-subheader class="subheader-section pr-2">
-        <span>Sections</span>
+        <span>{{ $t('Sections') }}</span>
         <v-spacer />
         <s-btn-icon
           v-if="!isInSearchMode && search !== undefined"
@@ -49,7 +49,7 @@
             <v-list>
               <v-list-item
                 v-if="props.collab"
-                title="Set status"
+                :title="$t('Set status')"
                 prepend-icon="mdi-pencil"
                 :disabled="props.readonly || (selectedFindings.length === 0 && selectedSections.length === 0)"
               >
@@ -76,7 +76,7 @@
               >
                 <template #dialog-text>
                   <p class="mt-0">
-                      Do you really want to delete {{ selectedFindings.length }} findings?
+                    {{ $t('Do you really want to delete {count} findings?', { count: selectedFindings.length }) }}
                   </p>
                   <ul class="mt-0">
                     <li v-for="f in selectedFindings" :key="f.id">
@@ -117,13 +117,13 @@
       </v-list-item>
 
       <v-list-subheader>
-        <span>Findings</span>
+        <span>{{ $t('Findings') }}</span>
         <s-btn-icon
           v-if="!isGrouped"
           @click="emit('create:finding')"
           :disabled="props.readonly"
           icon="mdi-plus"
-          v-tooltip.top="'Add Finding (Ctrl+J)'"
+          v-tooltip.top="$t('Add Finding (Ctrl+J)')"
           size="small"
           variant="flat"
           color="secondary"
@@ -136,7 +136,7 @@
           @click="overrideFindingOrder = !overrideFindingOrder"
           :disabled="props.readonly"
           :icon="overrideFindingOrder ? 'mdi-sort-variant-off' : 'mdi-sort-variant'"
-          v-tooltip.top="overrideFindingOrder ? 'Custom order' : 'Default order'"
+          v-tooltip.top="overrideFindingOrder ? $t('Custom order') : $t('Default order')"
           size="small"
           density="compact"
         />
@@ -157,7 +157,7 @@
               </div>
               
               <span v-if="group.label">{{ group.label }}</span>
-              <span class="font-italic" v-else>(unnamed group)</span>
+              <span class="font-italic" v-else>{{ $t('(unnamed group)') }}</span>
 
               <s-btn-icon
                 @click="createFinding(group)"
@@ -203,7 +203,7 @@
                     <v-list-item-title class="text-body-medium">{{ findingTitle(finding) }}</v-list-item-title>
                     <v-list-item-subtitle v-if="finding.assignee">@{{ finding.assignee.username }}</v-list-item-subtitle>
                     <v-tooltip v-if="findingRetestStatus(finding)" activator="parent">
-                      Retest status: {{ findingRetestStatus(finding)?.label }}
+                      {{ $t('Retest status: {status}', { status: findingRetestStatus(finding)?.label }) }}
                     </v-tooltip>
                   </template>
                   <template #append>
@@ -226,7 +226,7 @@
     <div v-else>
       <!-- Search result list -->
       <template v-if="searchResultsSections.length > 0">
-        <v-list-subheader title="Sections" class="mt-0 pr-2" />
+        <v-list-subheader :title="$t('Sections')" class="mt-0 pr-2" />
         <div v-for="result in searchResultsSections" :key="result.item.id">
           <v-list-item
             :to="sectionUrl(result.item)"
@@ -246,7 +246,7 @@
       </template>
 
       <template v-if="searchResultsFindings.length > 0">
-        <v-list-subheader title="Findings" />
+        <v-list-subheader :title="$t('Findings')" />
         <div v-for="result in searchResultsFindings" :key="result.item.id">
           <v-list-item
             :to="findingUrl(result.item)"
@@ -273,9 +273,9 @@
           :confirm="false"
           :disabled="props.readonly"
           data-testid="create-finding-button"
-          button-text="Add"
+          :button-text="$t('Add')"
           button-icon="mdi-plus"
-          tooltip-text="Add Finding (Ctrl+J)"
+          :tooltip-text="$t('Add Finding (Ctrl+J)')"
           keyboard-shortcut="ctrl+j"
           color="secondary"
           size="small"

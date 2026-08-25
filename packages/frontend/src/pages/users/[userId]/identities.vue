@@ -1,13 +1,13 @@
 <template>
   <s-card class="mt-4">
-    <v-card-title>SSO Identities</v-card-title>
+    <v-card-title>{{ $t('SSO Identities') }}</v-card-title>
     <v-card-text>
       <v-table>
         <thead>
           <tr>
-            <th>SSO Provider</th>
-            <th>Identifier</th>
-            <th>Actions</th>
+            <th>{{ $t('SSO Provider') }}</th>
+            <th>{{ $t('Identifier') }}</th>
+            <th>{{ $t('Actions') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -27,15 +27,15 @@
             v-bind="dialogProps"
             :disabled="!canEdit"
             prepend-icon="mdi-plus"
-            text="Add"
+            :text="$t('Add')"
           />
         </template>
-        <template #title>Add Identity</template>
+        <template #title>{{ $t('Add Identity') }}</template>
         <template #default>
           <v-card-text>
             <s-select
               v-model="createWizard.form.provider"
-              label="SSO Provider"
+              :label="$t('SSO Provider')"
               :items="apiSettings.ssoAuthProviders"
               item-value="id"
               item-title="name"
@@ -43,7 +43,7 @@
             />
             <s-text-field
               v-model="createWizard.form.identifier"
-              label="Identifier"
+              :label="$t('Identifier')"
               :error-messages="createWizard.errors?.identifier || []"
               spellcheck="false"
               class="mt-4"
@@ -54,7 +54,7 @@
             <s-btn-primary
               @click="createIdentity"
               :loading="createWizard.actionInProgress"
-              text="Save"
+              :text="$t('Save')"
             />
           </v-card-actions>
         </template>

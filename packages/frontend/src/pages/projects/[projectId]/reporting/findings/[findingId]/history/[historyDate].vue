@@ -16,7 +16,7 @@
         :to="currentUrl" exact
         class="ml-1 mr-1 d-none d-lg-inline-flex"
         prepend-icon="mdi-undo"
-        text="Close Version History"
+        :text="$t('Close Version History')"
       />
       <chat-btn v-model="localSettings.reportingSidebarType" />
       <btn-comments v-model="localSettings.reportingSidebarType" :comments="fieldAttrsCurrent.collab.comments" />
@@ -33,10 +33,10 @@
     <v-container fluid class="pt-0 flex-grow-height overflow-y-auto">
       <v-row>
         <v-col cols="6">
-          <h2 class="text-headline-small text-center ma-0">Historic Version <chip-date :value="(route.params.historyDate as string)" /></h2>
+          <h2 class="text-headline-small text-center ma-0">{{ $t('Historic Version') }} <chip-date :value="(route.params.historyDate as string)" /></h2>
         </v-col>
         <v-col cols="6">
-          <h2 class="text-headline-small text-center ma-0">Current Version</h2>
+          <h2 class="text-headline-small text-center ma-0">{{ $t('Current Version') }}</h2>
         </v-col>
       </v-row>
 

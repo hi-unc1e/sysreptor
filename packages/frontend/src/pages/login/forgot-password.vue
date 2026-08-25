@@ -2,8 +2,8 @@
   <centered-view>
     <s-card class="w-100">
       <v-toolbar
-        title="Forgot Password?"
-        color="header" 
+        :title="$t('Forgot Password?')"
+        color="header"
         flat
       />
       <v-form ref="form" @submit.prevent="resetPassword">
@@ -12,7 +12,7 @@
             v-model="formResetPassword.email"
             type="email"
             name="email"
-            label="E-mail"
+            :label="$t('E-mail')"
             :error-messages="errorMessage"
             prepend-icon="mdi-email"
             variant="outlined"
@@ -25,11 +25,11 @@
           <v-spacer />
           <s-btn-other
             to="/login/local/"
-            text="Cancel"
+            :text="$t('Cancel')"
           />
           <s-btn-primary
             type="submit"
-            text="Reset Password"
+            :text="$t('Reset Password')"
             :loading="actionInProgress"
           />
         </v-card-actions>
@@ -49,16 +49,16 @@
               />
 
               <div class="font-weight-bold mb-1">
-                Password reset mail sent
+                {{ $t('Password reset mail sent') }}
               </div>
 
               <div class="text-body-medium text-medium-emphasis mb-6">
-                If your email address is associated with a user, you will now receive an email to reset your password. 
+                {{ $t('If your email address is associated with a user, you will now receive an email to reset your password.') }}
               </div>
 
               <s-btn-primary
                 to="/login/local/"
-                text="Proceed to login"
+                :text="$t('Proceed to login')"
               />
             </div>
           </template>
@@ -97,7 +97,7 @@ async function resetPassword() {
     } else if (error?.data?.email) {
       errorMessage.value = error.data.email;
     }
-    requestErrorToast({ error, message: 'Failed to send password reset email' });
+    requestErrorToast({ error, message: t('Failed to send password reset email') });
   } finally {
     actionInProgress.value = false;
   }

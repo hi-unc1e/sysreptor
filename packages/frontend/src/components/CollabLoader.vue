@@ -12,8 +12,8 @@
       color="warning"
     >
       <template #text>
-        <span v-if="connectionState === CollabConnectionState.CLOSED">Server connection lost</span>
-        <span v-else>Connecting...</span>
+        <span v-if="connectionState === CollabConnectionState.CLOSED">{{ $t('Server connection lost') }}</span>
+        <span v-else>{{ $t('Connecting...') }}</span>
       </template>
       <template #actions>
         <v-btn
@@ -21,7 +21,7 @@
           @click="reconnect()"
           variant="text"
           size="small"
-          text="Try again"
+          :text="$t('Try again')"
         />
         <v-progress-circular v-else indeterminate size="25" />
       </template>
@@ -57,7 +57,7 @@ watch(connectionState, async (newState, oldState) => {
     // Show warning if HTTP fallback was used
     if (apiSettings.settings!.features.websockets && props.collab.connection.value?.type === CollabConnectionType.HTTP_FALLBACK && !warningHttpFallbackShown.value) {
       warningHttpFallbackShown.value = true;
-      warningToast('Could not establish WebSocket connection, falling back to HTTP. Some features may be limited.');
+      warningToast(t('Could not establish WebSocket connection, falling back to HTTP. Some features may be limited.'));
     }
   } else if (newState === CollabConnectionState.CLOSED && !isFirstLoad.value && reconnectAttempted.value === 0) {
     await reconnect();

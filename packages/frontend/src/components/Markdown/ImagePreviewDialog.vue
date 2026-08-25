@@ -15,7 +15,7 @@
     @keydown.arrow-right="!editMode && windowRef?.group.next()"
   >
     <template #title>
-      <span v-if="editMode" class="mr-2">Edit Image</span>
+      <span v-if="editMode" class="mr-2">{{ $t('Edit Image') }}</span>
 
       <v-code v-if="modelValue.markdown" class="d-inline">
         <s-btn-icon
@@ -36,8 +36,8 @@
         :confirm="false"
         :disabled="fetchOriginalImageInfo.pending.value"
         button-variant="icon"
-        button-text="View original"
-        tooltip-text="View Original Image"
+        :button-text="$t('View original')"
+        :tooltip-text="$t('View Original Image')"
         class="dialog-toolbar-btn"
       >
         <template #icon>
@@ -53,8 +53,8 @@
         :disabled="props.readonly"
         button-variant="icon"
         button-icon="mdi-undo-variant"
-        button-text="Revert"
-        tooltip-text="Revert to Original Image"
+        :button-text="$t('Revert')"
+        :tooltip-text="$t('Revert to Original Image')"
         class="dialog-toolbar-btn"
       >
         <template #icon>
@@ -62,7 +62,7 @@
         </template>
         <template #dialog-text>
           <p class="mt-0">
-            Are you sure you want to revert to the original image? This will discard all annotations and edits you've made to this image.
+            {{ $t('Are you sure you want to revert to the original image? This will discard all annotations and edits you\'ve made to this image.') }}
           </p>
           <v-img :src="originalImageSrc" />
         </template>
@@ -73,8 +73,8 @@
         :confirm="false"
         :disabled="props.readonly || saveInProgress"
         button-variant="icon"
-        button-text="Edit Image"
-        tooltip-text="Edit Image"
+        :button-text="$t('Edit Image')"
+        :tooltip-text="$t('Edit Image')"
         class="dialog-toolbar-btn"
       >
         <template #icon>
@@ -87,8 +87,8 @@
         :confirm="false"
         :disabled="props.readonly || saveInProgress"
         button-variant="icon"
-        button-text="Save"
-        :tooltip-text="hasUnsavedChanges ? 'Save Changes' : 'Everything saved'"
+        :button-text="$t('Save')"
+        :tooltip-text="hasUnsavedChanges ? $t('Save Changes') : $t('Everything saved')"
         class="dialog-toolbar-btn"
       >
         <template #icon>
@@ -133,7 +133,7 @@
     density="compact"
   >
     <template #title>
-      <span>Original Image</span>
+      <span>{{ $t('Original Image') }}</span>
     </template>
     <template #toolbar>
       <btn-confirm
@@ -141,8 +141,8 @@
         :confirm="true"
         :disabled="props.readonly || !originalImageSrc"
         button-variant="icon"
-        button-text="Revert"
-        tooltip-text="Revert to Original Image"
+        :button-text="$t('Revert')"
+        :tooltip-text="$t('Revert to Original Image')"
         class="dialog-toolbar-btn"
       >
         <template #icon>
@@ -150,7 +150,7 @@
         </template>
         <template #dialog-text>
           <p class="mt-0">
-            Are you sure you want to revert to the original image? This will discard all annotations and edits you've made to this image.
+            {{ $t('Are you sure you want to revert to the original image? This will discard all annotations and edits you\'ve made to this image.') }}
           </p>
         </template>
       </btn-confirm>
@@ -224,7 +224,7 @@ function onClose(val: boolean) {
   if (!val) {
     if (editMode.value) {
       if (imageEditorRef.value?.hasChanges) {
-        const confirmClose = window.confirm('Do you really want to leave? You have unsaved changes!');
+        const confirmClose = window.confirm(t('Do you really want to leave? You have unsaved changes!'));
         if (!confirmClose) {
           return;
         }
@@ -369,7 +369,7 @@ async function performSave() {
   updateImageUrlInMarkdown(newMd);
   // Close dialog and show success
   exitEditMode();
-  successToast('Image saved successfully');
+  successToast(t('Image saved successfully'));
 }
 
 async function revertToOriginal() {
@@ -382,7 +382,7 @@ async function revertToOriginal() {
 
   // Update model and exit edit mode
   exitEditMode();
-  successToast('Reverted to original image');
+  successToast(t('Reverted to original image'));
 }
 
 async function open(image: PreviewImage, editModeParam?: boolean) {

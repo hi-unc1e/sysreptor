@@ -23,28 +23,28 @@
           @click.stop
           icon="mdi-cogs"
           size="x-small"
-          v-tooltip="{ text: 'Settings', location: 'top', openDelay: 500 }"
+          v-tooltip="{ text: $t('Settings'), location: 'top', openDelay: 500 }"
         />
         <s-btn-icon
           :to="`/projects/${props.item.id}/reporting/`"
           @click.stop
           icon="mdi-text"
           size="x-small"
-          v-tooltip="{ text: 'Reporting', location: 'top', openDelay: 500 }"
+          v-tooltip="{ text: $t('Reporting'), location: 'top', openDelay: 500 }"
         />
         <s-btn-icon
           :to="`/projects/${props.item.id}/notes/`"
           @click.stop
           icon="mdi-notebook"
           size="x-small"
-          v-tooltip="{ text: 'Notes', location: 'top', openDelay: 500 }"
+          v-tooltip="{ text: $t('Notes'), location: 'top', openDelay: 500 }"
         />
         <s-btn-icon
           :to="`/projects/${props.item.id}/publish/`"
           @click.stop
           icon="mdi-earth"
           size="x-small"
-          v-tooltip="{ text: 'Publish', location: 'top', openDelay: 500 }"
+          v-tooltip="{ text: $t('Publish'), location: 'top', openDelay: 500 }"
         />
       </div>
     </template>

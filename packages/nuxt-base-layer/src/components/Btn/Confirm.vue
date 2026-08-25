@@ -5,7 +5,7 @@
         <template #activator="{ props: tooltipProps }">
           <v-list-item
             v-if="props.buttonVariant === 'list-item'"
-            :title="props.buttonText"
+            :title="$t(props.buttonText)"
             :disabled="props.disabled"
             @click.stop.prevent="onClick"
             link
@@ -32,7 +32,7 @@
           </s-btn-icon>
           <s-btn
             v-else
-            :text="buttonText"
+            :text="$t(buttonText)"
             :loading="actionInProgress"
             :disabled="disabled"
             :color="(attrs.color as string|undefined) || buttonColor || 'secondary'"
@@ -49,7 +49,7 @@
       </v-tooltip>
     </template>
 
-    <template #title>{{ props.dialogTitle }}</template>
+    <template #title>{{ $t(props.dialogTitle) }}</template>
     <template #default>
       <v-card-text class="pt-0 overflow-y-auto">
         <slot name="dialog-text">
@@ -58,12 +58,12 @@
         
         <template v-if="props.confirmInput">
           <div>
-            Enter the following text to confirm: <br>
+            {{ $t('Enter the following text to confirm:') }} <br>
             <strong>{{ props.confirmInput }}</strong>
             <s-btn-icon 
               @click="copyToClipboard(props.confirmInput)"
               icon="mdi-content-copy"
-              v-tooltip="'Copy to clipboard'"
+              v-tooltip="$t('Copy to clipboard')"
               size="small" 
               density="compact"
               class="ml-1"
@@ -85,7 +85,7 @@
         <v-spacer />
         <s-btn-other
           @click="confirmDialogVisible = false"
-          text="Cancel"
+          :text="$t('Cancel')"
         />
         <s-btn
           :disabled="props.confirmInput && props.confirmInput !== confirmUserInput"
@@ -93,7 +93,7 @@
           :color="props.buttonColor || 'primary'"
           @click="performAction"
           :prepend-icon="props.buttonIcon"
-          :text="props.buttonText"
+          :text="$t(props.buttonText)"
           data-testid="confirm-button"
         />
       </v-card-actions>
@@ -139,7 +139,7 @@ const confirmDialogVisible = ref(false);
 const confirmUserInput = ref('');
 const actionInProgress = ref(false);
 const rules = {
-  confirm: [(v: string) => (v || '').trim() === (props.confirmInput || '').trim() || 'Confirmation text does not match']
+  confirm: [(v: string) => (v || '').trim() === (props.confirmInput || '').trim() || t('Confirmation text does not match')]
 };
 
 async function performAction() {

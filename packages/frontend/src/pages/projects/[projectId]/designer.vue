@@ -12,11 +12,11 @@
                 :disabled="pdfRenderingInProgress"
                 @click="loadPdf"
                 prepend-icon="mdi-cached"
-                text="Refresh PDF"
+                :text="$t('Refresh PDF')"
               >
                 <template #loader>
                   <s-saving-loader-spinner />
-                  Refresh PDF
+                  {{ $t('Refresh PDF') }}
                 </template>
               </s-btn-secondary>
             </template>
@@ -25,8 +25,8 @@
           <v-tabs v-model="currentTab" grow>
             <v-tab :value="PdfDesignerTab.HTML" text="HTML+Vue" />
             <v-tab :value="PdfDesignerTab.CSS" text="CSS" />
-            <v-tab :value="PdfDesignerTab.ASSETS" text="Assets" />
-            <v-tab :to="`/designs/${projectType.id}/reportfields/`" text="Fields" />
+            <v-tab :value="PdfDesignerTab.ASSETS" :text="$t('Assets')" />
+            <v-tab :to="`/designs/${projectType.id}/reportfields/`" :text="$t('Fields')" />
           </v-tabs>
         </template>
 
@@ -90,8 +90,8 @@ const { projectType, toolbarAttrs, readonly } = useProjectTypeLockEdit({
     saveFields: ['report_template', 'report_styles', 'report_preview_data'],
   }),
   hasEditPermissions: computed(() => !project.value.readonly && auth.permissions.value.edit_projects),
-  errorMessage: computed(() => project.value.readonly ? 
-    'This project is finished and cannot be changed anymore. In order to edit this project, re-activate it in the project settings.' : 
+  errorMessage: computed(() => project.value.readonly ?
+    t('This project is finished and cannot be changed anymore. In order to edit this project, re-activate it in the project settings.') :
     null),
 });
 

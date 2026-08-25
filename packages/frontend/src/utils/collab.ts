@@ -204,11 +204,11 @@ export function connectionWebsocket<T = any>(storeState: CollabStoreState<T>, on
       websocket.value.addEventListener('close', (event) => {
         // Error handling
         if (event.code === 4443) {
-          connectionInfo.connectionError = { error: event, message: event.reason || 'Permission denied' };
+          connectionInfo.connectionError = { error: event, message: event.reason || t('Permission denied') };
         } else if (connectionInfo.connectionState === CollabConnectionState.CONNECTING) {
-          connectionInfo.connectionError = { error: event, message: event.reason || 'Failed to establish connection' };
+          connectionInfo.connectionError = { error: event, message: event.reason || t('Failed to establish connection') };
         } else if (event.code === 1012) {
-          connectionInfo.connectionError = { error: event, message: event.reason || 'Server worker process is restarting' };
+          connectionInfo.connectionError = { error: event, message: event.reason || t('Server worker process is restarting') };
         } else if (event.code !== 1000) {
           connectionInfo.connectionError = { error: event, message: event.reason };
         }

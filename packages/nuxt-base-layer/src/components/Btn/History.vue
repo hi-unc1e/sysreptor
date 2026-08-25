@@ -2,7 +2,7 @@
   <s-btn-icon
     @click="modelValue = !modelValue"
     icon="mdi-history"
-    v-tooltip.bottom="'Version History'"
+    v-tooltip.bottom="$t('Version History')"
     data-testid="history-button"
   />
 </template>

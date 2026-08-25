@@ -8,7 +8,7 @@
     :style="{ 
       colorScheme: theme.current.value.dark ? 'dark': 'light',
     }"
-    title="PDF Viewer"
+    :title="$t('PDF Viewer')"
   />
 </template>
 

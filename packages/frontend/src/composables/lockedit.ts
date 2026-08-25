@@ -132,11 +132,11 @@ export function useProjectEditBase(options: {
   });
   const errorMessage = computed(() => {
     if (options.historyDate) {
-      return `You are comparing a historic version from ${formatISO9075(new Date(options.historyDate))} to the current version.`;
+      return t('You are comparing a historic version from {date} to the current version.', { date: formatISO9075(new Date(options.historyDate)) });
     } else if (options.project.value?.readonly) {
-      return 'This project is finished and cannot be changed anymore. In order to edit this project, re-activate it in the project settings.'
+      return t('This project is finished and cannot be changed anymore. In order to edit this project, re-activate it in the project settings.')
     } else if (!auth.permissions.value.edit_projects) {
-      return 'You do not have permissions to edit this resource.';
+      return t('You do not have permissions to edit this resource.');
     }
     return null;
   });

@@ -4,7 +4,7 @@
     density="comfortable"
   >
     <v-icon icon="mdi-dots-vertical" />
-    <v-tooltip activator="parent" location="top" text="More actions" />
+    <v-tooltip activator="parent" location="top" :text="$t('More actions')" />
 
     <v-menu activator="parent">
       <template #default>

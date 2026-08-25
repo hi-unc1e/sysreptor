@@ -24,7 +24,7 @@ const emit = defineEmits<{
 }>();
 
 const apiSettings = useApiSettings();
-const languageInfo = computed(() => apiSettings.settings!.languages.find(l => l.code === props.value) || { code: '??-??', name: 'Unknown' });
+const languageInfo = computed(() => apiSettings.settings!.languages.find(l => l.code === props.value) || { code: '??-??', name: t('Unknown') });
 
 function applyFilter() {
   emit('filter', {

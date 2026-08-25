@@ -110,7 +110,7 @@ async function sortFindings(findings: PentestFinding[]) {
   await projectStore.sortFindings(project.value, findings);
 }
 async function deleteFindings(findingsToDelete: PentestFinding[]) {
-  await bulkAction(findingsToDelete, f => projectStore.deleteFinding(project.value, f), f => `Failed to delete finding "${f.data.title}"`);
+  await bulkAction(findingsToDelete, f => projectStore.deleteFinding(project.value, f), f => t('Failed to delete finding "{name}"', { name: f.data.title }));
 }
 async function toggleOverrideFindingOrder() {
   if (!wasOverrideFindingOrder.value) {

@@ -4,7 +4,7 @@
     @update:model-value="emit('update:modelValue', $event)"
     :items="tagSuggestions"
     :readonly="props.readonly"
-    label="Tags"
+    :label="$t('Tags')"
     multiple
     chips 
     :hide-no-data="false"
@@ -21,8 +21,8 @@
     </template>
     <template #append-item>
       <v-list-item
-        title="Type to add custom tags..."
-        subtitle="Apply with [enter]"
+        :title="$t('Type to add custom tags...')"
+        :subtitle="$t('Apply with [enter]')"
       />
     </template>
   </s-combobox>

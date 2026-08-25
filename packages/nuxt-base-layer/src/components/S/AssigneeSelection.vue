@@ -2,7 +2,7 @@
   <s-user-selection
     v-if="lgAndUp"
     v-model="modelValue"
-    label="Assignee"
+    :label="$t('Assignee')"
     prepend-inner-icon="mdi-account"
     variant="underlined"
     density="compact"
@@ -35,7 +35,7 @@
         <v-list-item
           @click="modelValue = null"
           prepend-icon="mdi-account"
-          title="unassigned"
+          :title="$t('unassigned')"
           link
         />
       </v-list>
@@ -54,7 +54,7 @@ const props = defineProps<{
 const { lgAndUp } = useVDisplay();
 
 function formatUsername(u: UserShortInfo) {
-  return (u.username && u.name) ? `${u.username} (${u.name})` : (u.username || u.name || 'Unknown User')
+  return (u.username && u.name) ? `${u.username} (${u.name})` : (u.username || u.name || t('Unknown User'))
 }
 </script>
 

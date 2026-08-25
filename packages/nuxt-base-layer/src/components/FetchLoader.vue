@@ -4,7 +4,7 @@
   </div>
   <div v-else-if="props.fetchState.error" class="h-100" v-bind="$attrs">
     <v-alert color="error">
-      Failed to load page: {{ props.fetchState.error?.message || props.fetchState.error }}
+      {{ $t('Failed to load page:') }} {{ props.fetchState.error?.message || props.fetchState.error }}
     </v-alert>
   </div>
 

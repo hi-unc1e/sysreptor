@@ -10,7 +10,7 @@
         >
           <div class="flex-grow-height overflow-y-auto">
             <v-list-item :value="allFieldsPlaceholder" :ripple="false" link>
-              <v-list-item-title class="text-body-medium">All Fields</v-list-item-title>
+              <v-list-item-title class="text-body-medium">{{ $t('All Fields') }}</v-list-item-title>
             </v-list-item>
 
             <draggable
@@ -50,7 +50,7 @@
             <v-divider />
             <v-list-group value="predefinedFields" fluid>
               <template #activator="{ props: listGroupProps }">
-                <v-list-item title="Predefined Fields" v-bind="listGroupProps" />
+                <v-list-item :title="$t('Predefined Fields')" v-bind="listGroupProps" />
               </template>
               <draggable
                 :model-value="availablePredefinedFields"
@@ -82,7 +82,7 @@
               block
               :disabled="readonly"
               prepend-icon="mdi-plus"
-              text="Add Custom Field"
+              :text="$t('Add Custom Field')"
             />
           </v-list-item>
         </v-list>
@@ -189,7 +189,7 @@ function updateField(field: FieldDefinition, val: FieldDefinition) {
 }
 function addField() {
   const fieldId = uniqueName('new_field', projectType.value.finding_fields.map(f => f.id));
-  const newField = { id: fieldId, type: FieldDataType.STRING, origin: FieldOrigin.CUSTOM, label: 'New Field', required: true, default: 'TODO: fill field in report' }
+  const newField = { id: fieldId, type: FieldDataType.STRING, origin: FieldOrigin.CUSTOM, label: t('New Field'), required: true, default: t('TODO: fill field in report') }
   projectType.value.finding_fields.push(newField);
   currentField.value = newField;
 }

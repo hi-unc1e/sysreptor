@@ -1,21 +1,21 @@
 <template>
   <div class="mde-statusbar d-flex flex-row">
     <div v-if="props.uploadFiles">
-      <v-btn 
+      <v-btn
          v-if="!props.fileUploadInProgress"
         @click="fileInput?.click()"
-        text="Paste, drop or click to upload files"
+        :text="$t('Paste, drop or click to upload files')"
         :disabled="props.disabled"
         variant="plain"
         class="btn-upload"
       />
-      <span v-else><v-progress-circular indeterminate :size="16" width="3" class="mr-1"/> Uploading files...</span>
+      <span v-else><v-progress-circular indeterminate :size="16" width="3" class="mr-1"/> {{ $t('Uploading files...') }}</span>
       <input ref="fileInput" type="file" multiple @change="e => onUploadFiles(e as InputEvent)" @click.stop :disabled="props.disabled || props.fileUploadInProgress" class="d-none" />
     </div>
     <v-spacer />
     <div class="status-items" v-if="!mobile">
-      <span>lines: {{ lineCount }}</span>
-      <span>words: {{ wordCount }}</span>
+      <span>{{ $t('lines: {count}', { count: lineCount }) }}</span>
+      <span>{{ $t('words: {count}', { count: wordCount }) }}</span>
       <span>{{ currentLineNumber }}:{{ currentColNumber }}</span>
     </div>
   </div>

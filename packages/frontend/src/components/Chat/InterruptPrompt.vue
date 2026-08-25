@@ -53,7 +53,7 @@
             @update:model-value="onOtherTextUpdate"
             @keydown.enter.prevent
             :readonly="selection !== OTHER_VALUE"
-            placeholder="Other..."
+            :placeholder="$t('Other...')"
             variant="plain"
             density="compact"
             hide-details
@@ -73,7 +73,7 @@
       <s-btn-primary
         @click="submit"
         :disabled="!canSubmit"
-        text="Submit answer"
+        :text="$t('Submit answer')"
         prepend-icon="mdi-send"
         size="small"
       />

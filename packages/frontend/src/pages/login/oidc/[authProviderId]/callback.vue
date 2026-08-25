@@ -2,7 +2,7 @@
   <centered-view>
     <s-card class="w-100">
       <v-toolbar color="header" flat>
-        <v-toolbar-title>Login</v-toolbar-title>
+        <v-toolbar-title>{{ $t('Login') }}</v-toolbar-title>
       </v-toolbar>
 
       <v-card-text v-if="error">
@@ -19,11 +19,11 @@
         <s-btn-other
           v-if="auth.loggedIn.value"
           to="/"
-          text="Cancel"
+          :text="$t('Cancel')"
         />
         <s-btn-secondary
           to="/login/?logout=true"
-          text="Use another method"
+          :text="$t('Use another method')"
         />
       </v-card-actions>
     </s-card>
@@ -50,7 +50,7 @@ const { error } = useAsyncData(async () => {
     if (error?.data?.detail) {
       throw new Error(error.data.detail, { cause: error });
     } else {
-      throw new Error('Login failed', { cause: error });
+      throw new Error(t('Login failed'), { cause: error });
     }
   }
 });

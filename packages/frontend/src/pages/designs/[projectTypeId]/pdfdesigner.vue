@@ -13,22 +13,22 @@
                   :disabled="pdfRenderingInProgress"
                   @click="loadPdf"
                   prepend-icon="mdi-cached"
-                  text="Refresh PDF"
+                  :text="$t('Refresh PDF')"
                 >
                   <template #loader>
                     <s-saving-loader-spinner />
-                    Refresh PDF
+                    {{ $t('Refresh PDF') }}
                   </template>
                 </s-btn-secondary>
               </template>
             </edit-toolbar>
 
             <v-tabs v-model="currentTab" grow>
-              <v-tab :value="PdfDesignerTab.LAYOUT" text="Layout" prepend-icon="mdi-flask" />
+              <v-tab :value="PdfDesignerTab.LAYOUT" :text="$t('Layout')" prepend-icon="mdi-flask" />
               <v-tab :value="PdfDesignerTab.HTML" text="HTML+Vue" />
               <v-tab :value="PdfDesignerTab.CSS" text="CSS" />
-              <v-tab :value="PdfDesignerTab.ASSETS" text="Assets" />
-              <v-tab :value="PdfDesignerTab.PREVIEW_DATA" text="Preview Data" />
+              <v-tab :value="PdfDesignerTab.ASSETS" :text="$t('Assets')" />
+              <v-tab :value="PdfDesignerTab.PREVIEW_DATA" :text="$t('Preview Data')" />
             </v-tabs>
           </template>
 
@@ -84,29 +84,29 @@
     </split-menu>
 
     <s-dialog v-model="showStartDialog">
-      <template #title>Start Designing</template>
+      <template #title>{{ $t('Start Designing') }}</template>
       <template #default>
         <v-card-text>
           <p>
-            It looks like you haven't started designing your report yet.
-            We recommend following approach:
+            {{ $t('It looks like you haven\'t started designing your report yet.') }}
+            {{ $t('We recommend following approach:') }}
           </p>
           <ol class="ml-6 mt-2">
             <li>
-              Before starting to design, define your
-              <nuxt-link :to="`/designs/${projectType.id}/reportfields/`" class="text-primary">report fields</nuxt-link> and
-              <nuxt-link :to="`/designs/${projectType.id}/findingfields/`" class="text-primary">finding fields</nuxt-link>
+              {{ $t('Before starting to design, define your') }}
+              <nuxt-link :to="`/designs/${projectType.id}/reportfields/`" class="text-primary">{{ $t('report fields') }}</nuxt-link> {{ $t('and') }}
+              <nuxt-link :to="`/designs/${projectType.id}/findingfields/`" class="text-primary">{{ $t('finding fields') }}</nuxt-link>
             </li>
-            <li>Include base styles (click "Start Designing" below to add them)</li>
-            <li>Define the report structure in "Layout"</li>
-            <li>Customize the HTML and CSS to your needs via the code editors</li>
-            <li>Hint: Use "Preview Data" to test your design</li>
+            <li>{{ $t('Include base styles (click "Start Designing" below to add them)') }}</li>
+            <li>{{ $t('Define the report structure in "Layout"') }}</li>
+            <li>{{ $t('Customize the HTML and CSS to your needs via the code editors') }}</li>
+            <li>{{ $t('Hint: Use "Preview Data" to test your design') }}</li>
           </ol>
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <s-btn-other @click="showStartDialog = false" text="Cancel" />
-          <s-btn-primary @click="startDesigning" text="Start Designing" />
+          <s-btn-other @click="showStartDialog = false" :text="$t('Cancel')" />
+          <s-btn-primary @click="startDesigning" :text="$t('Start Designing')" />
         </v-card-actions>
       </template>
     </s-dialog>

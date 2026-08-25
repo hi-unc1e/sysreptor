@@ -2,20 +2,20 @@
   <full-height-page>
     <s-sub-drawer>
       <template #default="{ isExpanded }">
-        <v-list-item :to="`/designs/${route.params.projectTypeId}/`" exact prepend-icon="mdi-cogs" title="Settings">
-          <v-tooltip v-if="!isExpanded" activator="parent" text="Settings" />
+        <v-list-item :to="`/designs/${route.params.projectTypeId}/`" exact prepend-icon="mdi-cogs" :title="$t('Settings')">
+          <v-tooltip v-if="!isExpanded" activator="parent" :text="$t('Settings')" />
         </v-list-item>
-        <v-list-item :to="`/designs/${route.params.projectTypeId}/pdfdesigner/`" prepend-icon="mdi-pencil-ruler" title="PDF Designer">
-          <v-tooltip v-if="!isExpanded" activator="parent" text="PDF Designer" />
+        <v-list-item :to="`/designs/${route.params.projectTypeId}/pdfdesigner/`" prepend-icon="mdi-pencil-ruler" :title="$t('PDF Designer')">
+          <v-tooltip v-if="!isExpanded" activator="parent" :text="$t('PDF Designer')" />
         </v-list-item>
-        <v-list-item :to="`/designs/${route.params.projectTypeId}/reportfields/`" prepend-icon="mdi-alpha-r-box" title="Report Fields">
-          <v-tooltip v-if="!isExpanded" activator="parent" text="Report Fields" />
+        <v-list-item :to="`/designs/${route.params.projectTypeId}/reportfields/`" prepend-icon="mdi-alpha-r-box" :title="$t('Report Fields')">
+          <v-tooltip v-if="!isExpanded" activator="parent" :text="$t('Report Fields')" />
         </v-list-item>
-        <v-list-item :to="`/designs/${route.params.projectTypeId}/findingfields/`" prepend-icon="mdi-alpha-f-box" title="Finding Fields">
-          <v-tooltip v-if="!isExpanded" activator="parent" text="Finding Fields" />
+        <v-list-item :to="`/designs/${route.params.projectTypeId}/findingfields/`" prepend-icon="mdi-alpha-f-box" :title="$t('Finding Fields')">
+          <v-tooltip v-if="!isExpanded" activator="parent" :text="$t('Finding Fields')" />
         </v-list-item>
-        <v-list-item :to="`/designs/${route.params.projectTypeId}/notes/`" prepend-icon="mdi-notebook" title="Notes">
-          <v-tooltip v-if="!isExpanded" activator="parent" text="Notes" />
+        <v-list-item :to="`/designs/${route.params.projectTypeId}/notes/`" prepend-icon="mdi-notebook" :title="$t('Notes')">
+          <v-tooltip v-if="!isExpanded" activator="parent" :text="$t('Notes')" />
         </v-list-item>
       </template>
     </s-sub-drawer>

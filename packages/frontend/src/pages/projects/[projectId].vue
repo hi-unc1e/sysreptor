@@ -2,29 +2,29 @@
   <full-height-page>
     <s-sub-drawer>
       <template #default="{ isExpanded }" v-if="project">
-        <v-list-item :to="`/projects/${project.id}/`" exact prepend-icon="mdi-cogs" title="Settings" data-testid="project-settings-tab">
-          <v-tooltip v-if="!isExpanded" activator="parent" text="Project Settings" />
+        <v-list-item :to="`/projects/${project.id}/`" exact prepend-icon="mdi-cogs" :title="$t('Settings')" data-testid="project-settings-tab">
+          <v-tooltip v-if="!isExpanded" activator="parent" :text="$t('Project Settings')" />
         </v-list-item>
-        <v-list-item :to="`/projects/${project.id}/notes/`" prepend-icon="mdi-notebook" title="Notes" data-testid="project-notes-tab">
-          <v-tooltip v-if="!isExpanded" activator="parent" text="Notes" />
+        <v-list-item :to="`/projects/${project.id}/notes/`" prepend-icon="mdi-notebook" :title="$t('Notes')" data-testid="project-notes-tab">
+          <v-tooltip v-if="!isExpanded" activator="parent" :text="$t('Notes')" />
         </v-list-item>
-        <v-list-item :to="`/projects/${project.id}/reporting/`" prepend-icon="mdi-text" title="Reporting" data-testid="project-reporting-tab">
-          <v-tooltip v-if="!isExpanded" activator="parent" text="Reporting" />
+        <v-list-item :to="`/projects/${project.id}/reporting/`" prepend-icon="mdi-text" :title="$t('Reporting')" data-testid="project-reporting-tab">
+          <v-tooltip v-if="!isExpanded" activator="parent" :text="$t('Reporting')" />
         </v-list-item>
-        <v-list-item :to="`/projects/${project.id}/designer/`" v-if="projectType?.source === 'customized'" prepend-icon="mdi-pencil-ruler" title="Designer" data-testid="project-designer-tab">
-          <v-tooltip v-if="!isExpanded" activator="parent" text="Designer" />
+        <v-list-item :to="`/projects/${project.id}/designer/`" v-if="projectType?.source === 'customized'" prepend-icon="mdi-pencil-ruler" :title="$t('Designer')" data-testid="project-designer-tab">
+          <v-tooltip v-if="!isExpanded" activator="parent" :text="$t('Designer')" />
         </v-list-item>
-        <v-list-item :to="`/projects/${project.id}/publish/`" prepend-icon="mdi-earth" title="Publish" data-testid="project-publish-tab">
-          <v-tooltip v-if="!isExpanded" activator="parent" text="Publish" />
+        <v-list-item :to="`/projects/${project.id}/publish/`" prepend-icon="mdi-earth" :title="$t('Publish')" data-testid="project-publish-tab">
+          <v-tooltip v-if="!isExpanded" activator="parent" :text="$t('Publish')" />
         </v-list-item>
-        <v-list-item :to="`/projects/${project.id}/history/`" prepend-icon="mdi-history" title="History" data-testid="project-history-tab">
-          <v-tooltip v-if="!isExpanded" activator="parent" text="History" />
+        <v-list-item :to="`/projects/${project.id}/history/`" prepend-icon="mdi-history" :title="$t('History')" data-testid="project-history-tab">
+          <v-tooltip v-if="!isExpanded" activator="parent" :text="$t('History')" />
         </v-list-item>
         
         <template v-if="pluginMenuEntries.length > 0">
           <v-list-item density="compact" class="pa-0">
             <v-list-subheader>
-              <span v-if="isExpanded">Plugins</span>
+              <span v-if="isExpanded">{{ $t('Plugins') }}</span>
             </v-list-subheader>
             <template #append v-if="isExpanded">
               <s-btn-icon

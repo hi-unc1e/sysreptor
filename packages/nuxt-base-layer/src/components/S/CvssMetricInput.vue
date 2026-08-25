@@ -1,7 +1,7 @@
 <template>
   <div class="ma-1" :class="{'metric-inline': props.singleLine, 'metric-twoline': !props.singleLine}">
     <v-label class="metric-label">
-      <div class="metric-label-text">{{ metric.name }}</div>
+      <div class="metric-label-text">{{ $t(metric.name) }}</div>
       <v-tooltip activator="parent" :text="metric.description" location="bottom" :open-delay="1000" />
     </v-label>
     <div>
@@ -22,7 +22,7 @@
           size="small" 
           class="metric-btn"
         >
-          {{ c.name }} ({{ c.id }})
+          {{ $t(c.name) }} ({{ c.id }})
           <v-tooltip activator="parent" :text="c.description" location="bottom" :open-delay="1000" />
         </v-btn>
       </v-btn-toggle>

@@ -11,7 +11,7 @@
     <div class="history-timeline-header">
       <v-list-item class="pt-0 pb-0">
         <v-list-item-title class="text-title-large">
-          <pro-info>Version History</pro-info>
+          <pro-info>{{ $t('Version History') }}</pro-info>
         </v-list-item-title>
         <template #append>
           <s-btn-icon @click="modelValue = false">
@@ -23,9 +23,8 @@
     </div>
 
     <v-list-item v-if="!apiSettings.isProfessionalLicense">
-      Version history is available<br>
-      in SysReptor Professional.<br><br>
-      See <a href="https://sysreptor.com/pricing" target="_blank" class="text-primary">https://sysreptor.com/pricing</a>
+      {{ $t('Version history is available in SysReptor Professional.') }}<br><br>
+      {{ $t('See') }} <a href="https://sysreptor.com/pricing" target="_blank" class="text-primary">https://sysreptor.com/pricing</a>
     </v-list-item>
     <div v-else>
       <v-timeline
@@ -38,7 +37,7 @@
       >
         <history-timeline-item
           v-if="props.currentUrl"
-          :value="{history_type: '~', history_change_reason: 'Current Version'} as unknown as HistoryTimelineRecord"
+          :value="{history_type: '~', history_change_reason: $t('Current Version')} as unknown as HistoryTimelineRecord"
           :to="currentUrl"
 
         >

@@ -1,6 +1,6 @@
 <template>
   <div class="header-logo-text">
-    <img v-if="headerLogoUrl && apiSettings.isProfessionalLicense" :src="headerLogoUrl" alt="Logo" />
+    <img v-if="headerLogoUrl && apiSettings.isProfessionalLicense" :src="headerLogoUrl" :alt="$t('Logo')" />
     <template v-else>
       <svg-logo-text />
       <span class="license-text">{{ licenseText }}</span>

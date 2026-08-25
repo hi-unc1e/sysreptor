@@ -44,7 +44,7 @@ function userFullName(client: CollabPropType['clients'][0]) {
   if (client.user) {
     return client.user.username + (client.user.name ? ` (${client.user.name})` : '');
   } else {
-    return `${client.client_id} (Anonymous User)`;
+    return t('{clientId} (Anonymous User)', { clientId: client.client_id });
   }
 }
 </script>

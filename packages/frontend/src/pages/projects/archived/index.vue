@@ -4,7 +4,7 @@
     url="/api/v1/archivedprojects/"
     :filter-properties="filterProperties"
   >
-    <template #title>Projects</template>
+    <template #title>{{ $t('Projects') }}</template>
     <template #navigation>
         <project-navigation-dropdown value="archived" />
       </template>
@@ -21,7 +21,7 @@
             {{ item.threshold }} / {{ item.key_parts.length }}
 
             <v-tooltip activator="parent">
-              {{ item.threshold }} of {{ item.key_parts.length }} users are required to restore this project
+              {{ $t('{threshold} of {total} users are required to restore this project', { threshold: item.threshold, total: item.key_parts.length }) }}
             </v-tooltip>
           </v-chip>
 
@@ -34,8 +34,8 @@
             {{ keypart.user.username }}
 
             <v-tooltip activator="parent">
-              <span v-if="keypart.is_decrypted">{{ keypart.user.username }} already restored their part</span>
-              <span v-else>{{ keypart.user.username }}'s part is still encrypted</span>
+              <span v-if="keypart.is_decrypted">{{ $t('{username} already restored their part', { username: keypart.user.username }) }}</span>
+              <span v-else>{{ $t("{username}'s part is still encrypted", { username: keypart.user.username }) }}</span>
             </v-tooltip>
           </v-chip>
 
@@ -64,8 +64,8 @@ useAppBar({ breadcrumbs: archivedProjectListBreadcrumbs() });
 const listViewRef = useTemplateRef('listViewRef');
 const suggestedTags = useArchivedProjectTags();
 const filterProperties = computed((): FilterProperties[] => [
-  { id: 'tag', name: 'Tag', icon: 'mdi-tag', type: 'combobox', options: suggestedTags.getTags, allow_exclude: true, allow_regex: false, default: '', multiple: true },
-  { id: 'timerange', name: 'Time Archived', icon: 'mdi-calendar', type: 'daterange', options: [], allow_exclude: true, default: '', multiple: true },
-  { id: 'name', name: 'Name', type: 'text', options: [], allow_exclude: true, allow_regex: false, default: '', multiple: true },
+  { id: 'tag', name: t('Tag'), icon: 'mdi-tag', type: 'combobox', options: suggestedTags.getTags, allow_exclude: true, allow_regex: false, default: '', multiple: true },
+  { id: 'timerange', name: t('Time Archived'), icon: 'mdi-calendar', type: 'daterange', options: [], allow_exclude: true, default: '', multiple: true },
+  { id: 'name', name: t('Name'), type: 'text', options: [], allow_exclude: true, allow_regex: false, default: '', multiple: true },
 ]);
 </script>

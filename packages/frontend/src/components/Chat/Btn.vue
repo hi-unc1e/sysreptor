@@ -3,7 +3,7 @@
     v-if="apiSettings.settings!.features?.ai_agent"
     @click="toggleChatSidebar"
     icon="mdi-creation"
-    v-tooltip.bottom="'AI Chat'"
+    v-tooltip.bottom="$t('AI Chat')"
   />
 </template>
 

@@ -1,26 +1,26 @@
 <template>
   <centered-view>
     <login-form v-if="step === 'local'" class="w-100" :username="auth.user.value!.username" @login="auth.redirect()">
-      <template #title>Re-Authenticate</template>
+      <template #title>{{ $t('Re-Authenticate') }}</template>
       <template #actions>
         <s-btn-other
           @click="cancelReAuth"
-          text="Cancel"
+          :text="$t('Cancel')"
         />
         <s-btn-secondary
           v-if="authProviders.length > 1"
           @click="step = Step.LIST"
-          text="Use another method"
+          :text="$t('Use another method')"
         />
       </template>
     </login-form>
     <login-provider-form v-else class="w-100" :auth-providers="authProviders" :reauth="true">
-      <template #title>Re-Authenticate</template>
+      <template #title>{{ $t('Re-Authenticate') }}</template>
       <template #local>
         <v-list-item>
           <s-btn-secondary
             @click="step = Step.LOCAL"
-            text="Login with local user"
+            :text="$t('Login with local user')"
             block
           />
         </v-list-item>
@@ -29,7 +29,7 @@
         <s-btn-other
           v-if="authProviders.length > 1"
           @click="cancelReAuth"
-          text="Cancel"
+          :text="$t('Cancel')"
         />
       </template>
     </login-provider-form>

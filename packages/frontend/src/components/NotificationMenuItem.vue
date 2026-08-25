@@ -8,7 +8,7 @@
       <v-icon :icon="notificationStore.enabled ? 'mdi-bell' : 'mdi-bell-off'" />
     </v-badge>
 
-    <v-tooltip activator="parent" location="bottom" text="Notifications" />
+    <v-tooltip activator="parent" location="bottom" :text="$t('Notifications')" />
 
     <v-menu 
       @update:model-value="onOpenMenu"
@@ -31,20 +31,20 @@
                 v-if="notificationStore.enabled"
                 @click="notificationStore.enabled = false"
                 icon="mdi-bell"
-                v-tooltip="'Mute notifications (temporarily for session)'"
+                v-tooltip="$t('Mute notifications (temporarily for session)')"
                 density="compact"
               />
               <s-btn-icon
                 v-else
                 @click="notificationStore.enabled = true"
                 icon="mdi-bell-off"
-                v-tooltip="'Unmute notifications'"
+                v-tooltip="$t('Unmute notifications')"
                 density="compact"
               />
             </template>
             <template #default>
               <v-list-item-title class="text-title-large">
-                <nuxt-link to="/users/self/notifications/" class="title-link">Notifications</nuxt-link>
+                <nuxt-link to="/users/self/notifications/" class="title-link">{{ $t('Notifications') }}</nuxt-link>
               </v-list-item-title>
             </template>
             <template #append v-if="notificationStore.unreadNotificationCount > 0">
@@ -52,7 +52,7 @@
                 @click="markAllAsRead"
                 icon="mdi-checkbox-blank-outline"
                 density="compact"
-                v-tooltip="'Mark all notifications as read'"
+                v-tooltip="$t('Mark all notifications as read')"
               />
             </template>
           </v-list-item>
@@ -62,7 +62,7 @@
         <div class="flex-grow-1 overflow-y-auto">
           <v-list-item
             v-if="notificationStore.groupedNotifications.length === 0"
-            title="No new notifications"
+            :title="$t('No new notifications')"
           />
 
           <template v-for="group in notificationStore.groupedNotifications" :key="group.key">

@@ -1,18 +1,18 @@
 <template>
   <v-toolbar ref="toolbarRef" density="compact" flat class="toolbar">
     <template v-if="props.markdownEditorMode !== MarkdownEditorMode.PREVIEW && toolbarWidth >= thresholds.sm">
-      <markdown-toolbar-button @click="codemirrorAction(toggleStrong)" title="Bold (Ctrl+B)" icon="mdi-format-bold" :disabled="props.disabled" :active="activeActions.strong" />
-      <markdown-toolbar-button @click="codemirrorAction(toggleEmphasis)" title="Italic (Ctrl+I)" icon="mdi-format-italic" :disabled="props.disabled" :active="activeActions.italic" />
-      <markdown-toolbar-button @click="codemirrorAction(toggleStrikethrough)" title="Strikethrough" icon="mdi-format-strikethrough" :disabled="props.disabled" :active="activeActions.strikethrough" />
-      <markdown-toolbar-button @click="codemirrorAction(toggleFootnote)" title="Footnote" icon="mdi-format-superscript" :disabled="props.disabled" :active="activeActions.footnote" />
-      <markdown-toolbar-button @click="codemirrorAction(toggleCodeText)" title="Inline Code (Ctrl+E)" icon="mdi-code-tags" :disabled="props.disabled" :active="activeActions.codeText" />
+      <markdown-toolbar-button @click="codemirrorAction(toggleStrong)" :title="$t('Bold (Ctrl+B)')" icon="mdi-format-bold" :disabled="props.disabled" :active="activeActions.strong" />
+      <markdown-toolbar-button @click="codemirrorAction(toggleEmphasis)" :title="$t('Italic (Ctrl+I)')" icon="mdi-format-italic" :disabled="props.disabled" :active="activeActions.italic" />
+      <markdown-toolbar-button @click="codemirrorAction(toggleStrikethrough)" :title="$t('Strikethrough')" icon="mdi-format-strikethrough" :disabled="props.disabled" :active="activeActions.strikethrough" />
+      <markdown-toolbar-button @click="codemirrorAction(toggleFootnote)" :title="$t('Footnote')" icon="mdi-format-superscript" :disabled="props.disabled" :active="activeActions.footnote" />
+      <markdown-toolbar-button @click="codemirrorAction(toggleCodeText)" :title="$t('Inline Code (Ctrl+E)')" icon="mdi-code-tags" :disabled="props.disabled" :active="activeActions.codeText" />
       <span class="separator" />
-      <markdown-toolbar-button @click="codemirrorAction(toggleListUnordered)" title="Bullet List" icon="mdi-format-list-bulleted" :disabled="props.disabled" :active="activeActions.listUnordered" />
-      <markdown-toolbar-button @click="codemirrorAction(toggleListOrdered)" title="Numbered List" icon="mdi-format-list-numbered" :disabled="props.disabled" :active="activeActions.listOrdered" />
-      <markdown-toolbar-button @click="codemirrorAction(toggleTaskList)" title="Checklist" icon="mdi-format-list-checkbox" :disabled="props.disabled" :active="activeActions.taskList" />
-      <markdown-toolbar-button @click="codemirrorAction(toggleBlockQuote)" title="Blockquote" icon="mdi-format-quote-open" :disabled="props.disabled" :active="activeActions.blockquote" />
-      <markdown-toolbar-button @click="codemirrorAction(insertCodeBlock)" title="Code Block" icon="mdi-code-block-tags" :disabled="props.disabled" :active="activeActions.code" />
-      <markdown-toolbar-button @click="codemirrorAction(insertTable)" title="Table" icon="mdi-table" :disabled="props.disabled" :active="activeActions.table" />
+      <markdown-toolbar-button @click="codemirrorAction(toggleListUnordered)" :title="$t('Bullet List')" icon="mdi-format-list-bulleted" :disabled="props.disabled" :active="activeActions.listUnordered" />
+      <markdown-toolbar-button @click="codemirrorAction(toggleListOrdered)" :title="$t('Numbered List')" icon="mdi-format-list-numbered" :disabled="props.disabled" :active="activeActions.listOrdered" />
+      <markdown-toolbar-button @click="codemirrorAction(toggleTaskList)" :title="$t('Checklist')" icon="mdi-format-list-checkbox" :disabled="props.disabled" :active="activeActions.taskList" />
+      <markdown-toolbar-button @click="codemirrorAction(toggleBlockQuote)" :title="$t('Blockquote')" icon="mdi-format-quote-open" :disabled="props.disabled" :active="activeActions.blockquote" />
+      <markdown-toolbar-button @click="codemirrorAction(insertCodeBlock)" :title="$t('Code Block')" icon="mdi-code-block-tags" :disabled="props.disabled" :active="activeActions.code" />
+      <markdown-toolbar-button @click="codemirrorAction(insertTable)" :title="$t('Table')" icon="mdi-table" :disabled="props.disabled" :active="activeActions.table" />
       <span class="separator" />
       <v-menu
         v-if="props.referenceItems"
@@ -20,16 +20,16 @@
         @update:model-value="referenceItemSearch = $event ? '' : referenceItemSearch"
       >
         <template #activator="{ props: menuProps }">
-          <markdown-toolbar-button title="Finding Reference" icon="mdi-alpha-f-box-outline" v-bind="menuProps" />
+          <markdown-toolbar-button :title="$t('Finding Reference')" icon="mdi-alpha-f-box-outline" v-bind="menuProps" />
         </template>
         <template #default>
           <v-list density="compact" class="pa-0 finding-reference-list">
             <div class="finding-reference-list-header">
-              <v-list-subheader>Finding Reference</v-list-subheader>
+              <v-list-subheader>{{ $t('Finding Reference') }}</v-list-subheader>
               <v-list-subheader>
-                <s-text-field 
+                <s-text-field
                   v-model="referenceItemSearch"
-                  placeholder="Search..."
+                  :placeholder="$t('Search...')"
                   density="compact"
                   variant="underlined"
                   prepend-inner-icon="mdi-magnify"
@@ -50,25 +50,25 @@
               :class="'finding-level-' + levelNumberFromLevelName(item.severity)"
             />
             <v-list-item v-if="referenceItemResults.length === 0" disabled>
-              No finding references found
+              {{ $t('No finding references found') }}
             </v-list-item>
           </v-list>
         </template>
       </v-menu>
-      <markdown-toolbar-button @click="codemirrorAction(toggleLink)" title="Link (Ctrl+K)" icon="mdi-link" :disabled="props.disabled" :active="activeActions.link" />
+      <markdown-toolbar-button @click="codemirrorAction(toggleLink)" :title="$t('Link (Ctrl+K)')" icon="mdi-link" :disabled="props.disabled" :active="activeActions.link" />
       <template v-if="props.uploadFiles">
-        <markdown-toolbar-button @click="fileInput?.click()" title="Image" icon="mdi-image" :disabled="props.disabled || props.fileUploadInProgress" />
+        <markdown-toolbar-button @click="fileInput?.click()" :title="$t('Image')" icon="mdi-image" :disabled="props.disabled || props.fileUploadInProgress" />
         <input ref="fileInput" type="file" multiple @change="e => onUploadFiles(e as InputEvent)" @click.stop :disabled="props.disabled || props.fileUploadInProgress" class="d-none" />
       </template>
       <span class="separator" />
-      <markdown-toolbar-button @click="codemirrorAction(undo)" title="Undo" icon="mdi-undo" :disabled="props.disabled || !canUndo" />
-      <markdown-toolbar-button @click="codemirrorAction(redo)" title="Redo" icon="mdi-redo" :disabled="props.disabled || !canRedo" />
+      <markdown-toolbar-button @click="codemirrorAction(undo)" :title="$t('Undo')" icon="mdi-undo" :disabled="props.disabled || !canUndo" />
+      <markdown-toolbar-button @click="codemirrorAction(redo)" :title="$t('Redo')" icon="mdi-redo" :disabled="props.disabled || !canRedo" />
       <span class="separator" />
       <template v-if="props.spellcheckSupported || props.collab?.comments">
         <markdown-toolbar-button
           v-if="props.spellcheckSupported && apiSettings.isProfessionalLicense"
           @click="toggleSpellcheck"
-          title="Spell check"
+          :title="$t('Spell check')"
           icon="mdi-spellcheck"
           :disabled="props.disabled || !spellcheckSupported"
           :active="spellcheckEnabled"
@@ -76,7 +76,7 @@
         <markdown-toolbar-button
           v-else-if="props.spellcheckSupported"
           @click="toggleSpellcheck"
-          :title="'Spell check (basic)'"
+          :title="$t('Spell check (basic)')"
           icon="mdi-spellcheck"
           :dot="!spellcheckSupported ? undefined : (spellcheckEnabled ? 'warning' : 'error')"
           :disabled="props.disabled || !spellcheckSupported"
@@ -85,7 +85,7 @@
         <markdown-toolbar-button
           v-if="props.collab?.comments"
           @click="emitCreateComment"
-          title="Comment (Ctrl+Alt+M)"
+          :title="$t('Comment (Ctrl+Alt+M)')"
           icon="mdi-comment-plus-outline"
           :disabled="props.disabled || !editorState"
         />
@@ -110,18 +110,18 @@
     >
       <v-btn
         :value="MarkdownEditorMode.MARKDOWN"
-        text="Write"
+        :text="$t('Write')"
         prepend-icon="mdi-language-markdown"
       />
       <v-btn
         v-if="hasSplitMode"
         :value="MarkdownEditorMode.MARKDOWN_AND_PREVIEW"
-        text="Split"
+        :text="$t('Split')"
         prepend-icon="mdi-view-split-vertical"
       />
       <v-btn
         :value="MarkdownEditorMode.PREVIEW"
-        text="Preview"
+        :text="$t('Preview')"
         prepend-icon="mdi-image-filter-hdr"
       />
     </v-btn-toggle>
@@ -212,7 +212,7 @@ function toggleSpellcheck() {
   const newVal = !props.spellcheckEnabled;
   emit('update:spellcheckEnabled', newVal);
   if (newVal && !apiSettings.isProfessionalLicense) {
-    warningToast('Basic spell check enabled. Upgrade to SysReptor Professional for advanced options.');
+    warningToast(t('Basic spell check enabled. Upgrade to SysReptor Professional for advanced options.'));
   }
 }
 

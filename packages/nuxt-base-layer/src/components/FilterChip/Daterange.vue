@@ -18,11 +18,11 @@
     />
 
     <v-divider class="my-2"></v-divider>
-    <p class="text-title-small mb-2">Custom Range:</p>
+    <p class="text-title-small mb-2">{{ $t('Custom Range:') }}</p>
 
     <s-text-field
       v-model="filter.value[0]"
-      label="Start Time"
+      :label="$t('Start Time')"
       type="date"
       density="compact"
       clearable
@@ -31,7 +31,7 @@
 
     <s-text-field
       v-model="filter.value[1]"
-      label="End Time"
+      :label="$t('End Time')"
       type="date"
       density="compact"
       clearable
@@ -50,13 +50,13 @@ const displayValue = computed(() => {
   const from = filter.value.value[0]
   const to = filter.value.value[1]
   if (from && to) {
-    return `${from} until ${to}`
+    return t('{from} until {to}', { from, to })
   } else if (from) {
-    return `From ${from}`
+    return t('From {from}', { from })
   } else if (to) {
-    return `Until ${to}`
+    return t('Until {to}', { to })
   }
-  return 'Any'
+  return t('Any')
 })
 const timePreset = ref<DateRange>('last12Months')
 
@@ -109,15 +109,15 @@ function formatDateForInput(date: Date): string {
   return `${year}-${month}-${day}`
 }
 
-const timePresets = [
-  { text: 'Last 24 Hours', value: 'last24Hours' },
-  { text: 'Last 7 Days', value: 'last7Days' },
-  { text: 'Last 30 Days', value: 'last30Days' },
-  { text: 'Last 90 Days', value: 'last90Days' },
-  { text: 'Last 12 Months', value: 'last12Months' },
-  { text: 'Last 24 Months', value: 'last24Months' },
-  { text: 'Last 5 Years', value: 'last5Years' }
-]
+const timePresets = computed(() => [
+  { text: t('Last 24 Hours'), value: 'last24Hours' },
+  { text: t('Last 7 Days'), value: 'last7Days' },
+  { text: t('Last 30 Days'), value: 'last30Days' },
+  { text: t('Last 90 Days'), value: 'last90Days' },
+  { text: t('Last 12 Months'), value: 'last12Months' },
+  { text: t('Last 24 Months'), value: 'last24Months' },
+  { text: t('Last 5 Years'), value: 'last5Years' }
+])
 
 // Apply default time preset on component mount
 onMounted(() => {

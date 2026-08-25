@@ -1,10 +1,10 @@
 <template>
   <btn-confirm
-    button-text="Delete"
+    :button-text="$t('Delete')"
     button-icon="mdi-delete"
     button-color="error"
-    dialog-title="Confirm Delete?"
-    dialog-text="Do you really want to delete this item? This action is not reversible!"
+    :dialog-title="$t('Confirm Delete?')"
+    :dialog-text="$t('Do you really want to delete this item? This action is not reversible!')"
     :color="props.buttonVariant !== 'icon' ? 'error' : (props.color || 'default')"
     :button-variant="props.buttonVariant"
     :confirm="props.confirm"

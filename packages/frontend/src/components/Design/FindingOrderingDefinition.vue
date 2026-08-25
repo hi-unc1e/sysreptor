@@ -1,9 +1,9 @@
 <template>
   <s-card class="mt-4 mb-4">
-    <v-card-title>Finding Ordering</v-card-title>
+    <v-card-title>{{ $t('Finding Ordering') }}</v-card-title>
     <v-card-text>
       <p>
-        Order findings by following fields in reports:
+        {{ $t('Order findings by following fields in reports:') }}
       </p>
 
       <v-list density="compact" class="pa-0">
@@ -17,8 +17,8 @@
             <v-list-item>
               <template #prepend>
                 <span class="ordering-prefix-text">
-                  <template v-if="idx === 0">Sort by</template>
-                  <template v-else>then by</template>
+                  <template v-if="idx === 0">{{ $t('Sort by') }}</template>
+                  <template v-else>{{ $t('then by') }}</template>
                 </span>
                 <v-icon size="x-large" class="draggable-handle ml-6" :disabled="props.readonly" icon="mdi-drag-horizontal" />
               </template>
@@ -28,7 +28,7 @@
                     <s-select
                       :model-value="orderConfig.field"
                       @update:model-value="updateField(idx, orderConfig, $event)"
-                      label="Field"
+                      :label="$t('Field')"
                       :items="[{id: orderConfig.field}].concat(availableFindingFields)"
                       item-title="id"
                       item-value="id"
@@ -40,8 +40,8 @@
                     <s-select
                       :model-value="orderConfig.order"
                       @update:model-value="updateOrder(idx, orderConfig, $event)"
-                      label="Order"
-                      :items="[SortOrder.ASC, SortOrder.DESC]"
+                      :label="$t('Order')"
+                      :items="[{title: $t('Ascending'), value: SortOrder.ASC}, {title: $t('Descending'), value: SortOrder.DESC}]"
                       :readonly="props.readonly"
                       class="mt-2"
                     />
@@ -66,7 +66,7 @@
             @click="addField"
             :disabled="props.readonly || availableFindingFields.length === 0"
             prepend-icon="mdi-plus"
-            text="Add"
+            :text="$t('Add')"
           />
         </v-list-item>
       </v-list>

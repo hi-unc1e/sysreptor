@@ -5,13 +5,13 @@
         @click="showDialog"
         v-bind="dialogProps"
         icon="mdi-pencil"
-        v-tooltip="'Edit'"
+        v-tooltip="$t('Edit')"
         size="small"
         density="comfortable"
         class="ml-1 mr-1"
       />
     </template>
-    <template #title>Edit</template>
+    <template #title>{{ $t('Edit') }}</template>
     <template #default>
       <v-card-text>
         <design-layout-component-form
@@ -24,8 +24,8 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer />
-        <s-btn-other @click="dialogVisible = false" text="Cancel" />
-        <s-btn-primary @click="saveDialog" text="Save" />
+        <s-btn-other @click="dialogVisible = false" :text="$t('Cancel')" />
+        <s-btn-primary @click="saveDialog" :text="$t('Save')" />
       </v-card-actions>
     </template>
   </s-dialog>

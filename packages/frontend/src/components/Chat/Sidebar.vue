@@ -3,15 +3,15 @@
     <div class="sidebar-header">
       <v-list-item class="pt-0 pb-0">
         <v-list-item-title class="text-title-large">
-          <v-badge content="Beta" color="primary" :offset-y="4" :offset-x="-10">
-            AI Chat
+          <v-badge :content="$t('Beta')" color="primary" :offset-y="4" :offset-x="-10">
+            {{ $t('AI Chat') }}
           </v-badge>
         </v-list-item-title>
         <template #append>
           <s-btn-icon
             @click="newChat"
             icon="mdi-plus-circle"
-            v-tooltip.top="'New chat (Ctrl+L)'"
+            v-tooltip.top="$t('New chat (Ctrl+L)')"
             density="compact"
           />
 
@@ -61,7 +61,7 @@
           v-model="form.message"
           :readonly="agent.inProgress.value"
           @keypress="onKeyPress"
-          placeholder="Type a message..."
+          :placeholder="$t('Type a message...')"
           variant="solo"
           density="compact"
           flat
@@ -82,7 +82,7 @@
               icon="mdi-send"
               size="small"
               density="compact"
-              v-tooltip="'Send message (Enter)'"
+              v-tooltip="$t('Send message (Enter)')"
             />
             <div v-else class="btn-stop" style="position: relative; display: inline-flex;">
               <v-progress-circular
@@ -96,7 +96,7 @@
                 size="small"
                 density="compact"
               />
-              <v-tooltip activator="parent" text="Cancel" />
+              <v-tooltip activator="parent" :text="$t('Cancel')" />
             </div>
           </template>
           <template #details>
@@ -104,8 +104,8 @@
               <v-select
                 v-model="localSettings.reportingChatAgent"
                 :items="[
-                  { value: 'project_ask', title: 'Ask', icon: 'mdi-comment-question-outline', proOnly: false },
-                  { value: 'project_agent', title: 'Agent', icon: 'mdi-robot-outline', proOnly: true },
+                  { value: 'project_ask', title: $t('Ask'), icon: 'mdi-comment-question-outline', proOnly: false },
+                  { value: 'project_agent', title: $t('Agent'), icon: 'mdi-robot-outline', proOnly: true },
                 ]"
                 item-value="value"
                 item-title="title"
@@ -251,7 +251,7 @@ async function onRevertPage(page: AgentChangedPage) {
   } catch (error) {
     requestErrorToast({
       error,
-      message: page.isCreated ? 'Failed to delete page' : 'Failed to revert changes',
+      message: page.isCreated ? t('Failed to delete page') : t('Failed to revert changes'),
     });
   }
 }

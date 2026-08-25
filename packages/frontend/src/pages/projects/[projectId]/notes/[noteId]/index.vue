@@ -46,7 +46,7 @@
 
           <s-btn-icon
             @click="shareDialogVisible = true"
-            v-tooltip.top="'Share'"
+            v-tooltip.top="$t('Share')"
           >
             <notes-share-pending-badge :pending="note.has_pending_share_files && note.is_shared" />
           </s-btn-icon>
@@ -68,7 +68,7 @@
             :export-url="exportPdfUrl"
             :name="note.title"
             extension=".pdf"
-            button-text="Export as PDF"
+            :button-text="$t('Export as PDF')"
           />
         </template>
       </edit-toolbar>
@@ -136,8 +136,8 @@ const { inputFieldAttrs, errorMessage } = useProjectEditBase({
 });
 const toolbarAttrs = computed(() => ({
   data: note.value,
-  errorMessage: errorMessage.value || 
-    (!notesCollab.hasLock.value ? 'This note is locked by another user. Upgrade to SysReptor Professional for lock-free collaborative editing.' : null),
+  errorMessage: errorMessage.value ||
+    (!notesCollab.hasLock.value ? t('This note is locked by another user. Upgrade to SysReptor Professional for lock-free collaborative editing.') : null),
   delete: async (note: ProjectNote) => {
     await projectStore.deleteNote(project.value, note);
     await navigateTo(`/projects/${project.value.id}/notes/`);

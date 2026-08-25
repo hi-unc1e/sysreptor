@@ -1,6 +1,6 @@
 <template>
   <v-chip class="ma-2" :class="'risk-level-' + levelNumber" label>
-    <strong class="level-name">{{ levelName }}</strong>
+    <strong class="level-name">{{ $t(levelName) }}</strong>
     <span class="score" v-if="props.riskScore !== null">{{ scoreFormatted }}</span>
   </v-chip>
 </template>

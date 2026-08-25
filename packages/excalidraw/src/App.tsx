@@ -24,6 +24,16 @@ function toggleFullscreen() {
   window.parent.postMessage({ type: 'toggleFullscreen' }, window.origin);
 }
 
+function readLangCode(): string {
+  try {
+    const raw = window.localStorage.getItem('ui-locale');
+    const locale = raw ? (JSON.parse(raw)?.locale ?? 'en') : 'en';
+    return String(locale).startsWith('zh') ? 'zh-CN' : 'en';
+  } catch {
+    return 'en';
+  }
+}
+
 
 export default function App() {
   const iframeParams = new URLSearchParams(window.location.hash.slice(1));
@@ -39,6 +49,17 @@ export default function App() {
   const [isConnected, setIsConnected] = useState<boolean>(false);
   const [wasConnected, setWasConnected] = useState<boolean>(false);
   const [isReadonly, setIsReadonly] = useState<boolean>(false);
+  const [langCode, setLangCode] = useState<string>(readLangCode);
+
+  useEffect(() => {
+    const onStorage = (event: StorageEvent) => {
+      if (event.key === 'ui-locale' || event.key === null) {
+        setLangCode(readLangCode());
+      }
+    };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, []);
 
   const loadInitialDataPromise = useResolvablePromise<ExcalidrawInitialDataState>();
   async function initializeScene(): Promise<ExcalidrawInitialDataState> {
@@ -92,7 +113,7 @@ export default function App() {
         isCollaborating={true}
         libraryReturnUrl={window.top!.location.origin + window.top!.location.pathname}
         detectScroll={false}
-        langCode="en"
+        langCode={langCode}
         autoFocus={true}
         viewModeEnabled={!isConnected || isReadonly}
         theme={isDarkTheme ? 'dark' : 'light'}

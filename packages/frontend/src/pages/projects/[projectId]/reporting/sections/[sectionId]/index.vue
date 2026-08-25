@@ -69,8 +69,8 @@ const { inputFieldAttrs, errorMessage } = useProjectEditBase({
 });
 const toolbarAttrs = computed(() => ({
   data: section.value,
-  errorMessage: errorMessage.value || 
-    (!reportingCollab.hasLock.value ? 'This section is locked by another user. Upgrade to SysReptor Professional for lock-free collaborative editing.' : null),
+  errorMessage: errorMessage.value ||
+    (!reportingCollab.hasLock.value ? t('This section is locked by another user. Upgrade to SysReptor Professional for lock-free collaborative editing.') : null),
 }));
 const historyVisible = ref(false);
 

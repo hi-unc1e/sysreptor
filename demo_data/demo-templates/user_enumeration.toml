@@ -48,3 +48,47 @@ recommendation = """
 short_recommendation = "Identify all application attack surfaces relevant to User Enumeration and ensures that the web application always returns generic error messages when invalid credentials are entered."
 references = []
 affected_components = []
+
+[[translations]]
+id = "988bc2f8-6926-4a79-b665-ef3bb17cbdb6"
+is_main = false
+language = "zh-CN"
+status = "finished"
+
+[translations.data]
+title = "用户枚举"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N"
+summary = """
+该 Web 应用存在用户枚举（User Enumeration）漏洞。
+用户枚举是 Web 应用中的一类常见漏洞，当攻击者能够借助暴力破解技术确定系统中的有效用户账户时，就会发生此类问题。
+尽管用户枚举本身风险较低，但它仍会为攻击者提供有价值的信息，可被用于后续攻击，例如暴力破解和凭证填充（credential stuffing）攻击，或社会工程活动。
+"""
+description = """
+我们在该 Web 应用中发现了用户枚举漏洞，使我们能够利用暴力破解技术确定有效用户账户。
+
+**TODO：技术描述**
+
+通常，由于错误的配置或设计决策，Web 应用会提示某个用户是否已存在于系统中。
+最常出现此类问题的两个位置是 Web 应用的登录页面或“忘记密码”功能。
+例如，当用户输入错误的凭据时，会收到其所输入密码不正确的提示。
+攻击者可以利用这一信息判断某个用户名是否已经存在。
+通过反复尝试，攻击者可以据此获得一份有效用户名列表。
+
+一旦攻击者拿到这样的列表，便可以在新的攻击中针对这些用户账户获取有效凭据。
+最简单的形式是实施暴力破解攻击：
+攻击者通过自动遍历密码来尝试猜出某个用户账户的凭据。
+此类攻击通常会使用包含常用密码的超大字典（word list）。
+攻击者还可以利用确定的用户名在历史数据泄露中检索密码。
+数据泄露中的凭据由用户名和密码对组成，攻击者可以在自动化攻击中重用这些凭据。
+这种特殊形式的暴力破解攻击也被称为凭证填充（credential stuffing）。
+此外，攻击者还可以在社会工程活动中利用用户名直接联系相关用户。
+"""
+recommendation = """
+* 确保当输入无效的用户名、密码或其他凭据时，Web 应用始终返回统一的通用错误消息。为此，应识别应用所有相关的攻击面。
+* 如果应用自行定义用户名，则可以有效防止用户枚举。前提是用户名随机生成、不可猜测。
+* 应用也可以使用电子邮件地址作为用户名。如果该用户名尚未注册，邮件中会包含一个用于完成注册流程的唯一 URL；如果该用户名已存在，用户则会收到一封包含密码重置 URL 的邮件。无论哪种情况，攻击者都无法据此推断出有效的用户账户。
+* 作为额外的安全措施，在系统投入生产环境之前，可以删除默认系统账户和测试账户，或对其进行重命名。
+"""
+short_recommendation = "识别应用中所有与用户枚举相关的攻击面，并确保当输入无效凭据时，Web 应用始终返回统一的通用错误消息。"
+references = []
+affected_components = []

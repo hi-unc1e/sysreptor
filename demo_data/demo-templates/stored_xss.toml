@@ -53,3 +53,51 @@ references = [
 ]
 affected_components = []
 
+[[translations]]
+id = "b688a882-fc0f-414a-985e-2d0a8c2e78cd"
+is_main = false
+language = "zh-CN"
+status = "finished"
+
+[translations.data]
+title = "存储型跨站脚本（Stored XSS）"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N"
+summary = """
+测试期间，该 Web 应用对用户输入未做校验即予以存储，随后又以不安全的方式将其包含在 HTTP 响应中。
+因此，该应用存在存储型跨站脚本（Stored XSS）漏洞。
+存储型 XSS 漏洞的利用无需用户交互，因而比反射型 XSS 漏洞更加危险。
+"""
+description = """
+我们在测试期间发现该 Web 应用存在一个存储型 XSS 漏洞。
+由于数据校验与编码处理不正确，我们得以向 Web 应用注入恶意脚本并将其持久化存储。
+
+**TODO：技术描述补充**
+
+跨站脚本（XSS）是一种常见的 Web 安全漏洞，由于对数据缺乏充分的校验或编码，攻击者可以向 Web 应用注入恶意脚本。
+在 XSS 攻击中，攻击者将 JavaScript 代码嵌入存在漏洞的 Web 应用所返回的内容之中。
+
+存储型 XSS 攻击的目标是将脚本代码植入其他用户会访问的页面上。
+受害者只需访问受影响的子页面，脚本代码便会在其浏览器中执行。
+
+发起攻击时，攻击者向 Web 应用注入恶意脚本，这些脚本被应用存储，并被包含在应用后续的 HTTP 响应中。
+恶意脚本最终会在受害者的浏览器中执行，并可能访问 Cookie、会话令牌或其他敏感信息。
+
+攻击一旦成功，攻击者便能在受害者的上下文中控制 Web 应用的功能与数据。
+若受影响的用户拥有特权访问权限，攻击者甚至可能完全控制该 Web 应用。
+"""
+recommendation = """
+* 确保对所有经处理的数据进行尽可能严格的过滤。过滤与校验应基于预期且合法的输入进行。
+* 在 Web 应用将数据包含进 HTTP 响应之前，应对数据进行编码。编码应结合上下文进行，即根据 Web 应用将数据插入 HTML 文档的位置，选用相应的编码语法。
+* 对于不包含 HTML 和 JavaScript 的 HTTP 响应，可以设置 HTTP 头 `Content-Type`（例如 `text/plain`）和 `X-Content-Type-Options: nosniff`。
+* 建议额外使用内容安全策略（CSP），以控制允许和禁止执行哪些客户端脚本。
+* 有关防范 XSS 的详细信息和帮助，请参阅 OWASP 的跨站脚本防范速查表（Cross-Site Scripting Prevention Cheat Sheet）。
+"""
+short_recommendation = """\
+应基于预期或合法的输入对用户输入进行校验和过滤。\
+并确保数据在被包含进 HTTP 响应之前，已结合上下文进行了正确的编码。\
+"""
+references = [
+    "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html",
+]
+affected_components = []
+

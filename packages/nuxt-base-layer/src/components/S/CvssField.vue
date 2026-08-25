@@ -20,13 +20,13 @@
     <div class="flex-grow-0">
       <div class="cvss-score ml-2" :class="'level-' + scoreInfo.levelNumber" data-testid="cvss-score">
         <div class="cvss-score-header">{{ scoreInfo.scoreFormatted }}</div>
-        <div class="cvss-score-label">{{ scoreInfo.levelName }}</div>
+        <div class="cvss-score-label">{{ $t(scoreInfo.levelName) }}</div>
       </div>
     </div>
 
     <s-dialog v-model="dialogVisible" max-width="70%" scrollable>
       <template #activator="{ props: dialogProps }">
-        <s-btn color="secondary" class="ma-3" text="CVSS Editor" v-bind="dialogProps" />
+        <s-btn color="secondary" class="ma-3" :text="$t('CVSS Editor')" v-bind="dialogProps" />
       </template>
 
       <template #title>
@@ -53,13 +53,13 @@
             />
           </v-btn-toggle>
 
-          {{ editorCvssVersion }} Editor
+          {{ editorCvssVersion }} {{ $t('Editor') }}
         </span>
       </template>
       <template #toolbar>
         <div class="cvss-score mr-2" :class="'level-' + editorScoreInfo.levelNumber">
           <div class="cvss-score-header">{{ editorScoreInfo.scoreFormatted }}</div>
-          <div class="cvss-score-label">{{ editorScoreInfo.levelName }}</div>
+          <div class="cvss-score-label">{{ $t(editorScoreInfo.levelName) }}</div>
         </div>
 
         <s-btn-icon
@@ -68,18 +68,18 @@
           data-testid="cvss-apply"
         >
           <v-icon size="x-large" icon="mdi-check-bold" />
-          <v-tooltip activator="parent" :disabled="props.disabled || props.readonly" text="Apply" />
+          <v-tooltip activator="parent" :disabled="props.disabled || props.readonly" :text="$t('Apply')" />
         </s-btn-icon>
       </template>
 
       <template #default>
         <v-card-text v-if="editorCvssVersion === CvssVersion.CVSS40">
           <v-card v-for="metricGroup in metricGroupsCvss40" :key="metricGroup.name" variant="outlined" class="mb-2">
-            <v-card-title>{{ metricGroup.name }}</v-card-title>
+            <v-card-title>{{ $t(metricGroup.name) }}</v-card-title>
             <v-divider />
 
             <v-card-text v-for="metricSubgroup in metricGroup.subgroups" :key="metricSubgroup.metrics.join(',')" class="pt-0 pb-0">
-              <v-card-subtitle v-if="metricSubgroup.name" class="text-title-large ma-2 mt-6 submetric-title">{{ metricSubgroup.name }}</v-card-subtitle>
+              <v-card-subtitle v-if="metricSubgroup.name" class="text-title-large ma-2 mt-6 submetric-title">{{ $t(metricSubgroup.name) }}</v-card-subtitle>
               <s-cvss-metric-input
                 v-for="m in metricSubgroup.metrics"
                 :key="m"
@@ -99,7 +99,7 @@
             variant="outlined"
             class="mb-2"
           >
-            <v-card-title>{{ metricGroup.name }}</v-card-title>
+            <v-card-title>{{ $t(metricGroup.name) }}</v-card-title>
             <v-divider />
             
             <v-card-text>
@@ -161,10 +161,10 @@ const rules = computed(() => {
       (v: string|null|undefined) =>
         isValidVector(v) ||
         [undefined, null, "", "n/a", "n.a."].includes(v) ||
-        "Invalid CVSS vector",
+        t("Invalid CVSS vector"),
       (v: string|null|undefined) => {
         if (v && props.cvssVersion && isValidVector(v) && !v.startsWith(props.cvssVersion)) {
-          return `Invalid CVSS version. Expected ${props.cvssVersion}`;
+          return t('Invalid CVSS version. Expected {version}', { version: props.cvssVersion });
         }
         return true;
       }

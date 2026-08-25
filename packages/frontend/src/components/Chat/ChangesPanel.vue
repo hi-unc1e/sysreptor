@@ -27,7 +27,7 @@
             </template>
             <v-list-item-title class="text-body-medium text-truncate">  
               {{ page.title }}
-              <span v-if="page.isCreated" class="text-disabled ml-1">(new)</span>
+              <span v-if="page.isCreated" class="text-disabled ml-1">{{ $t('(new)') }}</span>
             </v-list-item-title>
             <template #append>
               <div class="d-flex align-center ga-3">
@@ -39,7 +39,7 @@
                   button-variant="icon"
                   size="x-small"
                   density="compact"
-                  tooltip-text="Delete"
+                  :tooltip-text="$t('Delete')"
                 />
                 <s-btn-icon
                   v-else
@@ -48,7 +48,7 @@
                   :disabled="props.readonly"
                   size="x-small"
                   density="compact"
-                  v-tooltip.top="'Revert changes'"
+                  v-tooltip.top="$t('Revert changes')"
                 />
                 <s-btn-icon
                   @click.prevent.stop="emit('accept', page.filePath)"
@@ -56,7 +56,7 @@
                   :disabled="props.readonly"
                   size="x-small"
                   density="compact"
-                  v-tooltip.top="'Accept changes'"
+                  v-tooltip.top="$t('Accept changes')"
                 />
               </div>
             </template>
@@ -85,7 +85,7 @@ const expanded = ref(false);
 
 const summaryText = computed(() => {
   const count = props.changedPages.length;
-  return count === 1 ? 'Changed 1 page' : `Changed ${count} pages`;
+  return count === 1 ? t('Changed 1 page') : t('Changed {count} pages', { count });
 });
 </script>
 

@@ -30,9 +30,9 @@ const isoDate = computed(() => {
 })
 const formattedDate = computed(() => {
   if (!date.value) {
-    return 'never';
+    return t('never');
   }
-  return 'in ' + formatDistanceToNow(date.value);
+  return t('in {duration}', { duration: formatDistanceToNow(date.value, { locale: getDateFnsLocale() }) });
 });
 const isExpired = computed(() => date.value && endOfDay(date.value) < endOfToday());
 </script>

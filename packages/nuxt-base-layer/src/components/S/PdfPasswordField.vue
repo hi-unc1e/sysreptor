@@ -1,11 +1,11 @@
 <template>
   <s-text-field
     v-model="password"
-    label="PDF password (optional)"
+    :label="$t('PDF password (optional)')"
     spellcheck="false"
   >
     <template #prepend>
-      <s-checkbox v-model="shouldEncryptPdf" v-tooltip:top="'Encrypt PDF'" />
+      <s-checkbox v-model="shouldEncryptPdf" v-tooltip:top="$t('Encrypt PDF')" />
     </template>
     <template #append-inner>
       <v-icon-btn

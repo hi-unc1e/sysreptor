@@ -14,14 +14,14 @@
               {{ publicLink }}
             </v-code>
             <p class="mt-2">
-              Shared by 
-              <chip-member :value="modelValue.shared_by || ({username: 'unknown'} as unknown as UserShortInfo)" /> 
+              {{ $t('Shared by') }}
+              <chip-member :value="modelValue.shared_by || ({username: t('unknown')} as unknown as UserShortInfo)" />
               <chip-created :value="modelValue.created" />
             </p>
           </div>
           <div v-else>
-            <v-card-title class="pa-0">New Share Link</v-card-title>
-            <p>Share notes to allow public access via a share link.</p>
+            <v-card-title class="pa-0">{{ $t('New Share Link') }}</v-card-title>
+            <p>{{ $t('Share notes to allow public access via a share link.') }}</p>
           </div>
         </slot>
       </v-col>
@@ -30,7 +30,7 @@
         <s-password-field
           :model-value="modelValue.password"
           @update:model-value="updateProp('password', $event)"
-          label="Link Password (optional)"
+          :label="$t('Link Password (optional)')"
           generate
           autocomplete="new-password"
           :disabled="props.disabled"
@@ -41,8 +41,8 @@
         <s-checkbox
           :model-value="modelValue.permissions_write"
           @update:model-value="updateProp('permissions_write', $event)"
-          label="Write access"
-          messages="Allow public users to edit note contents"
+          :label="$t('Write access')"
+          :messages="$t('Allow public users to edit note contents')"
           :disabled="props.disabled"
           :error-messages="props.error?.permissions_write"
         />
@@ -52,7 +52,7 @@
         <s-date-picker
           :model-value="modelValue.expire_date"
           @update:model-value="updateProp('expire_date', $event)"
-          label="Expire Date"
+          :label="$t('Expire Date')"
           :disabled="props.disabled"
           :error-messages="props.error?.expire_date"
         />
@@ -61,8 +61,8 @@
         <s-checkbox 
           :model-value="modelValue.is_revoked"
           @update:model-value="updateProp('is_revoked', $event)"
-          label="Is Revoked?"
-          messages="Revoked share links can no longer be accessed"
+          :label="$t('Is Revoked?')"
+          :messages="$t('Revoked share links can no longer be accessed')"
           :disabled="props.disabled"
           :error-messages="props.error?.is_revoked"
         />
@@ -71,7 +71,7 @@
         <s-textarea
           :model-value="modelValue.comment"
           @update:model-value="updateProp('comment', $event)"
-          label="Comment (optional)"
+          :label="$t('Comment (optional)')"
           rows="1"
           :disabled="props.disabled"
           :error-messages="props.error?.comment"

@@ -18,9 +18,9 @@
       </v-badge>
     </template>
     <template #default>
-      <span v-if="modelValue === SyncState.SAVED">Everything saved</span>
-      <span v-else-if="modelValue === SyncState.DISCONNECTED">Disconnected</span>
-      <span v-else>Syncing changes</span>
+      <span v-if="modelValue === SyncState.SAVED">{{ $t('Everything saved') }}</span>
+      <span v-else-if="modelValue === SyncState.DISCONNECTED">{{ $t('Disconnected') }}</span>
+      <span v-else>{{ $t('Syncing changes') }}</span>
     </template>
   </v-tooltip>
 </template>

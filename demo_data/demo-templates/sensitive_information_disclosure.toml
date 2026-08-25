@@ -1,0 +1,49 @@
+format = "templates/v2"
+id = "26cc6d34-2f55-4779-a557-346d638aa174"
+tags = [
+    "web",
+    "common",
+]
+images = []
+
+[[translations]]
+id = "6a697e73-b98a-440d-a89f-250778e469d2"
+is_main = true
+language = "zh-CN"
+status = "finished"
+
+[translations.data]
+title = "敏感信息泄露"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+summary = """
+应用或服务器在响应中泄露了敏感信息，包括但不限于：详细报错信息（堆栈、SQL 语句）、源代码/配置文件备份、目录遍历、注释中的内部信息、API 密钥/凭证、服务器版本与组件指纹。攻击者可利用这些信息了解系统架构与技术栈，为进一步攻击（如利用已知漏洞、构造精准攻击载荷）提供便利。
+"""
+description = """
+我们在目标系统中发现多处敏感信息泄露问题。
+
+**TODO：技术描述补充**
+
+常见泄露形式：
+
+- 详细错误页面：异常堆栈暴露框架版本、文件路径、SQL 语句（如 SQL 报错注入的基础）；
+- 公开可访问的备份与临时文件：`.git/` 目录、`.svn/`、`web.config.bak`、`www.zip`、`.DS_Store`、`phpinfo()` 页面；
+- 源码/配置泄露：`application.yml`、`.env`、数据库连接串、API Key；
+- 接口过度返回：响应中包含内部字段（手机号、身份证、密码哈希、内部 IP）；
+- 前端注释与调试代码：TODO 注释、隐藏表单域、调试接口（/debug、/swagger 未授权访问）；
+- HTTP 响应头指纹：`Server`、`X-Powered-By` 暴露组件及版本；
+- 目录列表开启（Directory Listing）。
+
+例如，攻击者通过 `.git` 目录泄露可还原完整源代码；通过 `.env` 文件直接获得数据库与第三方服务凭证；通过 `phpinfo()` 获知绝对路径与已装扩展以构造精准利用。
+"""
+recommendation = """
+- 生产环境关闭调试模式与详细报错，统一返回自定义错误页，异常细节仅记录在服务端日志；
+- 清理并禁止部署备份文件、`.git/`、`.env` 等敏感文件至 Web 目录，配置 Web 服务器拒绝访问隐藏文件与常见备份扩展名；
+- 接口返回数据最小化：使用序列化白名单字段，剔除内部字段与敏感个人信息的明文（脱敏/加密存储）；
+- 移除 `Server`、`X-Powered-By` 等指纹响应头，关闭目录列表；
+- 调试/文档接口（Swagger、Actuator、phpinfo）设置访问控制或生产环境禁用；
+- 密钥凭证不硬编码于代码或前端，使用密钥管理服务，并建立泄露监控与轮换机制；
+- 将敏感文件检查纳入 CI/CD 发布流程。
+"""
+short_recommendation = "关闭调试报错、清理备份与配置文件、接口返回最小化、移除版本指纹。"
+references = []
+affected_components = []

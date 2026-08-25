@@ -20,11 +20,11 @@ const text = computed(() => {
   if (props.text) {
     return props.text;
   } else if (auth.permissions.value.superuser && !auth.permissions.value.admin && apiSettings.isProfessionalLicense) {
-    return 'Superuser permissions not enabled';
+    return t('Superuser permissions not enabled');
   } else if (props.permissionName) {
-    return `Permission required: ${props.permissionName}`;
+    return t('Permission required: {permission}', { permission: props.permissionName });
   } else {
-    return 'No permission to perform this action';
+    return t('No permission to perform this action');
   }
 });
 

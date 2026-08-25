@@ -41,7 +41,7 @@
             :to="currentUrl" exact
             class="ml-1 mr-1 d-none d-lg-inline-flex"
             prepend-icon="mdi-undo"
-            text="Close Version History"
+            :text="$t('Close Version History')"
           />
           <btn-history v-model="historyVisible" />
         </template>

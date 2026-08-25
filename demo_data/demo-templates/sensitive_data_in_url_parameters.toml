@@ -39,3 +39,37 @@ short_recommendation = "To protect sensitive data from access by third parties, 
 references = []
 affected_components = []
 
+[[translations]]
+id = "ce099a11-def4-49cc-8a9a-adc70cb71735"
+is_main = false
+language = "zh-CN"
+status = "finished"
+
+[translations.data]
+title = "URL 参数中泄露敏感数据"
+cvss = "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N"
+summary = """
+该 Web 应用在 HTTP 请求中以 URL 参数的形式发送敏感数据。
+以 URL 参数发送的数据会存储在浏览器缓存中，并可能出现在 Web 服务器日志、Referer 头、共享系统等诸多其他位置。
+第三方可能由此获取这些敏感数据。
+"""
+description = """
+该应用在 URL 参数 ''TODO' 中发送了敏感数据。
+**TODO：技术描述**
+
+这可能导致数据在以下位置暴露：
+* Referer 头
+* Web 服务器日志
+* 共享系统
+* 浏览器历史记录
+* 浏览器缓存
+* 肩窥（Shoulder Surfing）
+"""
+recommendation = """
+* 应用应将所有敏感数据放在 HTTP 报文主体中发送，例如放在 POST 请求的主体中。
+* 此外，应通过 HTTPS 加密通信来保护数据传输。
+"""
+short_recommendation = "为防止敏感数据被第三方访问，应将敏感数据放在 HTTP 报文主体中发送，例如通过 POST 请求发送。"
+references = []
+affected_components = []
+

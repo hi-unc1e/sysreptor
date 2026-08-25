@@ -29,7 +29,7 @@
             :disabled="!props.canChangeStructure"
             :readonly="props.readonly"
             label="ID"
-            hint="Used to access this field in report templates"
+            :hint="$t('Used to access this field in report templates')"
             required
             spellcheck="false"
           />
@@ -38,11 +38,11 @@
           <s-select
             :model-value="props.modelValue.type"
             @update:model-value="updateType($event)"
-            :items="Object.values(FieldDataType).filter(t => !([FieldDataType.JSON] as FieldDataType[]).includes(t))"
+            :items="Object.values(FieldDataType).filter(t => !([FieldDataType.JSON] as FieldDataType[]).includes(t)).map(t => ({title: $t(t), value: t}))"
             :disabled="!props.canChangeStructure"
             :readonly="props.readonly"
-            label="Data Type"
-            hint="Data type of this field. Controls the allowed values and input form."
+            :label="$t('Data Type')"
+            :hint="$t('Data type of this field. Controls the allowed values and input form.')"
             required
           />
         </v-col>
@@ -51,8 +51,8 @@
             :model-value="props.modelValue.label"
             @update:model-value="updateProperty('label', $event)"
             :readonly="props.readonly"
-            label="Label"
-            hint="Friendly name used in input forms for this field"
+            :label="$t('Label')"
+            :hint="$t('Friendly name used in input forms for this field')"
             required
             spellcheck="false"
           />
@@ -62,11 +62,11 @@
         v-else
         :model-value="props.modelValue.type"
         @update:model-value="updateProperty('type', $event)"
-        :items="Object.values(FieldDataType)"
+        :items="Object.values(FieldDataType).map(t => ({title: $t(t), value: t}))"
         :disabled="!props.canChangeStructure"
         :readonly="props.readonly"
-        label="Data Type"
-        hint="Data type of this field. Controls the allowed values and input form."
+        :label="$t('Data Type')"
+        :hint="$t('Data type of this field. Controls the allowed values and input form.')"
         required
       />
 
@@ -76,8 +76,8 @@
             :model-value="props.modelValue.required || false"
             @update:model-value="updateProperty('required', $event)"
             :readonly="props.readonly"
-            label="Required"
-            hint="Determines whether this field is required (must be filled) or optional (can be empty)"
+            :label="$t('Required')"
+            :hint="$t('Determines whether this field is required (must be filled) or optional (can be empty)')"
           />
         </v-col>
 
@@ -88,8 +88,8 @@
               :model-value="props.modelValue.spellcheck || false"
               @update:model-value="updateProperty('spellcheck', $event)"
               :readonly="props.readonly"
-              label="Spellcheck Supported"
-              hint="Support spellchecking for this fields text content."
+              :label="$t('Spellcheck Supported')"
+              :hint="$t('Support spellchecking for this fields text content.')"
             />
           </v-col>
 
@@ -99,16 +99,16 @@
               @update:model-value="updateProperty('pattern', $event)"
               :items="predefinedRegexPatterns.map(p => p.value)"
               :readonly="props.readonly"
-              label="Pattern"
-              hint="RegEx pattern to validate the input against."
+              :label="$t('Pattern')"
+              :hint="$t('RegEx pattern to validate the input against.')"
               :clearable="!props.readonly"
               :rules="rules.pattern"
               spellcheck="false"
             >
               <template #item="{item, props: itemProps}">
-                <v-list-item 
-                  v-bind="itemProps" 
-                  :title="predefinedRegexPatterns.find(p => p.value === item)?.title || 'Custom'" 
+                <v-list-item
+                  v-bind="itemProps"
+                  :title="predefinedRegexPatterns.find(p => p.value === item)?.title || $t('Custom')"
                   :subtitle="predefinedRegexPatterns.find(p => p.value === item)?.value || ''"
                 />
               </template>
@@ -122,7 +122,7 @@
             <s-number-input
               :model-value="props.modelValue.minimum ?? null"
               @update:model-value="updateProperty('minimum', $event)"
-              label="Minimum"
+              :label="$t('Minimum')"
               :rules="rules.minimum"
               clearable
             />
@@ -131,7 +131,7 @@
             <s-number-input
               :model-value="props.modelValue.maximum ?? null"
               @update:model-value="updateProperty('maximum', $event)"
-              label="Maximum"
+              :label="$t('Maximum')"
               :rules="rules.maximum"
               clearable
             />
@@ -144,10 +144,10 @@
             <s-select
               :model-value="props.modelValue.cvss_version || null"
               @update:model-value="updateProperty('cvss_version', $event)"
-              :items="[{ title: 'Any', value: null }, CvssVersion.CVSS40, CvssVersion.CVSS31]"
+              :items="[{ title: $t('Any'), value: null }, CvssVersion.CVSS40, CvssVersion.CVSS31]"
               :readonly="props.readonly"
-              label="CVSS Version"
-              hint="Require a specific CVSS version"
+              :label="$t('CVSS Version')"
+              :hint="$t('Require a specific CVSS version')"
               class="mt-2"
             />
           </v-col>
@@ -184,7 +184,7 @@
                         :disabled="!props.canChangeStructure"
                         :readonly="props.readonly"
                         :rules="rules.choice"
-                        label="Value"
+                        :label="$t('Value')"
                         required
                         spellcheck="false"
                         class="mt-2"
@@ -195,7 +195,7 @@
                         :model-value="choice.label"
                         @update:model-value="updateEnumChoice('updateLabel', choiceIdx, $event)"
                         :readonly="props.readonly"
-                        label="Label"
+                        :label="$t('Label')"
                         required
                         spellcheck="false"
                         class="mt-2"
@@ -220,7 +220,7 @@
             @click="updateEnumChoice('add', 0)"
             :disabled="props.readonly || !props.canChangeStructure"
             prepend-icon="mdi-plus"
-            text="Add Value"
+            :text="$t('Add Value')"
           />
         </v-list-item>
       </v-list>
@@ -250,7 +250,7 @@
                   @update:model-value="updateComboboxSuggestion('update', suggestionIdx, $event)"
                   :disabled="!props.canChangeStructure"
                   :readonly="props.readonly"
-                  label="Value"
+                  :label="$t('Value')"
                   required
                   spellcheck="false"
                   class="mt-2"
@@ -273,7 +273,7 @@
             @click="updateComboboxSuggestion('add', 0)"
             :disabled="props.readonly || !props.canChangeStructure"
             prepend-icon="mdi-plus"
-            text="Add Value"
+            :text="$t('Add Value')"
           />
         </v-list-item>
       </v-list>
@@ -282,7 +282,7 @@
         v-if="![FieldDataType.OBJECT, FieldDataType.LIST, FieldDataType.USER].includes(props.modelValue.type as any)"
         :model-value="props.modelValue.default"
         @update:model-value="updateProperty('default', $event)"
-        :definition="({...props.modelValue, label: 'Default Value', required: false, pattern: null} as FieldDefinition)"
+        :definition="({...props.modelValue, label: $t('Default Value'), required: false, pattern: null} as FieldDefinition)"
         :lang="props.lang"
         v-model:spellcheck-enabled="localSettings.designSpellcheckEnabled"
         v-model:markdown-editor-mode="localSettings.designMarkdownEditorMode"
@@ -330,10 +330,10 @@
                 button-variant="icon"
                 density="comfortable"
               />
-              <s-btn-icon 
+              <s-btn-icon
                 @click="updateObject('move', fIdx, fIdx - 1)"
                 icon="mdi-arrow-up-drop-circle-outline"
-                v-tooltip="'Move up in list'"
+                v-tooltip="$t('Move up in list')"
                 :disabled="props.readonly || fIdx === 0"
                 density="comfortable"
               />
@@ -341,7 +341,7 @@
               <s-btn-icon
                 @click="updateObject('move', fIdx, fIdx + 1)"
                 icon="mdi-arrow-down-drop-circle-outline"
-                v-tooltip="'Move down in list'"
+                v-tooltip="$t('Move down in list')"
                 :disabled="props.readonly || fIdx === props.modelValue.properties!.length - 1"
                 density="comfortable"
               />
@@ -355,7 +355,7 @@
             @click="updateObject('add')"
             :disabled="props.readonly || !props.canChangeStructure"
             prepend-icon="mdi-plus"
-            text="Add property"
+            :text="$t('Add property')"
           />
         </v-list-item>
       </v-list>
@@ -399,12 +399,12 @@ const rules = {
   id: [
     (id: string) => (
       /^[a-zA-Z_][a-zA-Z0-9_]*$/.test(id)
-    ) || 'Invalid field ID',
-    (id: string) => !props.siblingFieldIds.includes(id) || 'Field ID is not unique. This ID is already used by another field.',
+    ) || t('Invalid field ID'),
+    (id: string) => !props.siblingFieldIds.includes(id) || t('Field ID is not unique. This ID is already used by another field.'),
   ],
   choice: [
     // v => (choices || []).filter(c => c.value === v).length === 1 || 'Enum value is not unique',
-    (v: string) => /^[a-zA-Z0-9_-]+$/.test(v) || 'Invalid enum value',
+    (v: string) => /^[a-zA-Z0-9_-]+$/.test(v) || t('Invalid enum value'),
   ],
   pattern: [
     (v: string) => {
@@ -412,23 +412,23 @@ const rules = {
         new RegExp(v);
         return true;
       } catch (e: any) {
-        return e.message || 'Invalid regular expression';
+        return e.message || t('Invalid regular expression');
       }
     },
   ],
   minimum: [
-    (v: number) => v === null || v <= (props.modelValue.maximum ?? Number.MAX_SAFE_INTEGER) || 'Minimum must be smaller than maximum',
+    (v: number) => v === null || v <= (props.modelValue.maximum ?? Number.MAX_SAFE_INTEGER) || t('Minimum must be smaller than maximum'),
   ],
   maximum: [
-    (v: number) => v === null || v >= (props.modelValue.minimum ?? Number.MIN_SAFE_INTEGER) || 'Maximum must be larger than minimum',
+    (v: number) => v === null || v >= (props.modelValue.minimum ?? Number.MIN_SAFE_INTEGER) || t('Maximum must be larger than minimum'),
   ]
 };
 
 const predefinedRegexPatterns = [
-  { title: 'E-Mail', value: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$" },
-  { title: 'URL', value: "^(http(s)?:\\/\\/.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)$" },
-  { title: 'UUID', value: "^[a-fA-F0-9]{8}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{12}$" },
-  { title: 'Custom', value: null },
+  { title: t('E-Mail'), value: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$" },
+  { title: t('URL'), value: "^(http(s)?:\\/\\/.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)$" },
+  { title: t('UUID'), value: "^[a-fA-F0-9]{8}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{12}$" },
+  { title: t('Custom'), value: null },
 ];
 
 function updateProperty(property: string, val: any) {
@@ -467,7 +467,7 @@ function updateEnumChoice(action: string, choiceIdx: number, val?: any) {
     if (!val) {
       val = {
         value: uniqueName('new_value', newObj.choices.map(c => c.value || '')),
-        label: 'New Enum Value',
+        label: t('New Enum Value'),
       };
     }
     newObj.choices.push(val);
@@ -484,7 +484,7 @@ function updateComboboxSuggestion(action: string, suggestionIdx: number, val?: a
   } else if (action === 'delete') {
     newObj.suggestions.splice(suggestionIdx, 1);
   } else if (action === 'add') {
-    newObj.suggestions.push(uniqueName('New Value', newObj.suggestions));
+    newObj.suggestions.push(uniqueName(t('New Value'), newObj.suggestions));
   } else if (action === 'sort') {
     newObj.suggestions = val;
   }
@@ -501,7 +501,7 @@ function updateObject(action: string, fieldIdx?: number, val?: FieldDefinition|a
       val = {
         id: '',
         type: FieldDataType.STRING,
-        label: 'New Field',
+        label: t('New Field'),
         required: true,
         spellcheck: false,
         pattern: null,
@@ -531,13 +531,13 @@ function duplicateNestedField(fieldIdx: number) {
 
 watch(() => props.modelValue.type, () => {
   if (props.modelValue.type === FieldDataType.ENUM && !props.modelValue.choices) {
-    updateProperty('choices', [{ value: 'enum_val', label: 'Enum Value' }] as FieldDefinition['choices']);
+    updateProperty('choices', [{ value: 'enum_val', label: t('Enum Value') }] as FieldDefinition['choices']);
   } else if (props.modelValue.type === FieldDataType.COMBOBOX && !props.modelValue.suggestions) {
-    updateProperty('suggestions', ['Combobox Value'] as FieldDefinition['suggestions']);
+    updateProperty('suggestions', [t('Combobox Value')] as FieldDefinition['suggestions']);
   } else if (props.modelValue.type === FieldDataType.LIST && !props.modelValue.items) {
     updateProperty('items', { type: FieldDataType.STRING, default: null } as FieldDefinition['items']);
   } else if (props.modelValue.type === FieldDataType.OBJECT && !props.modelValue.properties) {
-    updateProperty('properties', [{ id: 'nested_field', type: FieldDataType.STRING, label: 'Nested Field', default: null }] as FieldDefinition['properties']);
+    updateProperty('properties', [{ id: 'nested_field', type: FieldDataType.STRING, label: t('Nested Field'), default: null }] as FieldDefinition['properties']);
   }
 });
 

@@ -1,42 +1,42 @@
 <template>
   <div>
     <s-dialog v-model="reauthDialogVisible">
-      <template #title>Re-Authentication required</template>
+      <template #title>{{ $t('Re-Authentication required') }}</template>
       <template #default>
         <v-card-text>
-          This operation requires a re-authentication.
+          {{ $t('This operation requires a re-authentication.') }}
         </v-card-text>
         <v-card-actions>
           <v-spacer />
           <s-btn-other
             @click="reauthDialogVisible = false"
-            text="Cancel"
+            :text="$t('Cancel')"
           />
           <s-btn-primary
             @click="auth.redirectToReAuth({ replace: true })"
-            text="Re-Authenticate"
+            :text="$t('Re-Authenticate')"
           />
         </v-card-actions>
       </template>
     </s-dialog>
 
     <s-card class="mt-4">
-      <v-card-title>Change Password</v-card-title>
+      <v-card-title>{{ $t('Change Password') }}</v-card-title>
       <v-card-text>
         <s-dialog v-model="changePasswordWizard.visible">
           <template #activator="{ props: dialogProps }">
             <s-btn-secondary
-              text="Change Password"
+              :text="$t('Change Password')"
               v-bind="dialogProps"
             />
           </template>
-          <template #title>Change Password</template>
+          <template #title>{{ $t('Change Password') }}</template>
           <template #default>
             <v-form ref="fromChangePassword">
               <v-card-text>
                 <s-password-field
                   v-model="changePasswordWizard.password"
-                  label="New Password"
+                  :label="$t('New Password')"
                   :error-messages="changePasswordWizard.errors?.password"
                   confirm show-strength generate
                   autocomplete="new-password"
@@ -48,7 +48,7 @@
                 <s-btn-primary
                   @click="changePassword"
                   :loading="actionInProgress"
-                  text="Change Password"
+                  :text="$t('Change Password')"
                 />
               </v-card-actions>
             </v-form>
@@ -58,7 +58,7 @@
     </s-card>
 
     <s-card class="mt-4">
-      <v-card-title>Multi Factor Authentication</v-card-title>
+      <v-card-title>{{ $t('Multi Factor Authentication') }}</v-card-title>
       <v-card-text>
         <v-list>
           <v-list-item
@@ -68,7 +68,7 @@
             <v-list-item-title>
               {{ mfaMethod.name }}
               <template v-if="mfaMethod.is_primary">
-                <v-chip size="small" class="ml-3" text="Primary" />
+                <v-chip size="small" class="ml-3" :text="$t('Primary')" />
               </template>
             </v-list-item-title>
             <template #append>
@@ -80,7 +80,7 @@
                     v-bind="dialogProps"
                   />
                 </template>
-                <template #title>Edit MFA</template>
+                <template #title>{{ $t('Edit MFA') }}</template>
                 <template #default>
                   <v-card-text>
                     <p class="mb-6">
@@ -90,14 +90,14 @@
 
                     <s-text-field
                       v-model="editWizard.form!.name"
-                      label="Name"
+                      :label="$t('Name')"
                       class="mt-4"
                       spellcheck="false"
                     />
                     <s-checkbox
                       v-model="editWizard.form!.is_primary"
-                      label="Primary MFA method"
-                      hint="This MFA method is the default MFA method used for logins."
+                      :label="$t('Primary MFA method')"
+                      :hint="$t('This MFA method is the default MFA method used for logins.')"
                       class="mt-4"
                     />
                   </v-card-text>
@@ -106,7 +106,7 @@
                     <s-btn-primary
                       @click="editWizardSave"
                       :loading="actionInProgress"
-                      text="Save"
+                      :text="$t('Save')"
                     />
                   </v-card-actions>
                 </template>
@@ -120,7 +120,7 @@
           </v-list-item>
           <v-list-item
             v-if="mfaMethods.length === 0"
-            title="Multi Factor Authentication is disabled"
+            :title="$t('Multi Factor Authentication is disabled')"
           />
 
           <v-list-item>
@@ -130,17 +130,17 @@
                   @click="openSetupWizard"
                   v-bind="dialogProps"
                   prepend-icon="mdi-plus"
-                  text="Add"
+                  :text="$t('Add')"
                 />
               </template>
-              <template #title>Setup MFA</template>
+              <template #title>{{ $t('Setup MFA') }}</template>
 
               <template #default>
                 <template v-if="setupWizard.step === SetupWizardStep.ChooseMethodType">
                   <v-card-text>
                     <s-select
                       v-model="setupWizard.methodType"
-                      label="MFA Type"
+                      :label="$t('MFA Type')"
                       :items="mfaMethodChoices"
                       class="mt-1"
                     >
@@ -159,14 +159,14 @@
                       @click="setupWizardRegisterBegin"
                       :disabled="!setupWizard.methodType"
                       :loading="actionInProgress"
-                      text="Next"
+                      :text="$t('Next')"
                     />
                   </v-card-actions>
                 </template>
 
                 <template v-else-if="setupWizard.step === SetupWizardStep.CompleteBackup">
                   <v-card-text>
-                    <p>Please save following backup codes offline.</p>
+                    <p>{{ $t('Please save following backup codes offline.') }}</p>
                     <ul class="backup-code-list">
                       <li v-for="code in setupWizard.data.backup_codes" :key="code">{{ code }}</li>
                     </ul>
@@ -177,7 +177,7 @@
                     <s-btn-primary
                       @click="setupWizardCompleteBackup"
                       :loading="actionInProgress"
-                      text="Activate"
+                      :text="$t('Activate')"
                     />
                   </v-card-actions>
                 </template>
@@ -187,16 +187,16 @@
                     <v-img :src="setupWizard.data.qrcode" alt="qrcode" max-width="40%" max-height="40%" />
 
                     <p>
-                      Scan the QR code with your Authenticator App.<br />
-                      If you cannot scan the QR code, here are the options to set up TOTP manually.
+                      {{ $t('Scan the QR code with your Authenticator App.') }}<br />
+                      {{ $t('If you cannot scan the QR code, here are the options to set up TOTP manually.') }}
                     </p>
                     <ul class="ml-8 mb-4">
-                      <li>Secret key: <s-code>{{ setupWizard.data.s }}</s-code></li>
-                      <li>Digits: {{ setupWizard.data.digits }}</li>
-                      <li>Interval: {{ setupWizard.data.interval }}s</li>
+                      <li>{{ $t('Secret key:') }} <s-code>{{ setupWizard.data.s }}</s-code></li>
+                      <li>{{ $t('Digits:') }} {{ setupWizard.data.digits }}</li>
+                      <li>{{ $t('Interval:') }} {{ setupWizard.data.interval }}s</li>
                     </ul>
 
-                    <p class="mb-0">Confirm TOTP Code:</p>
+                    <p class="mb-0">{{ $t('Confirm TOTP Code:') }}</p>
                     <v-otp-input
                       v-model="setupWizard.completeTotpForm.code"
                       type="number"
@@ -214,7 +214,7 @@
                     <s-btn-primary
                       @click="setupWizardCompleteTotp"
                       :loading="actionInProgress"
-                      text="Activate"
+                      :text="$t('Activate')"
                     />
                   </v-card-actions>
                 </template>
@@ -222,14 +222,14 @@
                 <template v-else-if="setupWizard.step === SetupWizardStep.CompleteFido2">
                   <v-card-text>
                     <p>
-                      Confirm registration on your security key.
+                      {{ $t('Confirm registration on your security key.') }}
                     </p>
 
                     <v-alert v-if="setupWizard.error" type="error">
                       {{ setupWizard.error }}
                       <s-btn-other
                         @click="setupWizardRegisterBegin"
-                        text="Try again"
+                        :text="$t('Try again')"
                       />
                     </v-alert>
                   </v-card-text>
@@ -238,12 +238,12 @@
                 <template v-else-if="setupWizard.step === SetupWizardStep.SetName">
                   <v-card-text>
                     <p>
-                      Set a name for the new MFA method to identify it later.
+                      {{ $t('Set a name for the new MFA method to identify it later.') }}
                     </p>
 
                     <s-text-field
                       v-model="setupWizard.newMfaMethod!.name"
-                      label="Name"
+                      :label="$t('Name')"
                       class="mt-4"
                       spellcheck="false"
                     />
@@ -253,7 +253,7 @@
                     <s-btn-primary
                       @click="setupWizardSetName"
                       :loading="actionInProgress"
-                      text="Save"
+                      :text="$t('Save')"
                     />
                   </v-card-actions>
                 </template>
@@ -408,7 +408,7 @@ async function setupWizardCompleteFido2() {
       });
     } catch (error: any) {
       if (error instanceof DOMException) {
-        setupWizard.value.error = 'Security Key registration failed: ' + error.message;
+        setupWizard.value.error = t('Security Key registration failed: {message}', { message: error.message });
       }
       throw error;
     }
@@ -449,7 +449,7 @@ async function setupWizardSetName() {
     });
     mfaMethods.value = [obj].concat(mfaMethods.value);
     setupWizard.value.visible = false;
-    successToast('MFA setup completed');
+    successToast(t('MFA setup completed'));
   });
 }
 
@@ -497,7 +497,7 @@ async function changePassword() {
       });
       changePasswordWizard.value.visible = false;
       changePasswordWizard.value.password = '';
-      successToast('Password changed');
+      successToast(t('Password changed'));
     } catch (error: any) {
       if (error?.status === 400 && error?.data?.password) {
         changePasswordWizard.value.errors = error?.data;

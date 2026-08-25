@@ -2,10 +2,10 @@
   <btn-confirm
     :action="customizeDesign"
     :confirm="!isAlreadyCustomized"
-    button-text="Customize Design"
+    :button-text="$t('Customize Design')"
     button-icon="mdi-pencil-ruler"
-    tooltip-text="Customize Design for this project"
-    dialog-text="Customize the current Design for this project. This allows you to adapt the appearence (HTML, CSS) of the design for this project only. The original design is not affected. Any changes made to the original design will not be automatically applied to the adapted design."
+    :tooltip-text="$t('Customize Design for this project')"
+    :dialog-text="$t('Customize the current Design for this project. This allows you to adapt the appearence (HTML, CSS) of the design for this project only. The original design is not affected. Any changes made to the original design will not be automatically applied to the adapted design.')"
     :disabled="project.readonly || !auth.permissions.value.update_project_settings"
     :button-variant="props.buttonVariant"
     class="mr-1 mb-1"

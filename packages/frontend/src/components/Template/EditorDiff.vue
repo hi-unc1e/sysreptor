@@ -31,10 +31,10 @@
         <v-container fluid class="pt-0 h-100 overflow-y-auto">
           <v-row>
             <v-col cols="6">
-              <h2 class="text-headline-small text-center ma-0">Historic Version <chip-date :value="props.historyDate" /></h2>
+              <h2 class="text-headline-small text-center ma-0">{{ $t('Historic Version') }} <chip-date :value="props.historyDate" /></h2>
             </v-col>
             <v-col cols="6">
-              <h2 class="text-headline-small text-center ma-0">Current Version</h2>
+              <h2 class="text-headline-small text-center ma-0">{{ $t('Current Version') }}</h2>
             </v-col>
           </v-row>
 
@@ -159,7 +159,7 @@ const visibleFieldDefinitionsExceptTitle = computed(() => visibleFieldDefinition
 const fieldDefinitionTitle = computed(() => props.fieldDefinitionList.find(f => f.id === 'title')!);
 
 function languageInfo(languageCode: string) {
-  return apiSettings.settings!.languages.find(l => l.code === languageCode) || { code: '??-??', name: 'Unknown' } as Language;
+  return apiSettings.settings!.languages.find(l => l.code === languageCode) || { code: '??-??', name: t('Unknown') } as Language;
 }
 
 const markdownEditorMode = ref(MarkdownEditorMode.MARKDOWN);

@@ -1,6 +1,6 @@
 <template>
   <btn-confirm
-    button-text="Export"
+    :button-text="$t('Export')"
     button-icon="mdi-download"
     button-variant="list-item"
     :action="performExport"

@@ -1,6 +1,6 @@
 <template>
   <s-dialog v-model="dialogVisible" width="60%" max-width="60%" data-testid="create-finding-dialog">
-    <template #title>New Finding</template>
+    <template #title>{{ $t('New Finding') }}</template>
     <template #default>
       <v-card-text>
         <v-row density="compact">
@@ -11,7 +11,7 @@
               @update:model-value="selectedTemplates = ($event || []).filter((v: any) => v && typeof v === 'object' && 'id' in v)"
               @update:search="(v: string|null) => templates.search.value = v || ''"
               @update:menu="onMenuClosed"
-              label="Template (optional)"
+              :label="$t('Template (optional)')"
               :items="templates.data.value"
               item-value="id"
               :item-title="(t: FindingTemplate|string|null) => typeof t === 'string' ? t : ''"
@@ -32,7 +32,7 @@
                     icon="$delete"
                     @click.stop="removeSelectedTemplate(template as any)"
                     @mousedown.stop
-                    v-tooltip.top="'Remove'"
+                    v-tooltip.top="$t('Remove')"
                   />
                 </div>
               </template>
@@ -67,21 +67,21 @@
         <v-spacer />
         <s-btn-other
           @click="dialogVisible = false"
-          text="Cancel"
+          :text="$t('Cancel')"
         />
         <s-btn-primary
           v-if="selectedTemplates.length > 0"
           @click="createFindingsFromTemplates"
           :loading="actionInProgress"
-          :text="`Create from Templates (${selectedTemplates.length})`"
+          :text="$t('Create from Templates ({count})', { count: selectedTemplates.length })"
         >
-          <span v-if="selectedTemplates.length === 1">Create from Template</span>
-          <span v-else>Create from Templates ({{ selectedTemplates.length }})</span>
+          <span v-if="selectedTemplates.length === 1">{{ $t('Create from Template') }}</span>
+          <span v-else>{{ $t('Create from Templates ({count})', { count: selectedTemplates.length }) }}</span>
         </s-btn-primary>
         <s-btn-primary
           v-else @click="createEmptyFinding"
           :loading="actionInProgress"
-          text="Create Empty Finding"
+          :text="$t('Create Empty Finding')"
         />
       </v-card-actions>
     </template>
@@ -178,20 +178,20 @@ async function createEmptyFinding() {
 async function createFindingsFromTemplates() {
   try {
     actionInProgress.value = true;
-    let created = await bulkAction(selectedTemplates.value, t => projectStore.createFindingFromTemplate(props.project, {
+    let created = await bulkAction(selectedTemplates.value, tmpl => projectStore.createFindingFromTemplate(props.project, {
       ...(findingData.value || {}),
-      template: t.id,
-      template_language: 
-        t.translations.find(tr => tr.language === templateLanguage.value)?.language || 
-        t.translations.find(tr => tr.language === props.project.language)?.language || 
-        t.translations.find(tr => tr.is_main)?.language || 
+      template: tmpl.id,
+      template_language:
+        tmpl.translations.find(tr => tr.language === templateLanguage.value)?.language ||
+        tmpl.translations.find(tr => tr.language === props.project.language)?.language ||
+        tmpl.translations.find(tr => tr.is_main)?.language ||
         '',
-    }), t => `Failed to create finding from template "${t.translations.find(tr => tr.is_main)?.data.title || t.id}"`)
-    
+    }), tmpl => t('Failed to create finding from template "{name}"', { name: tmpl.translations.find(tr => tr.is_main)?.data.title || tmpl.id }))
+
     created = created.filter(Boolean);
     if (created.length > 0) {
       if (created.length > 1) {
-        successToast(`Created ${created.length} finding${created.length === 1 ? '' : 's'}`);
+        successToast(t('Created {count} findings', { count: created.length }));
       }
       await navigateTo(`/projects/${created[0]!.project}/reporting/findings/${created[0]!.id}/`)
       dialogVisible.value = false;

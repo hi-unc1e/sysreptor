@@ -15,7 +15,7 @@
 
             <s-btn-icon @click="emit('update:modelValue', false)">
               <v-icon size="x-large" icon="mdi-close" />
-              <v-tooltip activator="parent" text="Cancel" />
+              <v-tooltip activator="parent" :text="$t('Cancel')" />
             </s-btn-icon>
           </v-toolbar>
         </v-card-title>

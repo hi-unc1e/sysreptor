@@ -34,7 +34,7 @@
             >
               <template #label>
                 <label>
-                  {{ filter.exclude ? 'Exclude' : 'Include' }}
+                  {{ filter.exclude ? $t('Exclude') : $t('Include') }}
                 </label>
               </template>
             </v-switch>
@@ -47,7 +47,7 @@
               false-icon="mdi-pin-off"
               density="compact"
               inline
-              v-tooltip="{text: 'Pin filter to persist across sessions'}"
+              v-tooltip="{text: $t('Pin filter to persist across sessions')}"
             />
           </div>
         </v-card-text>
@@ -77,7 +77,7 @@ const chipDisplayValue = computed(() => {
   } else if (Array.isArray(filter.value.value)) {
     return filter.value.value.join(', ')
   } else {
-    return 'Any'
+    return t('Any')
   }
 })
 

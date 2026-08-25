@@ -1,5 +1,6 @@
 import { defineVuetifyConfiguration } from "vuetify-nuxt-module/custom-configuration";
 import { merge } from "lodash-es";
+import { zhHans } from "vuetify/locale";
 
 const sysreptorGreen = '#aabb11'
 const sysreptorGreenDark = '#818b06'
@@ -113,6 +114,13 @@ export default defineVuetifyConfiguration({
       name: 'mdi', 
       cdn: '',  // Use local icon font instead of CDN
     }],
+  },
+
+  locale: {
+    locale: 'en',
+    messages: {
+      zhHans,
+    },
   },
 
   theme: {

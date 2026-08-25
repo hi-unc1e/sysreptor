@@ -4,7 +4,7 @@
       v-bind="$attrs"
       :model-value="modelValue" @update:model-value="passwordChanged"
       :type="showPassword ? 'text' : 'password'"
-      :label="label"
+      :label="$t(label)"
       :disabled="props.disabled"
       :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
       @click:append-inner="showPassword = !showPassword"
@@ -24,7 +24,7 @@
         <s-btn 
           @click="generateNewPassword"
           icon="mdi-lock-reset"
-          v-tooltip="'Generate random password'"
+          v-tooltip="$t('Generate random password')"
           density="compact"
           :disabled="props.disabled"
         />
@@ -35,7 +35,7 @@
       ref="confirmField"
       v-model="passwordConfirmValue"
       :type="showPassword ? 'text' : 'password'"
-      :label="label + ' (confirm)'"
+      :label="$t(label) + ' (' + $t('confirm') + ')'"
       :disabled="props.disabled"
       :append-innner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
       @click:append-inner="showPassword = !showPassword"
@@ -81,7 +81,7 @@ async function passwordChanged(val: string) {
 const showPassword = ref(false);
 const passwordConfirmValue = ref('');
 const rules = {
-  confirmMatches: [(p: string) => p === modelValue.value || (!p && !modelValue.value) || 'Passwords do not match'],
+  confirmMatches: [(p: string) => p === modelValue.value || (!p && !modelValue.value) || t('Passwords do not match')],
 };
 
 const passwordStrengthCheckResult = computed(() => zxcvbn(modelValue.value || ''));

@@ -11,7 +11,7 @@
       :srcdoc="IFRAME_SRCDOC"
       sandbox="allow-same-origin allow-downloads allow-popups"
       referrerpolicy="no-referrer"
-      title="Markdown preview"
+      :title="$t('Markdown preview')"
       class="preview-iframe"
       :style="{
         colorScheme: theme.current.value.dark ? 'dark' : 'light',
@@ -32,14 +32,14 @@
         <v-list-item
           @click="downloadFile()"
           prepend-icon="mdi-download"
-          title="Download"
+          :title="$t('Download')"
           data-testid="file-download-plain"
         />
         <v-list-item
           @click="downloadFileEncryptedChannel()"
           prepend-icon="mdi-shield-lock-outline"
-          title="Download via encrypted channel"
-          subtitle="Prevents proxies from inspecting the download"
+          :title="$t('Download via encrypted channel')"
+          :subtitle="$t('Prevents proxies from inspecting the download')"
           data-testid="file-download-encrypted"
         />
       </v-list>
@@ -330,7 +330,7 @@ async function downloadFileEncryptedChannel() {
   try {
     await downloadFileEncrypted(href, { filename: download });
   } catch (error: any) {
-    requestErrorToast({ error, message: 'Download failed' });
+    requestErrorToast({ error, message: t('Download failed') });
   }
 }
 

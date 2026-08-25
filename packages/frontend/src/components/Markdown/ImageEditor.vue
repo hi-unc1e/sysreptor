@@ -511,7 +511,7 @@ function addTextAtPosition(x: number, y: number) {
     return;
   }
   
-  const text = new IText('Text', {
+  const text = new IText(t('Text'), {
     left: x,
     top: y,
     fontSize: fontSize.value,

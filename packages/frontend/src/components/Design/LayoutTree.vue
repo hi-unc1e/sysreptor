@@ -35,7 +35,7 @@
               v-if="item.cssPosition"
               @click="emit('jumpToCode', {tab: PdfDesignerTab.CSS, position: item.cssPosition})"
               icon="mdi-code-braces"
-              v-tooltip="'Go to CSS'"
+              v-tooltip="$t('Go to CSS')"
               size="small"
               density="comfortable"
               class="ml-1 mr-1"
@@ -44,7 +44,7 @@
             <s-btn-icon
               @click="emit('jumpToCode', {tab: PdfDesignerTab.HTML, position: item.htmlPosition})"
               icon="mdi-code-tags"
-              v-tooltip="'Go to HTML'"
+              v-tooltip="$t('Go to HTML')"
               size="small"
               density="comfortable"
               class="ml-1 mr-1"

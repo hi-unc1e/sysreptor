@@ -3,9 +3,9 @@
     <login-form @login="onLogin" class="w-100">
       <template #message>
         <div v-if="apiSettings.settings!.features.forgot_password" class="text-end">
-          <v-btn 
+          <v-btn
             to="/login/forgot-password/"
-            text="Forgot password?"
+            :text="$t('Forgot password?')"
             variant="plain"
             density="compact"
             class="text-none"
@@ -14,9 +14,9 @@
 
         <p v-if="apiSettings.settings!.license.error" class="text-error">
           <v-icon start color="error" icon="mdi-alert-decagram" />
-          Software License Error: {{ apiSettings.settings!.license.error }}.<br>
-          Falling back to a free Community license. Some features are disabled.<br>
-          See <a href="https://sysreptor.com/pricing" target="_blank">https://sysreptor.com/pricing</a>
+          {{ $t('Software License Error: {error}.', { error: apiSettings.settings!.license.error }) }}<br>
+          {{ $t('Falling back to a free Community license. Some features are disabled.') }}<br>
+          {{ $t('See') }} <a href="https://sysreptor.com/pricing" target="_blank">https://sysreptor.com/pricing</a>
         </p>
       </template>
 
@@ -24,32 +24,32 @@
         <s-btn-other
           v-if="auth.loggedIn.value"
           to="/"
-          text="Cancel"
+          :text="$t('Cancel')"
         />
         <s-btn-secondary
           v-if="apiSettings.isSsoEnabled"
           to="/login/?logout=true"
-          text="Use another method"
+          :text="$t('Use another method')"
         />
       </template>
     </login-form>
 
     <s-dialog v-model="mfaSetupNotificationVisible">
-      <template #title>Multi Factor Authentication</template>
+      <template #title>{{ $t('Multi Factor Authentication') }}</template>
       <template #default>
         <v-card-text>
-          You do not have Multi Factor Authentication enabled for your account. <br>
-          We recommend to set up MFA to increase your account security.
+          {{ $t('You do not have Multi Factor Authentication enabled for your account.') }} <br>
+          {{ $t('We recommend to set up MFA to increase your account security.') }}
         </v-card-text>
         <v-card-actions>
           <v-spacer />
           <s-btn-other
             data-testid="mfa-setup-skip"
-            text="Skip"
+            :text="$t('Skip')"
             @click="auth.redirect()"
           />
           <s-btn-primary
-            text="Set up MFA"
+            :text="$t('Set up MFA')"
             to="/users/self/security/"
           />
         </v-card-actions>

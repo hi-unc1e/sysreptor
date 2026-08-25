@@ -2,10 +2,10 @@
   <v-container class="pt-0 h-100 overflow-y-auto">
     <v-form ref="form" @submit.prevent="performCreate">
       <edit-toolbar>
-        <template #title>Create new User</template>
-        <s-btn-primary 
+        <template #title>{{ $t('Create new User') }}</template>
+        <s-btn-primary
           type="submit"
-          text="Create"
+          :text="$t('Create')"
           prepend-icon="mdi-content-save"
         />
       </edit-toolbar>
@@ -22,21 +22,21 @@
             />
             <s-checkbox
               v-model="userForm.must_change_password"
-              label="Must change password"
-              hint="The user has to change the password at the next login."
+              :label="$t('Must change password')"
+              :hint="$t('The user has to change the password at the next login.')"
               :error-message="serverErrors?.must_change_password || []"
               :disabled="!apiSettings.isProfessionalLicense"
             >
-              <template #label><pro-info>Must change password</pro-info></template>
+              <template #label><pro-info>{{ $t('Must change password') }}</pro-info></template>
             </s-checkbox>
           </div>
           <div v-if="apiSettings.isSsoEnabled" class="mt-4">
-            SSO Authentication Identity (optional):
+            {{ $t('SSO Authentication Identity (optional):') }}
             <v-row>
               <v-col>
                 <s-select
                   v-model="identityForm.provider"
-                  label="Provider"
+                  :label="$t('Provider')"
                   :items="apiSettings.ssoAuthProviders"
                   item-value="id"
                   item-title="name"
@@ -45,7 +45,7 @@
               <v-col>
                 <s-text-field
                   v-model="identityForm.identifier"
-                  label="Identifier"
+                  :label="$t('Identifier')"
                   spellcheck="false"
                 />
               </v-col>
@@ -60,7 +60,7 @@
 import randomColor from 'randomcolor';
 import type { VForm } from "vuetify/lib/components/index.mjs";
 
-useAppBar({ breadcrumbs: userListBreadcrumbs().concat([{ title: 'New', to: '/users/new/' }]) });
+useAppBar({ breadcrumbs: userListBreadcrumbs().concat([{ title: t('New'), to: '/users/new/' }]) });
 
 const apiSettings = useApiSettings();
 

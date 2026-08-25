@@ -2,7 +2,7 @@
   <v-container class="pt-0">
     <v-form ref="formRef">
       <edit-toolbar v-bind="toolbarAttrs" ref="toolbarRef">
-        <template #title>Project Settings</template>
+        <template #title>{{ $t('Project Settings') }}</template>
         <template #default>
           <permission-info :value="auth.permissions.value.update_project_settings">
             <btn-readonly 
@@ -22,7 +22,7 @@
               class="mr-1"
               prepend-icon="mdi-folder-lock-outline"
             >
-              <pro-info>Archive</pro-info>
+              <pro-info>{{ $t('Archive') }}</pro-info>
             </s-btn-secondary>
           </permission-info>
           <btn-history v-model="historyVisible" />
@@ -30,7 +30,7 @@
         <template #context-menu>
           <btn-copy
             :copy="performCopy"
-            confirm-text="The whole project will be copied including all members, sections, findings and images."
+            :confirm-text="$t('The whole project will be copied including all members, sections, findings and images.')"
             :disabled="!auth.permissions.value.create_projects"
           />
           <btn-export
@@ -42,7 +42,7 @@
             :export-url="`/api/v1/pentestprojects/${project.id}/export/`"
             :options="{ export_all: true }"
             :name="'project-' + project.name"
-            button-text="Export (with notes)"
+            :button-text="$t('Export (with notes)')"
           />
           <btn-customize-design
             :action="() => projectStore.customizeDesign(project)"
@@ -60,20 +60,20 @@
       />
 
       <p v-if="project.copy_of" class="mt-4">
-        This project is a copy
+        {{ $t('This project is a copy') }}
         <s-btn
           :to="`/projects/${project.copy_of}/reporting/`"
           variant="text"
           size="small"
           prepend-icon="mdi-chevron-right-circle-outline"
-          text="show original"
+          :text="$t('show original')"
           class="ml-1 mr-1"
         />
       </p>
 
       <s-text-field
         v-model="project.name"
-        label="Name"
+        :label="$t('Name')"
         :error-messages="serverErrors?.name || []"
         :readonly="readonly"
         spellcheck="false"
@@ -96,19 +96,19 @@
           <template v-if="message === 'Designs have incompatible field definitions. Converting might result in data loss.'">
             <btn-confirm
               :action="forceChangeDesign"
-              button-text="Force change"
+              :button-text="$t('Force change')"
               button-color="error"
-              tooltip-text="Force change Design"
-              dialog-text="Force change the Design for this project. WARNING: Data of incompatible fields might get lost."
+              :tooltip-text="$t('Force change Design')"
+              :dialog-text="$t('Force change the Design for this project. WARNING: Data of incompatible fields might get lost.')"
               color="error"
               variant="text"
               size="x-small"
             />
             <btn-copy
               :copy="() => performCopy({project_type: project.project_type})"
-              button-text="Duplicate"
-              tooltip-text="Duplicate project and change design in the duplicated project"
-              confirm-text="The whole project will be copied including all sections, findings, images, etc. All changes are made in the duplicated project. No data will be lost."
+              :button-text="$t('Duplicate')"
+              :tooltip-text="$t('Duplicate project and change design in the duplicated project')"
+              :confirm-text="$t('The whole project will be copied including all sections, findings, images, etc. All changes are made in the duplicated project. No data will be lost.')"
               button-variant="default"
               color="inherit"
               variant="text"
@@ -137,7 +137,7 @@
         :error-messages="serverErrors?.members || []"
         :readonly="readonly"
         :required="true"
-        label="Members"
+        :label="$t('Members')"
         class="mt-4"
       />
       <s-member-selection
@@ -147,8 +147,8 @@
         :error-messages="serverErrors?.imported_members || []"
         :readonly="readonly"
         :disable-add="true"
-        label="Members (imported)"
-        hint="These users do not exist on this instance, they were imported from somewhere else. They do not have access, but can be included in reports."
+        :label="$t('Members (imported)')"
+        :hint="$t('These users do not exist on this instance, they were imported from somewhere else. They do not have access, but can be included in reports.')"
         class="mt-4"
       />
       <s-date-picker
@@ -156,12 +156,12 @@
         v-model="project.delete_date"
         :allow-never="true"
         :min-date="formatISO9075(new Date(), { representation: 'date' })"
-        hint="Date when this project will be automatically deleted. Select Never to disable automatic deletion, or clear the field to unset."
+        :hint="$t('Date when this project will be automatically deleted. Select Never to disable automatic deletion, or clear the field to unset.')"
         :error-messages="serverErrors?.delete_date || []"
         :readonly="readonly || !apiSettings.isProfessionalLicense"
         class="mt-4"
       >
-        <template #label><pro-info>Delete Date</pro-info></template>
+        <template #label><pro-info>{{ $t('Delete Date') }}</pro-info></template>
       </s-date-picker>
       <v-alert v-if="deleteDateWarning" type="warning" class="mt-2">
         {{ deleteDateWarning }}
@@ -233,11 +233,11 @@ const deleteDateWarning = computed(() => {
     return null;
   }
   const date = parseISO(project.value.delete_date!);
-  let formattedDate = formatDistanceToNowStrict(date, { unit: 'day' });
+  let formattedDate = formatDistanceToNowStrict(date, { unit: 'day', locale: getDateFnsLocale() });
   if (isSameDay(date, new Date()) || date <= new Date()) {
-    formattedDate = 'today';
+    formattedDate = t('today');
   }
-  return `This project will be automatically deleted in ${formattedDate}.`;
+  return t('This project will be automatically deleted in {duration}.', { duration: formattedDate });
 });
 
 watch(projectType, (val: ProjectType|null) => {

@@ -2,8 +2,8 @@
   <chip-date
     :value="(props.value === 'never' || !apiSettings.isProfessionalLicense) ? null : props.value"
     icon="mdi-delete-clock"
-    label="delete"
-    tooltip-prefix-text="Automatic deletion: "
+    :label="$t('delete')"
+    :tooltip-prefix-text="$t('Automatic deletion: ')"
     relative="future"
     :color="isSoon ? 'error' : undefined"
   />

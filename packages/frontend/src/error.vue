@@ -4,7 +4,7 @@
       <v-empty-state
         :title="errorHeading"
         color="primary"
-        action-text="Go back home"
+        :action-text="$t('Go back home')"
         @click:action="handleError"
       >
         <template #media>
@@ -13,14 +13,14 @@
         </template>
         <template #text>
           <div v-if="props.error.statusCode === 404">
-            This site has gone.<br />
+            {{ $t('This site has gone.') }}<br />
             {{ errorMessage }}
           </div>
           <div v-else>
             {{ errorMessage }}<br />
             <div v-if="![401, 403].includes(props.error.statusCode!)">
-              This should not have happened.<br />
-              If you think this is a vulnerability, please <a href="https://github.com/Syslifters/sysreptor/security/" target="_blank" class="text-primary">disclose responsibly</a>.<br />
+              {{ $t('This should not have happened.') }}<br />
+              {{ $t('If you think this is a vulnerability, please') }} <a href="https://github.com/Syslifters/sysreptor/security/" target="_blank" class="text-primary">{{ $t('disclose responsibly.') }}</a><br />
             </div>
           </div>
         </template>
@@ -44,11 +44,11 @@ const errorHeading = computed(() => {
   if (props.error.statusCode && props.error.statusMessage) {
     return props.error.statusCode + ' ' + props.error.statusMessage;
   } else {
-    return 'Ooops!'
+    return t('Ooops!')
   }
 });
 const errorMessage = computed(() => {
-  let message = props.error.message || 'Error';
+  let message = props.error.message || t('Error');
 
   if ((props.error?.data as any)?.detail) {
     message += ': ' + (props.error?.data as any)?.detail;

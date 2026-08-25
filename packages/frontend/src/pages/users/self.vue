@@ -2,35 +2,35 @@
   <split-menu :content-props="{ class: 'h-100' }">
     <template #menu>
       <v-list nav density="compact">
-        <v-list-item-title class="text-title-large pl-2 mb-2">User Profile</v-list-item-title>
+        <v-list-item-title class="text-title-large pl-2 mb-2">{{ $t('User Profile') }}</v-list-item-title>
 
         <v-list-item
           to="/users/self/" exact
           prepend-icon="mdi-account"
-          title="User Information"
+          :title="$t('User Information')"
         />
         <v-list-item
           v-if="apiSettings.isLocalUserAuthEnabled"
           to="/users/self/security/"
           prepend-icon="mdi-lock"
-          title="Security"
+          :title="$t('Security')"
         />
         <v-list-item
           to="/users/self/apitokens/"
           prepend-icon="mdi-key-variant"
-          title="API Tokens"
+          :title="$t('API Tokens')"
         />
         <v-list-item
           :disabled="!apiSettings.settings!.features.archiving"
           to="/users/self/publickeys/"
           prepend-icon="mdi-folder-key"
         >
-          <v-list-item-title><pro-info>Archiving Public Keys</pro-info></v-list-item-title>
+          <v-list-item-title><pro-info>{{ $t('Archiving Public Keys') }}</pro-info></v-list-item-title>
         </v-list-item>
         <v-list-item
           to="/users/self/notifications/"
           prepend-icon="mdi-bell"
-          title="Notifications"
+          :title="$t('Notifications')"
         />
       </v-list>
     </template>
@@ -48,6 +48,6 @@ const route = useRoute();
 useHead({
   titleTemplate: (title?: string|null) => profileTitleTemplate(title, route),
 });
-useAppBar({ breadcrumbs: [{ title: 'Profile', to: '/users/self/' }] });
+useAppBar({ breadcrumbs: [{ title: t('Profile'), to: '/users/self/' }] });
 const apiSettings = useApiSettings();
 </script>

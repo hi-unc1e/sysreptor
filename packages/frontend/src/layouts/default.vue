@@ -12,7 +12,7 @@
         <template #item="{ item, index }">
           <v-breadcrumbs-item :to="(item as Breadcrumb).to" v-on="(index === breadcrumbs!.length - 1) ? { 'click.prevent': () => {} } : {}">
             <v-icon v-if="(item as Breadcrumb).icon" :icon="(item as Breadcrumb).icon" />
-            {{ (item as Breadcrumb).title }}
+            {{ $t((item as Breadcrumb).title ?? '') }}
           </v-breadcrumbs-item>
         </template>
       </v-breadcrumbs>
@@ -24,13 +24,13 @@
         to="/notes/personal/"
         :active="false"
         icon="mdi-notebook"
-        v-tooltip.bottom="'Personal Notes'"
+        v-tooltip.bottom="$t('Personal Notes')"
       />
       <notification-menu-item v-if="auth.loggedIn.value" />
       <s-btn-icon
         href="https://docs.sysreptor.com/" target="_blank"
         icon="mdi-help-circle"
-        v-tooltip.bottom="'Documentation'"
+        v-tooltip.bottom="$t('Documentation')"
       />
       <user-info-menu-item data-testid="profile-button" />
     </v-app-bar>
@@ -39,14 +39,14 @@
       <header-logo-text class="menu-drawer-header" @click="navigationDrawerVisible = !navigationDrawerVisible" />
 
       <v-list class="pt-0 menu-drawer-body">
-        <v-list-item to="/projects/" title="Projects" prepend-icon="mdi-file-document" :active="route.path.startsWith('/projects')" data-testid="projects-tab"/>
-        <v-list-item to="/templates/" title="Templates" prepend-icon="mdi-view-compact" :active="route.path.startsWith('/templates')" data-testid="templates-tab" />
-        <v-list-item to="/designs/" title="Designs" prepend-icon="mdi-pencil-ruler" :active="route.path.startsWith('/designs')" data-testid="design-tab"/>
-        <v-list-item to="/notes/personal/" title="Notes" prepend-icon="mdi-notebook" :active="route.path.startsWith('/notes')" data-testid="notes-tab" />
+        <v-list-item to="/projects/" :title="$t('Projects')" prepend-icon="mdi-file-document" :active="route.path.startsWith('/projects')" data-testid="projects-tab"/>
+        <v-list-item to="/templates/" :title="$t('Templates')" prepend-icon="mdi-view-compact" :active="route.path.startsWith('/templates')" data-testid="templates-tab" />
+        <v-list-item to="/designs/" :title="$t('Designs')" prepend-icon="mdi-pencil-ruler" :active="route.path.startsWith('/designs')" data-testid="design-tab"/>
+        <v-list-item to="/notes/personal/" :title="$t('Notes')" prepend-icon="mdi-notebook" :active="route.path.startsWith('/notes')" data-testid="notes-tab" />
         
         <template v-if="pluginMenuEntries.length > 0">
           <v-list-item class="mt-4 pa-0">
-            <v-list-subheader>Plugins</v-list-subheader>
+            <v-list-subheader>{{ $t('Plugins') }}</v-list-subheader>
             <template #append>
               <s-btn-icon
                 @click="localSettings.pluginMenuExpanded = !localSettings.pluginMenuExpanded"
@@ -70,14 +70,14 @@
         </template>
 
         <v-list-item class="mt-4 pa-0" min-height="0">
-          <v-list-subheader title="Administration" />
+          <v-list-subheader :title="$t('Administration')" />
           <template #append v-if="apiSettings.isProfessionalLicense && auth.permissions.value.superuser">
             <s-btn-icon
               v-if="auth.permissions.value.admin"
               :to="{path: '/users/self/admin/disable/', query: { next: route.fullPath }}"
               density="comfortable"
               icon="mdi-account-arrow-down"
-              v-tooltip.bottom="'Disable Superuser Permissions'"
+              v-tooltip.bottom="$t('Disable Superuser Permissions')"
             />
             <s-btn-icon
               v-else
@@ -85,7 +85,7 @@
               :disabled="!auth.user.value!.is_superuser"
               density="comfortable"
               icon="mdi-account-arrow-up"
-              v-tooltip.bottom="'Enable Superuser Permissions'"
+              v-tooltip.bottom="$t('Enable Superuser Permissions')"
               data-testid="enable-superuser"
             />
           </template>
@@ -98,21 +98,21 @@
           :active="route.path.startsWith('/users') && !route.path.startsWith('/users/self')"
           :disabled="!auth.permissions.value.user_manager" 
         >
-          <template #title><permission-info :value="auth.permissions.value.user_manager" permission-name="User Manager">Users</permission-info></template>
+          <template #title><permission-info :value="auth.permissions.value.user_manager" :permission-name="$t('User Manager')">{{ $t('Users') }}</permission-info></template>
         </v-list-item>
         <v-list-item
           to="/settings/"
           prepend-icon="mdi-cog"
           :disabled="!auth.permissions.value.admin"
         >
-          <template #title><permission-info :value="auth.permissions.value.admin" permission-name="Superuser">Settings</permission-info></template>
+          <template #title><permission-info :value="auth.permissions.value.admin" :permission-name="$t('Superuser')">{{ $t('Settings') }}</permission-info></template>
         </v-list-item>
         <v-list-item
           to="/backups/"
           prepend-icon="mdi-tools"
           :disabled="!auth.permissions.value.view_backup"
         >
-          <template #title><pro-info><permission-info :value="auth.permissions.value.view_backup || !apiSettings.isProfessionalLicense" permission-name="Superuser">Backups</permission-info></pro-info></template>
+          <template #title><pro-info><permission-info :value="auth.permissions.value.view_backup || !apiSettings.isProfessionalLicense" :permission-name="$t('Superuser')">{{ $t('Backups') }}</permission-info></pro-info></template>
         </v-list-item>
         <license-info-menu-item />
       </v-list>

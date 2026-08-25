@@ -2,26 +2,26 @@
   <centered-view>
     <s-card v-if="error" class="w-100">
       <v-toolbar
-        title="Invalid shared link"
+        :title="$t('Invalid shared link')"
         color="error"
         flat
       />
       <v-card-text>
-        <p>Maybe the shared link expired or was revoked.</p>
+        <p>{{ $t('Maybe the shared link expired or was revoked.') }}</p>
       </v-card-text>
     </s-card>
     <s-card v-else-if="shareInfo?.password_required" class="w-100">
-      <v-toolbar 
-        title="Access Shared Data"
-        color="header" 
-        flat 
+      <v-toolbar
+        :title="$t('Access Shared Data')"
+        color="header"
+        flat
       />
       <v-form @submit.prevent="submitPasswordForm">
         <v-card-text>
           <s-password-field
             v-model="passwordForm.data.password"
             :error-messages="passwordForm.error"
-            label="Password"
+            :label="$t('Password')"
             autocomplete="current-password"
             required
             class="mt-4"
@@ -31,7 +31,7 @@
           <v-spacer />
           <s-btn-primary
             type="submit"
-            text="Submit"
+            :text="$t('Submit')"
             :loading="passwordForm.inProgress"
           />
         </v-card-actions>

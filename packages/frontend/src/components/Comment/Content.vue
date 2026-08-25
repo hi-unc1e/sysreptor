@@ -22,11 +22,11 @@
             class="context-menu"
           >
             <v-list density="compact">
-              <v-list-item 
+              <v-list-item
                 @click="editEnabled = true"
                 :disabled="props.readonly || modelValue.user?.id !== auth.user.value!.id"
                 prepend-icon="mdi-pencil"
-                title="Edit"
+                :title="$t('Edit')"
               />
               <btn-delete
                 v-if="props.delete"
@@ -53,18 +53,18 @@
           variant="outlined"
         />
         <div class="mt-1">
-          <s-btn-other 
-            v-if="!props.initialEdit" 
-            @click="editEnabled = false" 
-            size="small" 
-            text="Cancel" 
+          <s-btn-other
+            v-if="!props.initialEdit"
+            @click="editEnabled = false"
+            size="small"
+            :text="$t('Cancel')"
           />
-          <s-btn-other 
+          <s-btn-other
             @click="performUpdate"
-            text="Save"
-            v-tooltip="'Save comment (Enter)'"
+            :text="$t('Save')"
+            v-tooltip="$t('Save comment (Enter)')"
             :disabled="!editText.trim()"
-            :loading="updateInProgress" 
+            :loading="updateInProgress"
             size="small"
           />
         </div>

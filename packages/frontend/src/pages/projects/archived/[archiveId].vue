@@ -8,11 +8,11 @@
           <s-btn-primary
             :disabled="publicKeyEncryptedKeyParts.length === 0"
             prepend-icon="mdi-folder-lock-open-outline"
-            text="Restore"
+            :text="$t('Restore')"
             v-bind="dialogProps"
           />
         </template>
-        <template #title>Restore Project</template>
+        <template #title>{{ $t('Restore Project') }}</template>
 
         <template #default>
           <split-menu :model-value="200">
@@ -22,7 +22,7 @@
                 mandatory
                 density="compact"
               >
-                <v-list-subheader>Public Keys</v-list-subheader>
+                <v-list-subheader>{{ $t('Public Keys') }}</v-list-subheader>
                 <v-list-item
                   v-for="encryptedPart in publicKeyEncryptedKeyParts"
                   :key="encryptedPart.id"
@@ -39,8 +39,9 @@
                   :error-messages="restoreWizard.error"
                 >
                   <template #message>
-                    Decrypt the following message with your private key <strong>{{ restoreWizard.selectedParts[0]!.public_key.name }}</strong>
-                    and copy the decrypted data into the text field below.
+                    {{ $t('Decrypt the following message with your private key') }}
+                    <strong>{{ restoreWizard.selectedParts[0]!.public_key.name }}</strong>
+                    {{ $t('and copy the decrypted data into the text field below.') }}
                   </template>
                 </decrypt-form>
 
@@ -48,7 +49,7 @@
                   :action="decryptKeyPart"
                   :disabled="!restoreWizard.form.data"
                   :confirm="false"
-                  button-text="Restore"
+                  :button-text="$t('Restore')"
                   button-icon="mdi-folder-lock-open-outline"
                   button-color="primary-bg"
                   class="mt-4"
@@ -67,15 +68,14 @@
     </div>
 
     <p class="mt-4">
-      <strong>{{ archive.threshold }} of {{ archive.key_parts.length }}</strong> users are required to restore the project.<br>
+      <strong>{{ archive.threshold }} / {{ archive.key_parts.length }}</strong> {{ $t('users are required to restore the project.') }}<br>
       <template v-if="archive.key_parts.filter(p => p.is_decrypted).length > 0">
-        <strong>{{ archive.threshold - archive.key_parts.filter(p => p.is_decrypted).length }} more users</strong> required to restore the project.<br>
-        They have to decrypt their key parts {{ restoreUntilDate }},
-        otherwise all decrypted key parts will be reset due to inactivity and archive restoring has to start again.
+        <strong>{{ archive.threshold - archive.key_parts.filter(p => p.is_decrypted).length }} {{ $t('more users') }}</strong> {{ $t('required to restore the project.') }}<br>
+        {{ $t('They have to decrypt their key parts {date}, otherwise all decrypted key parts will be reset due to inactivity and archive restoring has to start again.', { date: restoreUntilDate }) }}
       </template>
     </p>
 
-    <h6 class="text-title-large mt-6 mb-0">Users</h6>
+    <h6 class="text-title-large mt-6 mb-0">{{ $t('Users') }}</h6>
     <v-table>
       <tbody>
         <tr v-for="keypart in archive.key_parts" :key="keypart.id">
@@ -83,17 +83,17 @@
             {{ keypart.user.username }}<template v-if="keypart.user.name"> ({{ keypart.user.name }})</template>
             <v-chip v-if="!keypart.user.is_active" size="small" class="ml-4" color="warning">
               <v-icon size="small" start icon="mdi-alert" />
-              inactive
+              {{ $t('inactive') }}
             </v-chip>
           </td>
           <td>
             <template v-if="keypart.is_decrypted">
               <v-icon color="success" icon="mdi-lock-open-variant" />
-              Restored at {{ formatISO9075(parseISO(keypart.decrypted_at!)) }}
+              {{ $t('Restored at {date}', { date: formatISO9075(parseISO(keypart.decrypted_at!)) }) }}
             </template>
             <template v-else>
               <v-icon color="error" icon="mdi-lock" />
-              Encrypted
+              {{ $t('Encrypted') }}
             </template>
           </td>
         </tr>
@@ -122,10 +122,10 @@ const restoreUntilDate = computed(() => {
   }
   const date = parseISO(archive.value.reencrypt_key_parts_after_inactivity_date);
   if (isSameDay(date, new Date()) || date <= new Date()) {
-    return 'today';
+    return t('today');
   }
 
-  return 'in the next ' + formatDistanceToNowStrict(date, { unit: 'day' });
+  return t('in the next {duration}', { duration: formatDistanceToNowStrict(date, { unit: 'day', locale: getDateFnsLocale() }) });
 })
 
 useHead({
@@ -154,10 +154,10 @@ async function decryptKeyPart() {
     });
     restoreWizard.value.visible = false;
     if (res.status === 'project-restored') {
-      successToast('Project restored successfully.');
+      successToast(t('Project restored successfully.'));
       await navigateTo(`/projects/${res.project_id}/`)
     } else {
-      successToast('Key part decrypted successfully. More users are required to restore the project.');
+      successToast(t('Key part decrypted successfully. More users are required to restore the project.'));
       await refreshNuxtData();
     }
   } catch (error: any) {

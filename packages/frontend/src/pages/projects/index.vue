@@ -4,16 +4,16 @@
       url="/api/v1/pentestprojects/?readonly=false"
       v-model:ordering="localSettings.projectListOrdering"
       :ordering-options="[
-        {id: 'created', title: 'Created', value: '-created'},
-        {id: 'updated', title: 'Updated', value: '-updated'},
-        {id: 'name', title: 'Name', value: 'name'},
+        {id: 'created', title: $t('Created'), value: '-created'},
+        {id: 'updated', title: $t('Updated'), value: '-updated'},
+        {id: 'name', title: $t('Name'), value: 'name'},
       ]"
       v-model:pinned-filters="localSettings.projectListPinnedFilters"
       :filter-properties="filterProperties"
       :selectable="true"
       ref="listViewRef"
     >
-      <template #title>Projects</template>
+      <template #title>{{ $t('Projects') }}</template>
       <template #navigation>
         <project-navigation-dropdown value="active" />
       </template>
@@ -27,11 +27,11 @@
         </permission-info>
         <template v-if="selectedItems.length > 0">
           <v-divider vertical />
-          <s-btn-icon 
+          <s-btn-icon
             color="secondary"
             variant="flat"
             density="comfortable"
-            v-tooltip.bottom="'Export selected'"
+            v-tooltip.bottom="$t('Export selected')"
           >
             <v-icon icon="mdi-download" />
             <v-menu activator="parent" location="bottom">
@@ -47,7 +47,7 @@
                   :options="{ids: selectedItems.map(p => p.id), export_all: true}"
                   name="projects"
                   extension=".tar.gz"
-                  button-text="Export (with notes)"
+                  :button-text="$t('Export (with notes)')"
                 />
               </v-list>
             </v-menu>
@@ -64,7 +64,7 @@
             >
               <template #dialog-text>
                 <p class="mt-0">
-                  Mark {{ selectedItems.length }} projects as finished and make them readonly?
+                  {{ $t('Mark {count} projects as finished and make them readonly?', { count: selectedItems.length }) }}
                 </p>
                 <ul class="mt-0">
                   <li v-for="p in selectedItems" :key="p.id">
@@ -78,14 +78,14 @@
             <btn-delete
               :delete="() => performDeleteSelected(selectedItems)"
               :disabled="!auth.permissions.value.delete_projects"
-              :confirm-input="`delete ${selectedItems.length} projects`"
-              tooltip-text="Delete selected"
+              :confirm-input="$t('delete {count} projects', { count: selectedItems.length })"
+              :tooltip-text="$t('Delete selected')"
               icon="mdi-delete"
               density="comfortable"
             >
               <template #dialog-text>
                 <p class="mt-0">
-                  Do you really want to delete {{ selectedItems.length }} projects?
+                  {{ $t('Do you really want to delete {count} projects?', { count: selectedItems.length }) }}
                 </p>
                 <ul class="mt-0">
                   <li v-for="p in selectedItems" :key="p.id">
@@ -133,19 +133,19 @@ watch(() => listViewRef.value?.items?.data.value as PentestProject[]|undefined, 
 }, { immediate: true, deep: 1 });
 const suggestedTags = useProjectTags();
 const filterProperties = computed((): FilterProperties[] => [
-  { id: 'member', name: 'Member', icon: 'mdi-account', type: 'combobox', options: suggestedMembers.value, allow_exclude: true, allow_regex: false, default: '', multiple: true },
-  { id: 'tag', name: 'Tag', icon: 'mdi-tag', type: 'combobox', options: suggestedTags.getTags, allow_exclude: true, allow_regex: false, default: '', multiple: true },
-  { id: 'timerange', name: 'Time Created', icon: 'mdi-calendar', type: 'daterange', options: [], allow_exclude: true, default: '', multiple: true },
-  { id: 'language', name: 'Language', icon: 'mdi-translate', type: 'select', options: apiSettings.settings!.languages.map(l => l.code), allow_exclude: true, default: '', multiple: true },
-  { id: 'name', name: 'Name', type: 'text', options: [], allow_exclude: true, allow_regex: false, default: '', multiple: true },
+  { id: 'member', name: t('Member'), icon: 'mdi-account', type: 'combobox', options: suggestedMembers.value, allow_exclude: true, allow_regex: false, default: '', multiple: true },
+  { id: 'tag', name: t('Tag'), icon: 'mdi-tag', type: 'combobox', options: suggestedTags.getTags, allow_exclude: true, allow_regex: false, default: '', multiple: true },
+  { id: 'timerange', name: t('Time Created'), icon: 'mdi-calendar', type: 'daterange', options: [], allow_exclude: true, default: '', multiple: true },
+  { id: 'language', name: t('Language'), icon: 'mdi-translate', type: 'select', options: apiSettings.settings!.languages.map(l => l.code), allow_exclude: true, default: '', multiple: true },
+  { id: 'name', name: t('Name'), type: 'text', options: [], allow_exclude: true, allow_regex: false, default: '', multiple: true },
 ]);
 
 async function performDeleteSelected(projects: PentestProject[]) {
-  await bulkAction(projects, projectStore.deleteProject, p => `Failed to delete "${p.name}"`);
+  await bulkAction(projects, projectStore.deleteProject, p => t('Failed to delete "{name}"', { name: p.name }));
   await listViewRef.value?.refresh();
 }
 async function setReadonlySelected(projects: PentestProject[]) {
-  await bulkAction(projects, p => projectStore.setReadonly(p, true), p => `Failed to finish "${p.name}"`);
+  await bulkAction(projects, p => projectStore.setReadonly(p, true), p => t('Failed to finish "{name}"', { name: p.name }));
   await listViewRef.value?.refresh();
 }
 

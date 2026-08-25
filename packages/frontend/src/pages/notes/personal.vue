@@ -2,7 +2,7 @@
   <split-menu v-model="localSettings.notebookInputMenuSizePx" :content-props="{ class: 'pa-0 h-100' }">
     <template #menu>
       <notes-menu
-        title="Personal Notes"
+        :title="$t('Personal Notes')"
         v-model:search="notesCollab.search.value"
         :create-note="createNote"
         :perform-import="performImport"
@@ -56,7 +56,7 @@ useHead({
   titleTemplate: title => userNotesTitleTemplate(title, route),
 });
 useAppBar({
-  breadcrumbs: [{ title: 'Personal Notes', to: '/notes/personal/' }],
+  breadcrumbs: [{ title: t('Personal Notes'), to: '/notes/personal/' }],
   syncState: notesCollab.syncState,
 });
 
@@ -79,7 +79,7 @@ function collabAwarenessSendNavigate() {
 async function createNote(data?: Partial<NoteBase>) {
   const currentNote = userNotesStore.notes.find(n => n.id === route.params.noteId);
   const obj = await userNotesStore.createNote({
-    title: 'New Note',
+    title: t('New Note'),
     // Insert new note after the currently selected note, or at the end of the list
     parent: currentNote?.parent || null,
     order: (currentNote ? currentNote.order + 1 : undefined),

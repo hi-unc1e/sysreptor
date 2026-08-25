@@ -2,7 +2,7 @@
   <s-user-selection
     :model-value="modelValue"
     @update:model-value="updateMembers($event as ProjectMember[])"
-    label="Members"
+    :label="$t('Members')"
     :multiple="true"
     :disabled="props.disabled"
     :readonly="props.readonly || disableAdd"
@@ -43,7 +43,7 @@
       <s-btn-secondary
         size="small"
         prepend-icon="mdi-plus"
-        text="Add"
+        :text="$t('Add')"
         :disabled="props.readonly || disableAdd"
       />
     </template>

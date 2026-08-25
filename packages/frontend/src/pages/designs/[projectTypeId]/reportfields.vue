@@ -77,7 +77,7 @@
                         size="x-small"
                         :disabled="readonly"
                         prepend-icon="mdi-plus"
-                        text="Add Field"
+                        :text="$t('Add Field')"
                       />
                     </v-list-item>
                   </v-list>
@@ -97,7 +97,7 @@
                 size="small"
                 block
                 prepend-icon="mdi-plus"
-                text="Add Section"
+                :text="$t('Add Section')"
               />
             </v-list-item>
           </div>
@@ -111,14 +111,14 @@
           <v-container fluid class="pt-0 flex-grow-height overflow-y-auto">
             <template v-if="currentItemIsSection">
               <s-card>
-                <v-card-title>Section: {{ currentItemSection!.label }}</v-card-title>
+                <v-card-title>{{ $t('Section: {label}', { label: currentItemSection!.label }) }}</v-card-title>
                 <v-card-text>
                   <v-row>
                     <v-col>
                       <s-text-field
                         :model-value="currentItemSection!.id"
                         @update:model-value="updateCurrentSection('id', $event)"
-                        label="Section ID"
+                        :label="$t('Section ID')"
                         :rules="rules.sectionId"
                         required
                         spellcheck="false"
@@ -129,7 +129,7 @@
                       <s-text-field
                         :model-value="currentItemSection!.label"
                         @update:model-value="updateCurrentSection('label', $event)"
-                        label="Label"
+                        :label="$t('Label')"
                         required
                         spellcheck="false"
                         :readonly="readonly"
@@ -155,7 +155,7 @@
                 :disabled="readonly"
                 class="mt-4"
                 prepend-icon="mdi-plus"
-                text="Add Field"
+                :text="$t('Add Field')"
               />
             </template>
             <template v-else-if="currentItemIsField">
@@ -216,8 +216,8 @@ const currentSection = computed(() => currentItemSection.value || reportSections
 
 const rules = {
   sectionId: [
-    (id: string) => /^[a-zA-Z0-9_-]+$/.test(id) || 'Invalid ID format',
-    (id: string) => !reportSections.value.filter(s => s !== currentItemSection.value).map(s => s.id).includes(id) || 'Section ID is not unique. This ID is already used by another section.',
+    (id: string) => /^[a-zA-Z0-9_-]+$/.test(id) || t('Invalid ID format'),
+    (id: string) => !reportSections.value.filter(s => s !== currentItemSection.value).map(s => s.id).includes(id) || t('Section ID is not unique. This ID is already used by another section.'),
   ]
 };
 const form = useTemplateRef('form');
@@ -234,9 +234,9 @@ function addField(section: ReportSectionDefinition) {
   section.fields.push({
     id: fieldId,
     type: FieldDataType.STRING,
-    label: 'New Field',
+    label: t('New Field'),
     required: true,
-    default: 'TODO: fill field in report',
+    default: t('TODO: fill field in report'),
     origin: FieldOrigin.CUSTOM,
   });
 
@@ -265,7 +265,7 @@ function updateCurrentSection(sectionField: keyof ReportSectionDefinition, val: 
 }
 function addSection() {
   const sectionId = uniqueName('section', projectType.value.report_sections.map(s => s.id));
-  const newSection = { id: sectionId, label: 'New Section', fields: [] }
+  const newSection = { id: sectionId, label: t('New Section'), fields: [] }
   projectType.value.report_sections.push(newSection);
   currentItem.value = newSection;
 }

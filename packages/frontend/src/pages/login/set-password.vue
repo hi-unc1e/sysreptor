@@ -1,14 +1,14 @@
 <template>
   <centered-view>
     <s-card class="w-100">
-      <v-toolbar title="Set Password" color="header" flat />
+      <v-toolbar :title="$t('Set Password')" color="header" flat />
       <v-form v-if="user" @submit.prevent="performSetPassword">
         <v-card-text>
           <s-text-field
             v-model="user.username"
             type="text"
             name="username"
-            label="Username"
+            :label="$t('Username')"
             prepend-inner-icon="mdi-account"
             disabled
           />
@@ -16,7 +16,7 @@
             v-model="formSetPassword.password"
             :error-messages="formError?.data?.detail"
             confirm show-strength generate
-            label="New Password"
+            :label="$t('New Password')"
             autocomplete="new-password"
             class="mt-4"
           />
@@ -26,7 +26,7 @@
           <v-spacer />
           <s-btn-primary
             type="submit"
-            text="Submit"
+            :text="$t('Submit')"
           />
         </v-card-actions>
       </v-form>
@@ -66,7 +66,7 @@ const { data: user, error: checkTokenError } = useAsyncData(async () => {
     if (error.data.detail) {
       throw new Error(error.data.detail, { cause: error });
     } else {
-      throw new Error('Failed to reset password', { cause: error });
+      throw new Error(t('Failed to reset password'), { cause: error });
     }
   }
 });
@@ -82,7 +82,7 @@ async function performSetPassword() {
         ...formSetPassword.value,
       },
     });
-    successToast('Password changed');
+    successToast(t('Password changed'));
     await navigateTo('/login/local/');
   } catch (error: any) {
     formError.value = error;

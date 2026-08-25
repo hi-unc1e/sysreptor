@@ -22,7 +22,7 @@
                 </td>
               </tr>
               <tr>
-                <td class="timing-table-key">Total</td>
+                <td class="timing-table-key">{{ $t('Total') }}</td>
                 <td class="timing-value">{{ timingsTotal }}</td>
               </tr>
             </v-table>
@@ -113,13 +113,13 @@ async function reload() {
     } else if (Array.isArray(error?.data) && error?.data?.length === 1) {
       details = error?.data[0];
     } else if (error?.status === 429) {
-      details = 'Exceeded PDF rendering rate limit. Try again later.'
+      details = t('Exceeded PDF rendering rate limit. Try again later.')
     } else if (error?.statusCode) {
       details = `${error.statusCode} ${error.statusText}`;
     }
     messages.value.push({
       level: MessageLevel.ERROR,
-      message: 'PDF rendering error (HTTP error)',
+      message: t('PDF rendering error (HTTP error)'),
       details,
       location: {
         type: MessageLocationType.OTHER,

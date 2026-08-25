@@ -2,13 +2,13 @@
   <v-form ref="formRef" @submit.prevent="changePassword">
     <v-toolbar density="compact" flat color="inherit">
       <v-toolbar-title>
-        Reset password of {{ user.username }}<template v-if="user.name"> ({{ user.name }})</template>
+        {{ $t('Reset password of {username}', { username: user.username }) }}<template v-if="user.name"> ({{ user.name }})</template>
       </v-toolbar-title>
     </v-toolbar>
 
     <s-password-field
       v-model="form.password"
-      label="New password"
+      :label="$t('New password')"
       :error-messages="serverErrors?.password || []"
       confirm show-strength generate
       autocomplete="new-password"
@@ -18,17 +18,17 @@
 
     <s-checkbox
       v-model="form.must_change_password"
-      hint="The user has to change the password at the next login."
+      :hint="$t('The user has to change the password at the next login.')"
       :error-message="serverErrors?.must_change_password || []"
       :disabled="!canEdit || !apiSettings.isProfessionalLicense"
     >
-      <template #label><pro-info>Must change password</pro-info></template>
+      <template #label><pro-info>{{ $t('Must change password') }}</pro-info></template>
     </s-checkbox>
 
     <div class="mt-4">
       <s-btn-primary
         type="submit"
-        text="Set password"
+        :text="$t('Set password')"
         :disabled="!canEdit"
         class="mr-2"
       />
@@ -64,7 +64,7 @@ async function changePassword() {
       method: 'POST',
       body: form.value,
     });
-    successToast('Password changed');
+    successToast(t('Password changed'));
     await navigateTo(`/users/${user.value.id}/`);
   } catch (error: any) {
     if (error?.status === 400 && error?.data) {

@@ -1,7 +1,7 @@
 <template>
   <v-chip v-if="statusInfo" size="small" class="ma-1">
     <v-icon size="small" start :class="'status-' + statusInfo.id" :icon="statusInfo.icon || 'mdi-help'" />
-    {{ statusInfo.label }}
+    {{ $t(statusInfo.label) }}
     <v-icon 
       v-if="props.filterable" 
       size="small" 

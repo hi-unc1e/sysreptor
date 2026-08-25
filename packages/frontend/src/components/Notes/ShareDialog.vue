@@ -12,9 +12,9 @@
           @click="dialogView = 'main'"
           icon="mdi-arrow-left"
           density="compact"
-          v-tooltip="'Back to share settings'"
+          v-tooltip="$t('Back to share settings')"
         />
-        <span>{{ dialogView === 'pending' ? 'Review shared files' : 'Share Note' }}</span>
+        <span>{{ dialogView === 'pending' ? $t('Review shared files') : $t('Share Note') }}</span>
       </div>
     </template>
     <template #default>
@@ -73,7 +73,7 @@
                     <span v-if="shareInfo.comment?.trim()" class="text-medium-emphasis">{{ formatShareCreated(shareInfo.created) }}</span>
                     <span v-if="shareInfo.shared_by" class="text-medium-emphasis">@{{ shareInfo.shared_by.username }}</span>
                     <v-chip v-if="shareInfo.permissions_write" size="x-small" variant="tonal" label>
-                      Can edit
+                      {{ $t('Can edit') }}
                     </v-chip>
                   </div>
                   <div :class="shareExpiryTextClass(shareInfo)">
@@ -89,7 +89,7 @@
                     @click.stop="openPendingReview(shareInfo)"
                   >
                     <v-icon icon="mdi-file-eye-outline" size="x-small" start />
-                    {{ pendingCountFor(shareInfo.id) }} shared {{ pendingCountFor(shareInfo.id) === 1 ? 'file' : 'files' }} to review
+                    {{ $t('{count} shared files to review', { count: pendingCountFor(shareInfo.id) }) }}
                     <v-spacer />
                     <v-icon icon="mdi-chevron-right" size="x-small" end />
                   </v-btn>
@@ -101,7 +101,7 @@
                   class="mt-4"
                   @click="openCreateForm"
                   :disabled="props.readonly"
-                  text="New Share Link"
+                  :text="$t('New Share Link')"
                   prepend-icon="mdi-share-variant"
                   size="small"
                   block
@@ -116,7 +116,7 @@
               <s-btn-secondary
                 v-if="(currentShareInfo.pending_file_ids?.length ?? 0) > 0"
                 @click="openPendingReview(currentShareInfo)"
-                text="Review shared files"
+                :text="$t('Review shared files')"
                 prepend-icon="mdi-file-eye-outline"
                 color="error"
                 variant="tonal"
@@ -130,7 +130,7 @@
                 :action="() => performUpdateShareInfo(currentShareInfo!)"
                 :disabled="props.readonly || (isEqual(currentShareInfo, shareInfos.find(si => si.id === currentShareInfo?.id)))"
                 :confirm="false"
-                button-text="Update"
+                :button-text="$t('Update')"
                 button-icon="mdi-content-save"
                 button-color="primary-bg"
                 class="mt-4"
@@ -148,7 +148,7 @@
                 :disabled="createShareInfoForm.saveInProgress || props.readonly"
                 :loading="createShareInfoForm.saveInProgress"
                 :confirm="false"
-                button-text="Share"
+                :button-text="$t('Share')"
                 button-icon="mdi-share-variant"
                 button-color="primary-bg"
                 class="mt-4"
@@ -164,7 +164,7 @@
                 variant="tonal"
                 class="pa-4 rounded"
               >
-                Note sharing is disabled in instance settings.
+                {{ $t('Note sharing is disabled in instance settings.') }}
               </v-sheet>
               <v-sheet
                 v-else
@@ -172,7 +172,7 @@
                 variant="tonal"
                 class="pa-4 rounded"
               >
-                You do not have permission to share notes.
+                {{ $t('You do not have permission to share notes.') }}
               </v-sheet>
             </div>
           </v-container>
@@ -267,7 +267,7 @@ function openPendingReview(shareInfo: ShareInfo) {
 }
 
 function formatShareCreated(created: string) {
-  return formatDistanceToNow(parseISO(created)) + ' ago';
+  return t('{duration} ago', { duration: formatDistanceToNow(parseISO(created), { locale: getDateFnsLocale() }) });
 }
 
 function isShareExpired(shareInfo: ShareInfo) {
@@ -276,12 +276,12 @@ function isShareExpired(shareInfo: ShareInfo) {
 
 function formatShareExpiry(shareInfo: ShareInfo) {
   if (shareInfo.is_revoked) {
-    return 'Revoked';
+    return t('Revoked');
   }
   if (isShareExpired(shareInfo)) {
-    return 'Expired';
+    return t('Expired');
   }
-  return 'Expires in ' + formatDistanceToNow(parseISO(shareInfo.expire_date));
+  return t('Expires in {duration}', { duration: formatDistanceToNow(parseISO(shareInfo.expire_date), { locale: getDateFnsLocale() }) });
 }
 
 function shareExpiryTextClass(shareInfo: ShareInfo) {

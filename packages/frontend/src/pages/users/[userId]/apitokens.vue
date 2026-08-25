@@ -1,6 +1,6 @@
 <template>
   <s-card class="mt-4">
-    <v-card-title>API Tokens</v-card-title>
+    <v-card-title>{{ $t('API Tokens') }}</v-card-title>
     <v-card-text>
       <v-list>
         <v-list-item
@@ -15,10 +15,10 @@
               size="small"
               class="ml-3"
             >
-              Admin
+              {{ $t('Admin') }}
             </v-chip>
             <chip-expires class="ml-3" :value="apiToken.expire_date" />
-            <chip-date :value="apiToken.last_used" label="Last Used" />
+            <chip-date :value="apiToken.last_used" :label="$t('Last Used')" />
             <chip-created :value="apiToken.created" />
           </v-list-item-title>
           <template #append>
@@ -27,7 +27,7 @@
         </v-list-item>
         <v-list-item
           v-if="apiTokens.length === 0"
-          title="No API tokens available"
+          :title="$t('No API tokens available')"
         />
       </v-list>
     </v-card-text>

@@ -69,7 +69,7 @@ export function useCursorPaginationFetcher<T>({ baseURL, query }: { baseURL: str
       data.value.push(...toRef(res.results).value);
       error.value = null;
     } catch (err: any) {
-      error.value = err?.data || 'Could not load data';
+      error.value = err?.data || t('Could not load data');
       requestErrorToast({ error: err });
     } finally {
       pending.value = false;

@@ -1,0 +1,44 @@
+format = "templates/v2"
+id = "e5e76523-1c66-4cd6-982b-e0aa3e25be90"
+tags = [
+    "web",
+]
+images = []
+
+[[translations]]
+id = "c71439e4-ed27-4dd2-aa60-4e81122594e6"
+is_main = true
+language = "zh-CN"
+status = "finished"
+
+[translations.data]
+title = "任意文件上传"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+summary = """
+应用的上传功能未对文件类型、内容及存储路径进行严格校验，攻击者可上传 Webshell（如 .php、.jsp、.aspx 脚本）或恶意文件，随后通过 Web 直接访问并执行任意代码，最终获得服务器控制权。
+"""
+description = """
+我们发现应用存在任意文件上传漏洞，成功上传可执行脚本文件并获得了服务器代码执行能力。
+
+**TODO：技术描述补充**
+
+常见的校验绕过方式包括：
+
+- 前端仅用 JavaScript 校验扩展名：禁用 JS 或直接构造请求即可绕过；
+- 仅校验 Content-Type 或文件扩展名黑名单：修改 `Content-Type: image/jpeg`、使用大小写（`.PhP`）、双扩展名（`shell.php.jpg`）、`%00` 截断、`.htaccess`/`.user.ini` 解析利用等；
+- 未校验文件内容：在图片中嵌入 PHP 代码（图片马），配合解析漏洞或包含漏洞利用；
+- 存储路径可控：上传路径可遍历（`../../`）将文件写到 Web 目录之外或敏感位置。
+
+上传成功后，攻击者访问 `http://target/uploads/shell.php` 即可执行任意命令，进而读取数据库凭证、横向移动、植入持久化后门，完全控制服务器。
+"""
+recommendation = """
+- 采用白名单机制校验文件扩展名与 MIME 类型，仅允许业务必需的类型（如 jpg/png/pdf）；
+- 校验文件内容（文件头 magic number）与扩展名一致性，使用独立的图片解码重编码处理图片；
+- 重命名文件（UUID/随机名 + 固定安全扩展名），禁止保留用户原始文件名；
+- 上传文件与 Web 解析目录分离：存储到对象存储或 Web 不可直接解析执行的目录，或该目录禁用脚本执行权限；
+- 限制上传文件大小与频率，校验压缩包内容（防范 Zip Bomb）；
+- 对服务器进行最小化权限配置（运行账户、目录权限），即使失陷也限制影响范围。
+"""
+short_recommendation = "白名单校验类型与内容，重命名并隔离存储上传文件，禁止 Web 目录执行脚本权限。"
+references = []
+affected_components = []

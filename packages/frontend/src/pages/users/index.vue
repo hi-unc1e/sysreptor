@@ -1,14 +1,14 @@
 <template>
-  <list-view 
+  <list-view
     url="/api/v1/pentestusers/"
     v-model:ordering="localSettings.userListOrdering"
     :ordering-options="[
-      {id: 'created', title: 'Created', value: '-created'},
-      {id: 'updated', title: 'Updated', value: '-updated'},
-      {id: 'name', title: 'Name', value: 'username'},
+      {id: 'created', title: $t('Created'), value: '-created'},
+      {id: 'updated', title: $t('Updated'), value: '-updated'},
+      {id: 'name', title: $t('Name'), value: 'username'},
     ]"
   >
-    <template #title>Users</template>
+    <template #title>{{ $t('Users') }}</template>
     <template #actions>
       <btn-create 
         to="/users/new/" 
@@ -28,14 +28,14 @@
             </v-list-item-title>
           </v-col>
           <v-col md="3">
-            <v-chip size="small" class="ma-1" v-if="user.is_superuser" text="Superuser" />
-            <v-chip size="small" class="ma-1" v-if="user.is_project_admin" text="Project Admin" />
-            <v-chip size="small" class="ma-1" v-if="user.is_user_manager" text="User Manager" />
-            <v-chip size="small" class="ma-1" v-if="user.is_designer" text="Designer" />
-            <v-chip size="small" class="ma-1" v-if="user.is_template_editor" text="Template Editor" />
-            <v-chip size="small" class="ma-1" v-if="user.is_guest" text="Guest" />
-            <v-chip size="small" class="ma-1" v-if="user.is_global_archiver" text="Global Archiver" />
-            <v-chip size="small" class="ma-1" v-if="user.is_system_user" text="System" />
+            <v-chip size="small" class="ma-1" v-if="user.is_superuser" :text="$t('Superuser')" />
+            <v-chip size="small" class="ma-1" v-if="user.is_project_admin" :text="$t('Project Admin')" />
+            <v-chip size="small" class="ma-1" v-if="user.is_user_manager" :text="$t('User Manager')" />
+            <v-chip size="small" class="ma-1" v-if="user.is_designer" :text="$t('Designer')" />
+            <v-chip size="small" class="ma-1" v-if="user.is_template_editor" :text="$t('Template Editor')" />
+            <v-chip size="small" class="ma-1" v-if="user.is_guest" :text="$t('Guest')" />
+            <v-chip size="small" class="ma-1" v-if="user.is_global_archiver" :text="$t('Global Archiver')" />
+            <v-chip size="small" class="ma-1" v-if="user.is_system_user" :text="$t('System')" />
           </v-col>
           <v-col md="1">
             <v-chip size="small" class="ma-1" v-if="!user.is_system_user">
@@ -45,10 +45,10 @@
             </v-chip>
           </v-col>
           <v-col md="2">
-            <v-chip size="small" class="ma-1" v-if="!user.is_system_user">Last Login: {{ (user.last_login || 'never').split('T')[0] }}</v-chip>
+            <v-chip size="small" class="ma-1" v-if="!user.is_system_user">{{ $t('Last Login: {date}', { date: (user.last_login || $t('never')).split('T')[0] }) }}</v-chip>
           </v-col>
           <v-col md="1">
-            <v-chip size="small" class="ma-1" color="warning" v-if="!user.is_active">Inactive</v-chip>
+            <v-chip size="small" class="ma-1" color="warning" v-if="!user.is_active">{{ $t('Inactive') }}</v-chip>
           </v-col>
         </v-row>
       </v-list-item>

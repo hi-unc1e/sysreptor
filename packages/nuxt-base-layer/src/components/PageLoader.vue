@@ -4,14 +4,14 @@
 
     <div v-if="props.items.hasError.value">
       <v-alert color="error">
-        Failed to load data
+        {{ $t('Failed to load data') }}
         <template v-if="props.items.error.value?.detail">: {{ props.items.error.value.detail }}</template>
         <br>
         <s-btn-secondary
           @click="props.items.fetchNextPage()"
           :loading="props.items.pending.value"
           prepend-icon="mdi-refresh"
-          text="Retry"
+          :text="$t('Retry')"
         />
       </v-alert>
     </div>

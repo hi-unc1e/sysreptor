@@ -31,22 +31,22 @@ export function designTitleTemplate(projectType?: ProjectType, title?: string|nu
 
 export function profileTitleTemplate(title?: string|null, route?: RouteType) {
   title = getTitle(title, route);
-  return rootTitleTemplate((title ? title + ' | ' : '') + 'Profile');
+  return rootTitleTemplate((title ? title + ' | ' : '') + t('Profile'));
 }
 
 export function userNotesTitleTemplate(title?: string|null, route?: RouteType) {
   title = getTitle(title, route);
-  return rootTitleTemplate((title ? title + ' | ' : '') + 'Notes');
+  return rootTitleTemplate((title ? title + ' | ' : '') + t('Notes'));
 }
 
 export function projectNoteTitleTemplate(project?: PentestProject, title?: string|null, route?: RouteType) {
   title = getTitle(title, route);
-  return projectTitleTemplate(project, (title ? `${title} | ` : '') + 'Notes');
+  return projectTitleTemplate(project, (title ? `${title} | ` : '') + t('Notes'));
 }
 
 export function projectListBreadcrumbs(): Breadcrumbs {
   return [
-    { title: 'Projects', to: '/projects/' },
+    { title: t('Projects'), to: '/projects/' },
   ];
 }
 
@@ -58,7 +58,7 @@ export function projectDetailBreadcrumbs(project?: PentestProject): Breadcrumbs 
 
 export function designListBreadcrumbs(): Breadcrumbs {
   return [
-    { title: 'Designs', to: '/designs/' },
+    { title: t('Designs'), to: '/designs/' },
   ];
 }
 
@@ -70,7 +70,7 @@ export function designDetailBreadcrumbs(projectType?: ProjectType): Breadcrumbs 
 
 export function archivedProjectListBreadcrumbs(): Breadcrumbs {
   return projectListBreadcrumbs().concat([
-    { title: 'Archived', to: '/projects/archived/' },
+    { title: t('Archived'), to: '/projects/archived/' },
   ]);
 }
 
@@ -82,7 +82,7 @@ export function archivedProjectDetailBreadcrumbs(archive?: ArchivedProject): Bre
 
 export function templateListBreadcrumbs(): Breadcrumbs {
   return [
-    { title: 'Templates', to: '/templates/' },
+    { title: t('Templates'), to: '/templates/' },
   ];
 }
 
@@ -95,7 +95,7 @@ export function templateDetailBreadcrumbs(template?: FindingTemplate|null): Brea
 
 export function userListBreadcrumbs(): Breadcrumbs {
   return [
-    { title: 'Users', to: '/users/' },
+    { title: t('Users'), to: '/users/' },
   ];
 }
 
@@ -107,7 +107,7 @@ export function userDetailBreadcrumbs(user?: UserShortInfo): Breadcrumbs {
 
 export function pluginBreadcrumbs(scope: PluginRouteScope): Breadcrumbs {
   const breadcrumbs = [
-    { title: 'Plugins' },
+    { title: t('Plugins') },
   ] as Breadcrumbs;
 
   // Get nearest plugin menu entry for page

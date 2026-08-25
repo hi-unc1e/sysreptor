@@ -200,7 +200,7 @@
                   v-if="definition.items!.type === FieldDataType.STRING"
                   @click="bulkEditList = !bulkEditList"
                   :icon="bulkEditList ? 'mdi-format-list-bulleted' : 'mdi-playlist-edit'"
-                  v-tooltip.top="bulkEditList ? 'Edit as list' : 'Bulk edit list items'"
+                  v-tooltip.top="bulkEditList ? $t('Edit as list') : $t('Bulk edit list items')"
                   density="comfortable"
                 />
               </template>
@@ -214,7 +214,7 @@
                 @update:model-value="emitInputStringList"
                 spellcheck="false"
                 v-bind="fieldAttrs"
-                label="Enter one item per line"
+                :label="$t('Enter one item per line')"
                 class="mt-4"
               />
               <v-list v-else class="pa-0 bg-inherit field-nested">
@@ -255,17 +255,17 @@
                             class="mb-4"
                           />
 
-                          <s-btn-icon 
+                          <s-btn-icon
                             @click="emitInputList('move', entryIdx, entryIdx - 1)"
                             icon="mdi-arrow-up-drop-circle-outline"
-                            v-tooltip.top="'Move up in list'"
+                            v-tooltip.top="$t('Move up in list')"
                             :disabled="props.disabled || props.readonly || entryIdx === 0"
                             density="compact"
                           />
                           <s-btn-icon
                             @click="emitInputList('move', entryIdx, entryIdx + 1)"
                             icon="mdi-arrow-down-drop-circle-outline"
-                            v-tooltip.top="'Move down in list'"
+                            v-tooltip.top="$t('Move down in list')"
                             :disabled="props.disabled || props.readonly || entryIdx === formValue.length - 1"
                             density="compact"
                           />
@@ -295,7 +295,7 @@
                     @click="emitInputList('add')"
                     :disabled="props.disabled || props.readonly"
                     prepend-icon="mdi-plus"
-                    text="Add"
+                    :text="$t('Add')"
                   />
                 </v-list-item>
               </v-list>
@@ -493,7 +493,7 @@ async function validateRegexPattern(value: string) {
     // Execute regex in a web worker with timeout to prevent RegEx DoS
     const res = await regexWorker.run({ pattern, value });
     if (!res) {
-      return `Invalid format. Value does not match pattern ${pattern}`;
+      return t('Invalid format. Value does not match pattern {pattern}', { pattern: String(pattern) });
     }
   } catch (e: any) {
     return e.message;
@@ -510,7 +510,7 @@ function validateJson(v: string) {
   try {
     JSON.parse(v);
   } catch (e: any) {
-    return `Invalid JSON: ${e.message}`;
+    return t('Invalid JSON: {message}', { message: e.message });
   }
 
   return true;

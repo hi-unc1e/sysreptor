@@ -5,8 +5,8 @@
   >
     <s-btn-secondary
       @click="performCreate()"
-      text="Add"
-      v-tooltip.top="'Add Note (Ctrl+J)'"
+      :text="$t('Add')"
+      v-tooltip.top="$t('Add Note (Ctrl+J)')"
       :disabled="props.disabled"
       :loading="actionInProgress"
       prepend-icon="mdi-plus"
@@ -27,13 +27,13 @@
           <v-list-item
             @click="performCreate({ type: NoteType.TEXT })"
             prepend-icon="mdi-note-text-outline"
-            title="Add Text Note"
+            :title="$t('Add Text Note')"
             link
           />
           <v-list-item
             @click="performCreate({ type: NoteType.EXCALIDRAW })"
             prepend-icon="mdi-drawing"
-            title="Add Excalidraw Note"
+            :title="$t('Add Excalidraw Note')"
             link
             :disabled="props.preventCreateExcalidraw"
           />

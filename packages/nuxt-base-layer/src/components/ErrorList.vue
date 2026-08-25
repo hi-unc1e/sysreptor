@@ -5,7 +5,7 @@
         <v-expansion-panel-title hide-actions>
           <div class="error-header text-body-large">
             <v-icon color="green" start icon="mdi-checkbox-marked" />
-            All clear! Your report is ready for download.
+            {{ $t('All clear! Your report is ready for download.') }}
           </div>
         </v-expansion-panel-title>
       </v-expansion-panel>
@@ -25,9 +25,9 @@
             {{ msg.message }}
             <span v-if="msg.location" class="error-location">
               <slot name="location" :msg="msg">
-                in {{ msg.location.type }}
+                {{ $t('in {type}', { type: msg.location.type }) }}
                 <span v-if="msg.location.name">"{{ msg.location.name }}"</span>
-                <span v-if="msg.location.path">field {{ msg.location.path }}</span>
+                <span v-if="msg.location.path">{{ $t('field {path}', { path: msg.location.path }) }}</span>
               </slot>
             </span>
 
@@ -41,7 +41,7 @@
         <v-expansion-panel-title hide-actions>
           <div class="error-header text-body-large">
             <v-progress-circular size="24" indeterminate class="mr-2"/>
-            <span>Checks in progress...</span>
+            <span>{{ $t('Checks in progress...') }}</span>
           </div>
         </v-expansion-panel-title>
       </v-expansion-panel>
@@ -51,7 +51,7 @@
       <div v-if="showNoMessageInfo && messageList.length === 0 && !props.loading" class="error-group">
         <div class="error-header text-body-large">
           <v-icon color="green" start icon="mdi-checkbox-marked" />
-          Everything looks fine. There are no errors or warnings.
+          {{ $t('Everything looks fine. There are no errors or warnings.') }}
         </div>
       </div>
 
@@ -62,9 +62,9 @@
             <slot name="message" :msg="msg">
               {{ msg.message }}
               <span v-if="msg.location && msg.location.name" class="error-location">
-                in {{ msg.location.type }}
+                {{ $t('in {type}', { type: msg.location.type }) }}
                 <span v-if="msg.location.name">"{{ msg.location.name }}"</span>
-                <span v-if="msg.location.path"> field {{ msg.location.path }}</span>
+                <span v-if="msg.location.path"> {{ $t('field {path}', { path: msg.location.path }) }}</span>
               </span>
             </slot>
           </p>
@@ -76,7 +76,7 @@
       <div v-if="loading" class="error-group">
         <div class="error-header text-body-large">
           <v-progress-circular size="24" indeterminate class="mr-2"/>
-          <span>Checks in progress...</span>
+          <span>{{ $t('Checks in progress...') }}</span>
         </div>
       </div>
     </div>

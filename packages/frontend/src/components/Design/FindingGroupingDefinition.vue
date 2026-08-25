@@ -1,15 +1,15 @@
 <template>
   <s-card class="mt-4 mb-4">
-    <v-card-title>Finding Grouping</v-card-title>
+    <v-card-title>{{ $t('Finding Grouping') }}</v-card-title>
     <v-card-text>
       <p>
-        Group findings by following field in reports:<br>
-        <v-btn 
-          href="https://docs.sysreptor.com/designer/findings/" 
+        {{ $t('Group findings by following field in reports:') }}<br>
+        <v-btn
+          href="https://docs.sysreptor.com/designer/findings/"
           target="_blank"
-          text="Findings are not grouped in the PDF? You might need to update your design."
-          prepend-icon="mdi-help-circle" 
-          variant="plain" 
+          :text="$t('Findings are not grouped in the PDF? You might need to update your design.')"
+          prepend-icon="mdi-help-circle"
+          variant="plain"
           density="compact"
           class="btn-help"
         />
@@ -20,8 +20,8 @@
           <s-select
             :model-value="modelValue?.[0]?.field"
             @update:model-value="modelValue = $event ? [{field: $event, order: modelValue?.[0]?.order || SortOrder.ASC}] : null"
-            label="Field"
-            hint="Group finding by field in report. Empty: do not group findings (default)"
+            :label="$t('Field')"
+            :hint="$t('Group finding by field in report. Empty: do not group findings (default)')"
             :items="availableFindingFields"
             :readonly="props.readonly"
             clearable
@@ -32,9 +32,9 @@
           <s-select
             :model-value="modelValue?.[0]?.order"
             @update:model-value="modelValue = $event ? [{field: modelValue![0]!.field, order: $event}] : null"
-            label="Order of groups"
-            hint="Order groups in ascending/descending order. Findings in groups are ordered according to finding ordering definition."
-            :items="[SortOrder.ASC, SortOrder.DESC]"
+            :label="$t('Order of groups')"
+            :hint="$t('Order groups in ascending/descending order. Findings in groups are ordered according to finding ordering definition.')"
+            :items="[{title: $t('Ascending'), value: SortOrder.ASC}, {title: $t('Descending'), value: SortOrder.DESC}]"
             :readonly="props.readonly"
             :disabled="!modelValue?.[0]?.field"
             class="mt-2"

@@ -29,14 +29,14 @@ const date = computed(() => props.value && props.value !== 'never' ? parseISO(pr
 const isoDate = computed(() => date.value ? formatISO9075(date.value) : 'never');
 const formattedDate = computed(() => {
   if (!date.value) {
-    return 'never';
+    return t('never');
   }
 
-  const formatted = formatDistanceToNow(date.value);
+  const formatted = formatDistanceToNow(date.value, { locale: getDateFnsLocale() });
   if (props.relative === 'past') {
-    return formatted + ' ago';
+    return t('{duration} ago', { duration: formatted });
   } else {
-    return 'in ' + formatted;
+    return t('in {duration}', { duration: formatted });
   }
 });
 </script>

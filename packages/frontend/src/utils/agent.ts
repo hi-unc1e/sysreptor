@@ -159,15 +159,15 @@ export async function parseEventStream(
 
   // Handle abort signal
   const abortHandler = () => {
-    reader.cancel('Aborted by user').catch(() => {});
+    reader.cancel(t('Aborted by user')).catch(() => {});
   };
   signal?.addEventListener('abort', abortHandler);
 
   try {
     while (true) {
-      // Check if aborted before reading
+      // Check for aborted before reading
       if (signal?.aborted) {
-        throw new Error('Aborted by user');
+        throw new Error(t('Aborted by user'));
       }
       const { done, value } = await reader.read();
       if (done) {

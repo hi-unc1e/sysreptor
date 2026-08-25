@@ -66,18 +66,18 @@ export function requestErrorToast({ error, message }: { error: any; message?: st
       message = error.reason as string;
     } else if (error.name === 'FetchError') {
       if (error?.options?.method === "GET") {
-        message = "Failed to load data";
+        message = t("Failed to load data");
       } else if (["POST", "PUT", "PATCH"].includes(error?.options?.method)) {
-        message = "Failed to save data";
+        message = t("Failed to save data");
       } else if (error?.options?.method === "DELETE") {
-        message = "Failed to delete data";
+        message = t("Failed to delete data");
       } else {
-        message = "Request error";
+        message = t("Request error");
       }
     } else if (error.message) {
       message = error.message as string;
     } else {
-      message = 'Unexpected error';
+      message = t('Unexpected error');
     }
   }
   if (error?.data?.detail) {
@@ -87,7 +87,7 @@ export function requestErrorToast({ error, message }: { error: any; message?: st
   } else if (error?.data?.non_field_errors) {
     message += ": " + error.data.non_field_errors.join(", ");
   } else if (error?.status === 429) {
-    message += ": Exceeded rate limit. Try again later.";
+    message += ": " + t('Exceeded rate limit. Try again later.');
   } else if (isObject(error?.data)) {
     const entries = Object.values(error.data)
       .filter((v) => Array.isArray(v))
@@ -115,7 +115,7 @@ export function collabConfirmToast(message?: string) {
   return showConfirm({
     message:
       message ||
-      "Other users are editing this list. This operation might result in conflicts.",
-    buttonText: "Force change",
+      t("Other users are editing this list. This operation might result in conflicts."),
+    buttonText: t("Force change"),
   });
 }

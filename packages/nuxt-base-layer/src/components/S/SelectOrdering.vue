@@ -10,7 +10,7 @@
         <v-list-item
           v-for="option in props.orderingOptions" :key="option.id"
           prepend-icon="mdi-sort"
-          :title="option.title"
+          :title="$t(option.title)"
           :value="option"
         />
       </v-list>

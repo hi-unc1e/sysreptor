@@ -1,57 +1,57 @@
 <template>
   <v-container class="h-100 overflow-y-auto">
-    <h1 class="text-headline-large font-weight-bold">License Info</h1>
+    <h1 class="text-headline-large font-weight-bold">{{ $t('License Info') }}</h1>
 
     <p v-if="license.error" class="text-error mt-2">
       <v-icon start color="error" icon="mdi-alert-decagram" />
-      License Error: {{ license.error }}<br>
-      Falling back to a free community license. Some features are disabled.<br>
-      See <a href="https://sysreptor.com/pricing" target="_blank" class="text-primary">https://sysreptor.com/pricing</a>
+      {{ $t('License Error: {error}', { error: license.error }) }}<br>
+      {{ $t('Falling back to a free community license. Some features are disabled.') }}<br>
+      {{ $t('See') }} <a href="https://sysreptor.com/pricing" target="_blank" class="text-primary">https://sysreptor.com/pricing</a>
     </p>
 
     <v-table class="table-key-value">
       <tbody>
         <tr>
-          <td>License Type:</td>
+          <td>{{ $t('License Type:') }}</td>
           <td>{{ license.type }}</td>
         </tr>
         <tr v-if="license.name">
-          <td>Licensed to:</td>
+          <td>{{ $t('Licensed to:') }}</td>
           <td>{{ license.name }}</td>
         </tr>
         <tr v-if="license.valid_from">
-          <td>Valid from:</td>
+          <td>{{ $t('Valid from:') }}</td>
           <td>{{ license.valid_from }}</td>
         </tr>
         <tr v-if="license.valid_until">
-          <td>Valid until:</td>
+          <td>{{ $t('Valid until:') }}</td>
           <td>
             {{ license.valid_until }}
-            <v-chip v-if="new Date(license.valid_until) < new Date()" text="Expired" color="error" size="small" class="ml-2" />
-            <v-chip v-else-if="licenseWarning" text="Expires soon" color="warning" size="small" class="ml-2" />
+            <v-chip v-if="new Date(license.valid_until) < new Date()" :text="$t('Expired')" color="error" size="small" class="ml-2" />
+            <v-chip v-else-if="licenseWarning" :text="$t('Expires soon')" color="warning" size="small" class="ml-2" />
           </td>
         </tr>
         <tr>
-          <td>Max. Users:</td>
+          <td>{{ $t('Max. Users:') }}</td>
           <td>{{ license.users }}</td>
         </tr>
         <tr>
-          <td>Active Users:</td>
+          <td>{{ $t('Active Users:') }}</td>
           <td>
             {{ license.active_users }}
-            <v-chip v-if="license.active_users > license.users" text="Limit exceeded" color="error" size="small" class="ml-2" />
+            <v-chip v-if="license.active_users > license.users" :text="$t('Limit exceeded')" color="error" size="small" class="ml-2" />
           </td>
         </tr>
         <tr>
-          <td>Software Version:</td>
+          <td>{{ $t('Software Version:') }}</td>
           <td>{{ license.software_version }}</td>
         </tr>
         <tr>
-          <td>Database Version:</td>
+          <td>{{ $t('Database Version:') }}</td>
           <td>{{ license.database_version }}</td>
         </tr>
         <tr>
-          <td>Plugins:</td>
+          <td>{{ $t('Plugins:') }}</td>
           <td>{{ license.plugins.join(', ') || '-' }}</td>
         </tr>
       </tbody>
@@ -64,7 +64,7 @@ definePageMeta({
   title: 'License',
   toplevel: true,
 });
-useAppBar({ breadcrumbs: [{ title: 'License', to: '/license/' }] });
+useAppBar({ breadcrumbs: [{ title: t('License'), to: '/license/' }] });
 
 const license = await useFetchE<LicenseInfoDetails>('/api/v1/utils/license/', { method: 'GET' });
 const licenseWarning = computed(() => {

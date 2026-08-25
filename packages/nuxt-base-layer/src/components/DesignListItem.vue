@@ -23,35 +23,35 @@
           @click.stop
           icon="mdi-cogs"
           size="x-small"
-          v-tooltip="{ text: 'Settings', location: 'top', openDelay: 500 }"
+          v-tooltip="{ text: $t('Settings'), location: 'top', openDelay: 500 }"
         />
         <s-btn-icon
           :to="`/designs/${item.id}/pdfdesigner/`"
           @click.stop
           icon="mdi-pencil-ruler"
           size="x-small"
-          v-tooltip="{ text: 'PDF Designer', location: 'top', openDelay: 500 }"
+          v-tooltip="{ text: $t('PDF Designer'), location: 'top', openDelay: 500 }"
         />
         <s-btn-icon
           :to="`/designs/${item.id}/reportfields/`"
           @click.stop
           icon="mdi-alpha-r-box"
           size="x-small"
-          v-tooltip="{ text: 'Report Fields', location: 'top', openDelay: 500 }"
+          v-tooltip="{ text: $t('Report Fields'), location: 'top', openDelay: 500 }"
         />
         <s-btn-icon
           :to="`/designs/${item.id}/findingfields/`"
           @click.stop
           icon="mdi-alpha-f-box"
           size="x-small"
-          v-tooltip="{ text: 'Finding Fields', location: 'top', openDelay: 500 }"
+          v-tooltip="{ text: $t('Finding Fields'), location: 'top', openDelay: 500 }"
         />
         <s-btn-icon
           :to="`/designs/${item.id}/notes/`"
           @click.stop
           icon="mdi-notebook"
           size="x-small"
-          v-tooltip="{ text: 'Notes', location: 'top', openDelay: 500 }"
+          v-tooltip="{ text: $t('Notes'), location: 'top', openDelay: 500 }"
         />
       </div>
     </template>

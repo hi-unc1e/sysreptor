@@ -115,7 +115,7 @@ export function useLockEdit<T>(options: LockEditOptions<T>) {
     if (options.errorMessage?.value) {
       return options.errorMessage.value
     }
-    return 'You do not have permissions to edit this resource.';
+    return t('You do not have permissions to edit this resource.');
   })
   const toolbarAttrs = computed(() => {
     return ({

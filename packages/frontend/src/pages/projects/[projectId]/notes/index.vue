@@ -4,7 +4,7 @@
       <img src="@base/assets/dino/project.svg" alt="" class="img-raptor" />
     </template>
     <template #text>
-      <strong>Start writing notes</strong>
+      <strong>{{ $t('Start writing notes') }}</strong>
     </template>
   </v-empty-state>
 </template>

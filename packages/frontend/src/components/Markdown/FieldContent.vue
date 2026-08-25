@@ -33,7 +33,7 @@
         <div class="mde-endmarker mde-endmarker-top">
           <s-btn
             @click="syncScrollOrTop()"
-            text="End of preview"
+            :text="$t('End of preview')"
             append-icon="mdi-arrow-down"
             variant="plain"
           />
@@ -51,7 +51,7 @@
         <div class="mde-endmarker mde-endmarker-bottom">
           <s-btn
             @click="syncScrollOrTop()"
-            text="End of preview"
+            :text="$t('End of preview')"
             append-icon="mdi-arrow-up"
             variant="plain"
           />

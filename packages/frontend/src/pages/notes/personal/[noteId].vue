@@ -34,7 +34,7 @@
         <template #default>
           <s-btn-icon
             @click="shareDialogVisible = true"
-            v-tooltip.top="'Share'"
+            v-tooltip.top="$t('Share')"
           >
             <notes-share-pending-badge :pending="note.has_pending_share_files && note.is_shared" />
           </s-btn-icon>
@@ -53,7 +53,7 @@
             :export-url="exportPdfUrl"
             :name="note.title"
             extension=".pdf"
-            button-text="Export as PDF"
+            :button-text="$t('Export as PDF')"
           />
         </template>
       </edit-toolbar>

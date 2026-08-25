@@ -15,13 +15,13 @@ useLazyAsyncData(async () => {
       method: 'POST',
       body: {}
     });
-    successToast('Superuser permissions enabled');
+    successToast(t('Superuser permissions enabled'));
     auth.redirect(route.query.next);
   } catch (error: any) {
     if (error?.data?.code === 'reauth-required') {
       await auth.redirectToReAuth({ replace: true });
     } else {
-      requestErrorToast({ message: 'Failed to enable superuser permissions', error });
+      requestErrorToast({ message: t('Failed to enable superuser permissions'), error });
       auth.redirect(route.query.next);
     }
   }

@@ -11,11 +11,11 @@
               @click="fileInput?.click()"
               block
               prepend-icon="mdi-upload"
-              text="Upload"
+              :text="$t('Upload')"
             >
               <template #loader>
                 <s-saving-loader-spinner />
-                Uploading
+                {{ $t('Uploading') }}
               </template>
             </s-btn-secondary>
             <input
@@ -28,7 +28,7 @@
             />
           </v-card-actions>
           <v-card-text class="text--small text-center pt-0">
-            Attach files via drag and drop
+            {{ $t('Attach files via drag and drop') }}
           </v-card-text>
         </s-card>
       </v-col>
@@ -42,7 +42,7 @@
             <s-btn-icon
               @click="copyToClipboard(assetUrl(asset))"
               icon="mdi-content-copy"
-              v-tooltip="'Copy path to clipboard'"
+              v-tooltip="$t('Copy path to clipboard')"
               size="small"
               density="compact"
             />
@@ -54,7 +54,7 @@
               download
               density="comfortable"
               variant="text"
-              v-tooltip="'Download asset'"
+              v-tooltip="$t('Download asset')"
             />
             <s-btn-icon
               icon="mdi-open-in-new"
@@ -62,7 +62,7 @@
               target="_blank"
               density="comfortable"
               variant="text"
-              v-tooltip="'Show image in new tab'"
+              v-tooltip="$t('Show image in new tab')"
             />
             <v-spacer />
             <btn-delete
@@ -114,7 +114,7 @@ async function performFileUpload(files?: File[]|FileList|null) {
     await bulkAction(Array.from(files), async f => {
       const asset = await uploadFileHelper<UploadedFileInfo>(`/api/v1/projecttypes/${props.projectType.id}/assets/`, f);
       assets.data.value.unshift(asset);
-    }, f => `Failed to upload ${f.name}`);
+    }, f => t('Failed to upload {name}', { name: f.name }));
   } finally {
     // clear file input
     fileInput.value!.value = '';

@@ -2,7 +2,7 @@
   <v-select
     v-model="modelValue"
     :items="statusItems"
-    label="Status"
+    :label="$t('Status')"
     item-value="id"
     item-title="label"
     item-props="props"
@@ -20,7 +20,7 @@
     </template>
     <template #selection="{item: statusInfo}">
       <v-icon start :class="'status-' + statusInfo.id" :icon="statusInfo.icon || 'mdi-help'" /> 
-      {{ statusInfo.label }}
+      {{ $t(statusInfo.label) }}
     </template>
   </v-select>
 </template>
@@ -67,7 +67,7 @@ const statusItems = computed(() => {
       }
     })
   }
-  return allItems;
+  return allItems.map(s => ({ ...s, label: t(s.label) }));
 });
 
 watch(() => modelValue, () => {

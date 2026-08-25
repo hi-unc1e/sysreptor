@@ -4,10 +4,10 @@
       <s-project-type-selection
         v-model="templateFieldFilterDesign"
         :query-filters="{scope: [ProjectTypeScope.GLOBAL]}"
-        :additional-items="([{id: 'all', name: 'All Designs'}] as ProjectType[])"
+        :additional-items="([{id: 'all', name: $t('All Designs')}] as ProjectType[])"
         :disabled="disabled"
         :required="true"
-        label="Show fields of"
+        :label="$t('Show fields of')"
         variant="underlined"
       />
     </v-list-item>

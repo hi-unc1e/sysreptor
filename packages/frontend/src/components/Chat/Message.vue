@@ -2,7 +2,7 @@
   <div v-if="props.msg.role === MessageRole.ASSISTANT" class="assistant-message">
     <chat-reasoning-panel
       v-if="props.msg.reasoning"
-      title="Reasoning..."
+      :title="$t('Reasoning...')"
       :is-streaming="props.isStreaming && !props.msg.text"
     >
       <template #default>
@@ -31,7 +31,7 @@
             class="assistant-message-copy-btn text-disabled"
             size="x-small"
             density="compact"
-            v-tooltip.top="'Copy to clipboard'"
+            v-tooltip.top="$t('Copy to clipboard')"
           />
         </div>
         <v-spacer />
@@ -61,7 +61,7 @@
       class="user-message-copy-btn"
       size="small"
       density="compact"
-      v-tooltip.top="'Copy to clipboard'"
+      v-tooltip.top="$t('Copy to clipboard')"
     />
     <v-card-text class="message-text">
       {{ props.msg.text }}

@@ -35,14 +35,14 @@
           <v-btn
             v-if="props.allowNever"
             @click="setNever"
-            text="Never"
+            :text="$t('Never')"
             prepend-icon="mdi-infinity"
             variant="text"
           />
           <v-btn
             v-else-if="isTodayAllowed"
             @click="setToday"
-            text="Today"
+            :text="$t('Today')"
             prepend-icon="mdi-calendar-today"
             variant="text"
           />
@@ -81,7 +81,7 @@ const datePickerVisible = ref(false);
 
 const displayValue = computed(() => {
   if (props.modelValue === 'never') {
-    return 'Never';
+    return t('Never');
   }
   return props.modelValue;
 });
@@ -145,7 +145,7 @@ const rules = [
       return true;
     }
     if (!isValid(parseISO(d))) {
-      return 'Invalid date. Expected date format: YYYY-MM-DD';
+      return t('Invalid date. Expected date format: YYYY-MM-DD');
     }
     return true;
   },

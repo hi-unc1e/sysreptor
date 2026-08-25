@@ -3,7 +3,7 @@
     <split-menu v-model="localSettings.defaultNotesDefinitionMenuSizePx" :content-props="{ class: 'pa-0 h-100' }">
       <template #menu>
         <notes-menu
-          title="Initial Notes"
+          :title="$t('Initial Notes')"
           :create-note="createNote"
           :perform-delete="deleteNote"
           :perform-import="importNotes"
@@ -79,7 +79,7 @@
                 <img src="@base/assets/dino/project.svg" alt="" class="img-raptor" />
               </template>
               <template #text>
-                <strong>Define initial notes applied to new projects</strong>
+                <strong>{{ $t('Define initial notes applied to new projects') }}</strong>
               </template>
             </v-empty-state>
           </template>
@@ -127,7 +127,7 @@ async function createNote(data?: Partial<NoteBase>) {
     order: noteGroups.value.length + 1,
     checked: null,
     icon_emoji: null,
-    title: 'New Note',
+    title: t('New Note'),
     text: '',
     ...data,
     type: NoteType.TEXT,

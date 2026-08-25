@@ -49,6 +49,7 @@ class Language(models.TextChoices):
     # Languages without spellcheck support
     FINNISH = 'fi-FI', False, 'Finnish (fi-FI)'
     MALTESE = 'mt-MT', False, 'Maltese (mt-MT)'
+    CHINESE_SIMPLIFIED = 'zh-CN', False, 'Chinese Simplified (zh-CN)'
 
     def __new__(cls, value, spellcheck):
         obj = str.__new__(cls, value)

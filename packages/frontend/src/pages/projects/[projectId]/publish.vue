@@ -18,12 +18,12 @@
             :disabled="checksOrPreviewInProgress"
             @click="refreshPreviewAndChecks"
             prepend-icon="mdi-cached"
-            text="Refresh PDF"
+            :text="$t('Refresh PDF')"
             class="mr-1 mb-1"
           >
             <template #loader>
               <s-saving-loader-spinner />
-              Refresh PDF
+              {{ $t('Refresh PDF') }}
             </template>
           </s-btn-secondary>
           
@@ -40,7 +40,7 @@
           <s-text-field
             :model-value="generatePdfForm.filename"
             @update:model-value="updateFilename"
-            label="Filename"
+            :label="$t('Filename')"
             :rules="rules.filename"
             :loading="!wasFilenameEdited && checksOrPreviewInProgress"
             spellcheck="false"
@@ -60,7 +60,7 @@
             :disabled="hasErrors"
             :action="generateFinalReport.run"
             :confirm="false"
-            button-text="Download"
+            :button-text="$t('Download')"
             button-icon="mdi-download"
             button-color="primary-bg"
             class="mr-1 mb-1"
@@ -73,14 +73,14 @@
             <template #activator="{ props: dialogProps }">
               <s-btn-primary
                 prepend-icon="mdi-share-variant"
-                text="Share by Link"
+                :text="$t('Share by Link')"
                 :disabled="hasErrors || !auth.permissions.value.share_project_notes || !auth.permissions.value.edit_projects"
                 :loading="shareReport.pending.value"
                 class="mr-1 mb-1"
                 v-bind="dialogProps"
               />
             </template>
-            <template #title>Share Report by Link</template>
+            <template #title>{{ $t('Share Report by Link') }}</template>
             <template #default>
               <v-card-text>
                 <notes-share-info-form
@@ -89,7 +89,7 @@
                   :hidden-fields="['permissions_write', 'is_revoked']"
                 >
                   <template #header>
-                    <p>Share report to allow public access via a share link.</p>
+                    <p>{{ $t('Share report to allow public access via a share link.') }}</p>
                   </template>
                   <template #append-fields>
                     <!-- Set password for encrypting report -->
@@ -107,13 +107,13 @@
                 <v-spacer />
                 <s-btn-other
                   @click="shareReportForm.dialogVisible = false"
-                  text="Cancel"
+                  :text="$t('Cancel')"
                 />
                 <btn-confirm
                   :action="shareReport.run"
                   :confirm="false"
                   button-icon="mdi-share-variant"
-                  button-text="Share"
+                  :button-text="$t('Share')"
                   button-color="primary-bg"
                 />
               </v-card-actions>
@@ -123,7 +123,7 @@
       </v-form>
 
       <div class="mt-4">
-        <v-list-subheader>Warnings</v-list-subheader>
+        <v-list-subheader>{{ $t('Warnings') }}</v-list-subheader>
         <v-divider />
         <error-list 
           :value="allMessages" 
@@ -133,14 +133,14 @@
         >
           <template #location="{msg}">
             <NuxtLink v-if="messageLocationUrl(msg) && msg.location" :to="messageLocationUrl(msg)" @click="onBeforeOpenMessageLocationUrl(msg)" target="_blank" class="text-primary">
-              in {{ msg.location.type }}
+              {{ $t('in {type}', { type: msg.location.type }) }}
               <span v-if="msg.location.name"> "{{ msg.location.name }}"</span>
-              <span v-if="msg.location.path"> field "{{ msg.location.path }}"</span>
+              <span v-if="msg.location.path"> {{ $t('field {path}', { path: msg.location.path }) }}</span>
             </NuxtLink>
             <span v-else-if="msg.location?.name">
-              in {{ msg.location.type }}
+              {{ $t('in {type}', { type: msg.location.type }) }}
               <span v-if="msg.location.name"> "{{ msg.location.name }}"</span>
-              <span v-if="msg.location.path"> field "{{ msg.location.path }}"</span>
+              <span v-if="msg.location.path"> {{ $t('field {path}', { path: msg.location.path }) }}</span>
             </span>
           </template>
         </error-list>
@@ -182,7 +182,7 @@ const allMessages = computed(() => {
   if (checkMessagesStatus.value === 'error') {
     out.push({
       level: MessageLevel.ERROR,
-      message: 'Error while checking project',
+      message: t('Error while checking project'),
     });
   }
   return out;
@@ -224,7 +224,7 @@ const shareReportForm = ref({
   dialogVisible: false,
 })
 const rules = {
-  filename: [(v: string) => (Boolean(v) && /^[^/\\]+$/.test(v)) || 'Invalid filename'],
+  filename: [(v: string) => (Boolean(v) && /^[^/\\]+$/.test(v)) || t('Invalid filename')],
 }
 
 const menuSize = ref(window.innerWidth * 0.6);
@@ -271,7 +271,7 @@ const shareReport = useAbortController(async (fetchOptions: { signal: AbortSigna
     const reportPdf = await generatePdfRequest(fetchOptions);
     const uploadedFile = await uploadFileHelper<UploadedFileInfo>(`/api/v1/pentestprojects/${project.value.id}/upload/`, new File([reportPdf], filename.value), {}, fetchOptions);
     const note = await projectStore.createNote(project.value, {
-      title: 'Report',
+      title: t('Report'),
       icon_emoji: '📄',
       text: `[${uploadedFile.name}](/files/name/${uploadedFile.name})`,
       parent: null,

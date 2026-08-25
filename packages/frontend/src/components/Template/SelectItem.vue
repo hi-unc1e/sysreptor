@@ -17,7 +17,7 @@
       :to="{path: `/templates/${props.template.id}/`, query: { language: props.language }}"
       target="_blank"
       icon="mdi-chevron-right-circle"
-      v-tooltip="'Show template'"
+      v-tooltip="$t('Show template')"
     />
   </v-list-item-title>
 </template>

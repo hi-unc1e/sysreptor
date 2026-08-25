@@ -1,14 +1,14 @@
 <template>
   <div>
     <s-card class="mt-4">
-      <v-card-title>Login information</v-card-title>
+      <v-card-title>{{ $t('Login information') }}</v-card-title>
       <v-card-text>
         <v-row>
           <v-col>
             <s-text-field
               :model-value="user.username" @update:model-value="updateField('username', $event)"
-              label="Username"
-              hint="Use this name for logging in"
+              :label="$t('Username')"
+              :hint="$t('Use this name for logging in')"
               autocomplete="off"
               :rules="rules.required"
               :error-messages="props.errors?.username || []"
@@ -39,13 +39,13 @@
     </s-card>
 
     <s-card class="mt-4">
-      <v-card-title>Personal information</v-card-title>
+      <v-card-title>{{ $t('Personal information') }}</v-card-title>
       <v-card-text>
         <v-row class="mt-4">
           <v-col :md="5">
             <s-text-field
               :model-value="user.first_name" @update:model-value="updateField('first_name', $event)"
-              label="First name"
+              :label="$t('First name')"
               :rules="rules.required"
               required
               :error-messages="props.errors?.first_name || []"
@@ -57,7 +57,7 @@
           <v-col :md="2">
             <s-text-field
               :model-value="user.middle_name" @update:model-value="updateField('middle_name', $event)"
-              label="Middle name"
+              :label="$t('Middle name')"
               :error-messages="props.errors?.middle_name || []"
               :disabled="!canEdit"
               spellcheck="false"
@@ -67,7 +67,7 @@
           <v-col :md="5">
             <s-text-field
               :model-value="user.last_name" @update:model-value="updateField('last_name', $event)"
-              label="Last name"
+              :label="$t('Last name')"
               :rules="rules.required"
               required
               :error-messages="props.errors?.last_name || []"
@@ -81,7 +81,7 @@
           <v-col :md="6">
             <s-text-field
               :model-value="user.title_before" @update:model-value="updateField('title_before', $event)"
-              label="Title (before name)"
+              :label="$t('Title (before name)')"
               :error-messages="props.errors?.title_before || []"
               :disabled="!canEdit"
               spellcheck="false"
@@ -91,7 +91,7 @@
           <v-col :md="6">
             <s-text-field
               :model-value="user.title_after" @update:model-value="updateField('title_after', $event)"
-              label="Title (after name)"
+              :label="$t('Title (after name)')"
               :error-messages="props.errors?.title_after || []"
               :disabled="!canEdit"
               spellcheck="false"
@@ -103,8 +103,8 @@
         <s-text-field
           :model-value="user.email" @update:model-value="updateField('email', $event)"
           type="email"
-          label="Email"
-          hint="Email address to receive notifications and password reset links on (if enabled)"
+          :label="$t('Email')"
+          :hint="$t('Email address to receive notifications and password reset links on (if enabled)')"
           :rules="rules.required_email"
           :error-messages="props.errors?.email || []"
           :disabled="!canEditUsername"
@@ -117,7 +117,7 @@
             <s-text-field
               :model-value="user.phone" @update:model-value="updateField('phone', $event)"
               type="tel"
-              label="Phone number (optional)"
+              :label="$t('Phone number (optional)')"
               :error-messages="props.errors?.phone || []"
               :disabled="!canEdit"
               spellcheck="false"
@@ -128,7 +128,7 @@
             <s-text-field
               :model-value="user.mobile" @update:model-value="updateField('mobile', $event)"
               type="tel"
-              label="Mobile phone number (optional)"
+              :label="$t('Mobile phone number (optional)')"
               :error-messages="props.errors?.mobile || []"
               :disabled="!canEdit"
               spellcheck="false"
@@ -140,76 +140,76 @@
     </s-card>
 
     <s-card class="mt-4">
-      <v-card-title><pro-info>Permissions</pro-info></v-card-title>
+      <v-card-title><pro-info>{{ $t('Permissions') }}</pro-info></v-card-title>
       <v-card-text>
         <s-checkbox
           :model-value="user.is_template_editor" @update:model-value="updateField('is_template_editor', $event)"
-          label="Template Editor"
+          :label="$t('Template Editor')"
           data-testid="template-editor-checkbox"
-          hint="Template Editors are allowed to create and edit finding templates."
+          :hint="$t('Template Editors are allowed to create and edit finding templates.')"
           :error-messages="props.errors?.is_template_editor || []"
           :disabled="!canEditGeneralPermissions"
           density="compact"
         />
         <s-checkbox
           :model-value="user.is_designer" @update:model-value="updateField('is_designer', $event)"
-          label="Designer"
+          :label="$t('Designer')"
           data-testid="designer-checkbox"
-          hint="Designers can create and edit report designs. Users without this permission can create and edit private designs."
+          :hint="$t('Designers can create and edit report designs. Users without this permission can create and edit private designs.')"
           :error-messages="props.errors?.is_designer || []"
           :disabled="!canEditGeneralPermissions"
           density="compact"
         />
         <s-checkbox
           :model-value="user.is_user_manager" @update:model-value="updateField('is_user_manager', $event)"
-          label="User Manager"
+          :label="$t('User Manager')"
           data-testid="user-manager-checkbox"
-          hint="User Managers can create and update other users, assign permissions and reset passwords (except superusers)."
+          :hint="$t('User Managers can create and update other users, assign permissions and reset passwords (except superusers).')"
           :error-messages="props.errors?.is_user_manager || []"
           :disabled="!canEditGeneralPermissions"
           density="compact"
         />
         <s-checkbox
           :model-value="user.is_guest" @update:model-value="updateField('is_guest', $event)"
-          label="Guest"
-          hint="Guest are not allowed to list other users and might be further restricted by your system operator."
+          :label="$t('Guest')"
+          :hint="$t('Guest are not allowed to list other users and might be further restricted by your system operator.')"
           :error-messages="props.errors?.is_guest || []"
           :disabled="!canEditGeneralPermissions"
           density="compact"
         />
         <s-checkbox
           :model-value="user.is_global_archiver" @update:model-value="updateField('is_global_archiver', $event)"
-          label="Global Archiver"
+          :label="$t('Global Archiver')"
           data-testid="global-archiver-checkbox"
-          hint="Global Archivers will be added to archives when archiving projects (besides project members) and are able to restore these projects. They need to have archiving public keys configured for this permission take effect."
+          :hint="$t('Global Archivers will be added to archives when archiving projects (besides project members) and are able to restore these projects. They need to have archiving public keys configured for this permission take effect.')"
           :error-messages="props.errors?.is_global_archiver || []"
           :disabled="!canEditGeneralPermissions || !apiSettings.settings!.features.archiving"
           density="compact"
         />
         <s-checkbox
           :model-value="user.is_project_admin" @update:model-value="updateField('is_project_admin', $event)"
-          label="Project Admin"
+          :label="$t('Project Admin')"
           data-testid="project-admin-checkbox"
-          hint="Project Admins can access and manage all projects, regardless if they are members of the project or not."
+          :hint="$t('Project Admins can access and manage all projects, regardless if they are members of the project or not.')"
           :error-messages="props.errors?.is_project_admin || []"
           :disabled="!canEditGeneralPermissions"
           density="compact"
         />
         <s-checkbox
           :model-value="user.is_superuser" @update:model-value="updateField('is_superuser', $event)"
-          label="Superuser"
-          hint="Superusers have the highest privileges available. They have all permissions without explicitly assigning them."
+          :label="$t('Superuser')"
+          :hint="$t('Superusers have the highest privileges available. They have all permissions without explicitly assigning them.')"
           :error-messages="props.errors?.is_superuser || []"
           :disabled="!canEditSuperuserPermissions"
           density="compact"
         >
-          <template #label><permission-info :value="canEditSuperuserPermissions" permission-name="Superuser">Superuser</permission-info></template>
+          <template #label><permission-info :value="canEditSuperuserPermissions" permission-name="Superuser">{{ $t('Superuser') }}</permission-info></template>
         </s-checkbox>
         <s-checkbox
           v-if="user.is_system_user"
           :model-value="user.is_system_user"
-          label="System User"
-          hint="System users have access to internal functions such as creating backups."
+          :label="$t('System User')"
+          :hint="$t('System users have access to internal functions such as creating backups.')"
           disabled
           density="compact"
         />
@@ -235,7 +235,7 @@ const canEditGeneralPermissions = computed(() => canEdit.value && auth.permissio
 const canEditSuperuserPermissions = computed(() => canEdit.value && auth.permissions.value.user_manager && auth.permissions.value.admin);
 
 const rules = {
-  required: [(v: any) => !!v || 'This field is required!'],
+  required: [(v: any) => !!v || t('This field is required!')],
   required_email: [(v: any) => canEditUsername.value ? rules.required[0]!(v) : true],
 };
 

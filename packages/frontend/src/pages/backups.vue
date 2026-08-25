@@ -1,21 +1,19 @@
 <template>
   <v-container class="h-100 overflow-y-auto">
-    <h1 class="text-headline-large font-weight-bold mb-0">Backup</h1>
+    <h1 class="text-headline-large font-weight-bold mb-0">{{ $t('Backup') }}</h1>
 
     <p v-if="!apiSettings.settings!.features.backup">
-      No backup key configured. <br><br>
-      You need to configure a <v-code tag="span">BACKUP_KEY</v-code> as environment variable. 
-      This backup key has to be at least 20 characters long. 
-      If no <v-code tag="span">BACKUP_KEY</v-code> is configured, the backup API endpoint is disabled.
+      {{ $t('No backup key configured.') }} <br><br>
+      {{ $t('You need to configure a') }} <v-code tag="span">BACKUP_KEY</v-code> {{ $t('as environment variable. This backup key has to be at least 20 characters long. If no') }} <v-code tag="span">BACKUP_KEY</v-code> {{ $t('is configured, the backup API endpoint is disabled.') }}
     </p>
     <p v-else>
-      Enter the configured <v-code tag="span">BACKUP_KEY</v-code> to create a backup of this SysReptor instance
-      (see <a href="https://docs.sysreptor.com/setup/configuration/#backup-key" target="_blank" class="text-primary">https://docs.sysreptor.com/setup/configuration/#backup-key</a>).
+      {{ $t('Enter the configured') }} <v-code tag="span">BACKUP_KEY</v-code> {{ $t('to create a backup of this SysReptor instance (see') }}
+      <a href="https://docs.sysreptor.com/setup/configuration/#backup-key" target="_blank" class="text-primary">https://docs.sysreptor.com/setup/configuration/#backup-key</a>{{ $t(').') }}
     </p>
 
     <s-password-field
       v-model="backupKey"
-      label="Backup Key"
+      :label="$t('Backup Key')"
       :rules="rules.backupKey"
       :error-messages="backupKeyError"
       :hide-details="false"
@@ -25,7 +23,7 @@
     <btn-confirm
       :action="createBackup"
       :confirm="false"
-      button-text="Download Backup"
+      :button-text="$t('Download Backup')"
       button-icon="mdi-download"
       button-color="primary-bg"
       :disabled="!apiSettings.settings!.features.backup"
@@ -42,14 +40,14 @@
       <input type="hidden" name="csrfmiddlewaretoken" :value="csrftoken" />
     </form>
 
-    <s-card title="Backup History" class="mt-8">
+    <s-card :title="$t('Backup History')" class="mt-8">
       <template #text>
         <v-table>
           <thead>
             <tr>
-              <th>Date</th>
-              <th>User</th>
-              <th>Description</th>
+              <th>{{ $t('Date') }}</th>
+              <th>{{ $t('User') }}</th>
+              <th>{{ $t('Description') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -57,10 +55,10 @@
               <td><chip-date :value="log.created" /></td>
               <td>{{ log.user || '-' }}</td>
               <td>
-                <template v-if="log.type === BackupLogType.SETUP">Set up SysReptor instance</template>
-                <template v-else-if="log.type === BackupLogType.BACKUP_STARTED">Backup started</template>
-                <template v-else-if="log.type === BackupLogType.BACKUP_FINISHED">Backup finished</template>
-                <template v-else-if="log.type === BackupLogType.RESTORE">Restored backup</template>
+                <template v-if="log.type === BackupLogType.SETUP">{{ $t('Set up SysReptor instance') }}</template>
+                <template v-else-if="log.type === BackupLogType.BACKUP_STARTED">{{ $t('Backup started') }}</template>
+                <template v-else-if="log.type === BackupLogType.BACKUP_FINISHED">{{ $t('Backup finished') }}</template>
+                <template v-else-if="log.type === BackupLogType.RESTORE">{{ $t('Restored backup') }}</template>
                 <template v-else>{{ log.type }}</template>
               </td>
             </tr>
@@ -99,8 +97,8 @@ const backupKey = ref('');
 const backupKeyError = ref<string|null>(null);
 const rules = {
   backupKey: [
-    (v: string) => !!v || 'Backup Key is required',
-    (v: string) => v.length >= 20 || 'Backup Key must be at least 20 characters long',
+    (v: string) => !!v || t('Backup Key is required'),
+    (v: string) => v.length >= 20 || t('Backup Key must be at least 20 characters long'),
   ],
 }
 

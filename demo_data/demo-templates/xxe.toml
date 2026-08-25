@@ -68,3 +68,66 @@ references = [
 ]
 affected_components = []
 
+[[translations]]
+id = "6a79a315-3393-4eac-953f-ad376a5d8465"
+is_main = false
+language = "zh-CN"
+status = "finished"
+
+[translations.data]
+title = "XML 外部实体注入（XXE）"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+summary = """
+该 Web 应用以不安全的方式处理 XML 文档，因而存在 XML 外部实体（XXE）注入漏洞。
+XXE 注入是 Web 应用中的一类漏洞，允许攻击者干扰 XML 解析器对 XML 文档的处理。
+此类攻击可能导致机密数据泄露、拒绝服务、服务器端请求伪造（SSRF），以及对底层系统或其他后端系统造成其他严重影响。
+"""
+description = """
+我们在该 Web 应用中发现了一个 XXE 注入漏洞。
+该应用的 XML 解析器允许定义 XXE，因此可以构造恶意的 XML 文档。
+该 XXE 包含一个指向外部域名的 URL。
+解析器解引用该 XXE 后，Web 应用便与该域名发生了交互，这一点可由 DNS 请求得到证实。
+
+**TODO：技术描述补充**
+
+可扩展标记语言（XML）是一种标准化的标记语言和文件格式，用于存储、传输和重建任意数据。
+该语言以人类和机器均可读取的格式对数据进行编码。
+XML 文档的结构由 XML 标准定义。
+该标准引入了称为“实体（Entity）”的概念。
+实体提供了一种引用内容的能力，这些内容既可以由服务器远程提供，也可以驻留在服务器本地。
+XML 解析器在解析 XML 文档时，会将其中包含的实体替换为被引用的值。
+实体定义在所谓的文档类型定义（DTD）之中。
+
+DTD 定义了 XML 文档的结构和组成。
+DTD 既可以完全包含在 XML 文档自身中（即所谓的内部 DTD），也可以从其他位置加载（即所谓的外部 DTD）。
+两种方式的组合也是可能的。
+XML 外部实体（XXE）是 XML 实体的一种特殊形式，其内容从声明它的 DTD 之外的位置加载。
+
+XXE 在 DTD 中使用 SYSTEM 关键字以及一个指定内容加载来源的 URI 进行声明。
+例如：
+
+`<!DOCTYPE dtd [ <!ENTITY xxe SYSTEM "http://syslifters.com" > ]>`
+
+该 URI 还可以使用 `file://` 协议方案。
+这样便可以从本地文件加载内容。
+例如：
+
+`<!DOCTYPE dtd [ <!ENTITY xxe SYSTEM "file:///path/to/local/file" > ]>`
+
+XML 解析器在解析 XML 文档时，会通过解引用所定义的 URI，将文档中出现的 XXE 替换为其内容。
+若 URI 中包含被篡改的数据，可能造成严重后果。
+攻击者可利用这一点发起服务器端请求伪造（SSRF）攻击，进而攻陷底层服务器或其他后端基础设施。
+XXE 注入漏洞还可被用于造成服务/应用不可用（拒绝服务），或泄露本地系统文件等敏感数据。
+"""
+recommendation = """
+* 应将 XML 解析器配置为使用本地静态 DTD，并禁止解析 XML 文档中声明的外部 DTD。
+* 建议将 XML 解析库的功能限制在所需的最低范围内（参见所用库的文档）。
+* 如有可能，应在解析之前对用户输入进行校验。
+* 有关防范 XXE 注入的详细信息和帮助，请参阅 OWASP 的 XML 外部实体防范速查表（XML External Entity Prevention Cheat Sheet）。
+"""
+short_recommendation = "在 XML 解析库中禁用对外部 DTD 的支持。"
+references = [
+    "https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html",
+]
+affected_components = []
+

@@ -46,9 +46,9 @@
                     class="select-all-checkbox"
                   />
                   <v-tooltip activator="parent" location="top">
-                    <span v-if="allSelectedCount === 0">Select all</span>
-                    <span v-else-if="allSelectedCount === visibleSelectedCount">{{ allSelectedCount }} selected</span>
-                    <span v-else>{{ allSelectedCount }} selected ({{ visibleSelectedCount }} visible)</span>
+                    <span v-if="allSelectedCount === 0">{{ $t('Select all') }}</span>
+                    <span v-else-if="allSelectedCount === visibleSelectedCount">{{ $t('{count} selected', { count: allSelectedCount }) }}</span>
+                    <span v-else>{{ $t('{count} selected ({visible} visible)', { count: allSelectedCount, visible: visibleSelectedCount }) }}</span>
                   </v-tooltip>
                 </v-badge>
               </div>
@@ -58,7 +58,7 @@
                   ref="searchbarRef"
                   :model-value="items.search.value"
                   @update:model-value="updateSearch"
-                  label="Search"
+                  :label="$t('Search')"
                   variant="underlined"
                   spellcheck="false"
                   hide-details="auto"
@@ -101,7 +101,7 @@
         <page-loader :items="items" class="mt-4" />
         <v-list-item
           v-if="items.data.value.length === 0 && !items.hasNextPage.value && items.hasBaseURL.value"
-          title="No data found"
+          :title="$t('No data found')"
           class="no-data-item"
         >
           <div class="w-100 text-center">

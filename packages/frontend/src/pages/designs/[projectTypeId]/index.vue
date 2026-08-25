@@ -15,19 +15,19 @@
       </edit-toolbar>
 
       <p v-if="projectType.copy_of" class="mt-4">
-        This design is a copy
+        {{ $t('This design is a copy') }}
         <s-btn
           :to="`/designs/${projectType.copy_of}/`"
           variant="text"
           size="small"
           prepend-icon="mdi-chevron-right-circle-outline"
-          text="show original"
+          :text="$t('show original')"
           class="ml-1 mr-1"
         />
       </p>
       <s-text-field
         v-model="projectType.name"
-        label="Name"
+        :label="$t('Name')"
         :readonly="readonly"
         class="mt-4"
         spellcheck="false"

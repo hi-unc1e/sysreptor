@@ -36,3 +36,32 @@ recommendation = """
 short_recommendation = "Users should be logged out automatically after a certain period of inactivity."
 references = []
 affected_components = []
+
+[[translations]]
+id = "a64b9a96-f657-4e07-b429-02c9507a44f6"
+is_main = false
+language = "zh-CN"
+status = "finished"
+
+[translations.data]
+title = "会话管理缺陷"
+cvss = "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:N"
+summary = """
+我们在该 Web 应用的会话管理中发现了缺陷。
+用户的会话可以不受时间限制地使用，因此在任何时候都无需重新认证。
+如果其他用户事先未显式退出应用，能够访问该计算机系统的人员就可能利用这一情况。
+"""
+description = """
+我们发现用户会话可以不受时间限制地使用。
+这使攻击者可能接管事先未显式退出的用户会话。
+
+例如，若允许第三人操作仍保有活动会话的用户计算机，就可能出现这种情况。
+此外，攻击者还可能在获知会话令牌（Session Token）后对其进行重用（例如通过日志文件：本地或代理服务器上的日志等）。
+"""
+recommendation = """
+* Web 应用中的用户会话应在一定的非活动时间后自动超时。
+* 根据用户权限及应用的关键程度，超时时间可大致设置在一小时到一天之间。
+"""
+short_recommendation = "用户应在一定的非活动时间后被自动注销。"
+references = []
+affected_components = []

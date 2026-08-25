@@ -5,10 +5,10 @@
         <template #title>
           <span v-if="item.history_change_reason">{{ item.history_change_reason }}</span>
           <span v-else-if="item.history_type === '+'">
-            Created {{ formatModelName(item.history_model) }} {{ item.history_title }}
+            {{ $t('Created {model} {title}', { model: formatModelName(item.history_model), title: item.history_title }) }}
           </span>
           <span v-else-if="item.history_type === '-'">
-            Deleted {{ formatModelName(item.history_model) }} {{ item.history_title }}
+            {{ $t('Deleted {model} {title}', { model: formatModelName(item.history_model), title: item.history_title }) }}
           </span>
         </template>
       </history-timeline-item>
@@ -34,9 +34,9 @@ function historyItemTo(item: HistoryTimelineRecord) {
 
 function formatModelName(model: string) {
   return {
-    FindingTemplate: 'Template',
-    FindingTemplateTranslation: 'Translation',
-    UploadedTemplateImage: 'Image',
+    FindingTemplate: t('Template'),
+    FindingTemplateTranslation: t('Translation'),
+    UploadedTemplateImage: t('Image'),
   }[model] || model;
 }
 </script>

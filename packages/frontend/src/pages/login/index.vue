@@ -4,7 +4,7 @@
       <template #actions v-if="auth.loggedIn.value">
         <s-btn-other
           to="/"
-          text="Cancel"
+          :text="$t('Cancel')"
         />
       </template>
     </login-provider-form>

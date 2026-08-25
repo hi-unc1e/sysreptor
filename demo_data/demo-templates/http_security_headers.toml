@@ -78,3 +78,77 @@ references = [
     "https://infosec.mozilla.org/guidelines/web_security#content-security-policy",
 ]
 affected_components = []
+
+[[translations]]
+id = "e372b7fb-7b7e-438d-b5d7-66b24177901f"
+is_main = false
+language = "zh-CN"
+status = "finished"
+
+[translations.data]
+title = "HTTP 安全响应头配置不当"
+cvss = "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:L/I:L/A:N"
+summary = """
+该 Web 应用未设置重要的 HTTP 安全响应头，或相关配置不安全。
+HTTP 安全响应头是提升 Web 应用安全性的有效手段。
+它们可以加大跨站脚本（XSS）、点击劫持、信息泄露等漏洞的利用难度，甚至能够完全阻止此类攻击。
+缺乏正确的 HTTP 安全响应头会扩大 Web 应用的潜在攻击面，使攻击者更容易利用客户端漏洞。
+"""
+description = """
+我们对所检测 Web 应用的 HTTP 安全响应头进行了检查。
+下表概述了哪些响应头已正确设置、哪些未正确设置：
+
+| 主机 | Content-Security-Policy (CSP) | Referrer-Policy | HTTP-Strict-Transport-Security (HSTS) | X-Content-Type-Options | X-Frame-Options | Permissions-Policy | X-XSS-Protection |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| TODO | - | - | - | - | - | - |
+
+现代浏览器支持多种 HTTP 安全响应头，可用于增强 Web 应用针对点击劫持、跨站脚本及其他常见客户端漏洞攻击的防护能力。
+HTTP 安全响应头属于 HTTP 响应头，用于指定在 Web 浏览器中启用或禁用哪些安全措施。
+这些 HTTP 头在浏览器与服务器之间交换，规定 HTTP 通信中与安全相关的细节。
+以下是对当前最重要 HTTP 安全响应头的简要说明与概述：
+
+* **Content Security Policy**。
+Content Security Policy（CSP）HTTP 头允许对浏览器可获取的资源进行细粒度控制。
+CSP 头是防止跨站脚本（XSS）漏洞被利用的一项非常有效的措施。
+
+* **Referrer Policy**。
+`Referrer-Policy` 头决定浏览器在何种情况下以及如何传输 HTTP Referer（sic）头。
+浏览器通过 Referer 头告知目标页面某个 HTTP 请求的来源，例如用户通过链接跳转到特定页面，或加载外部资源时。
+
+* **HTTP Strict Transport Security (HSTS)**。
+网页可通过 HSTS 头指示浏览器仅通过 HTTPS 建立连接。
+在此过程中，所有未加密的 HTTP 请求都会被透明地重定向。
+同时，TLS 及证书相关错误的处理也更加严格，用户将无法绕过错误页面。
+
+* **X-Content-Type-Options**。
+`X-Content-Type-Options` 头规定，只有在服务器指定了正确 MIME 类型的情况下，浏览器才会加载脚本和样式表。
+若缺少该头，则存在 MIME 嗅探风险。
+即浏览器可能将文件误识别为脚本和样式表，进而导致 XSS 攻击。
+
+* **X-Frame-Options**
+`X-Frame-Options` 用于确定网页能否以及以何种形式被嵌入 iframe。
+点击劫持正是利用此类 `iframe` 嵌入的一种可行攻击。
+在此类攻击中，攻击者会覆盖合法页面的渲染内容，诱使用户执行看似无害的交互操作（如鼠标点击和/或键盘输入）。
+
+* **Permissions policy**
+Permissions Policy 允许 Web 开发者有选择地启用、禁用或修改浏览器中某些特性与 API 的行为。
+`Permissions-Policy` 与 Content Security Policy 类似，但它控制的是浏览器的特定功能，而非安全行为。
+
+* **X-XSS-Protection**
+`X-XSS-Protection` 是一项在浏览器检测到反射型跨站脚本（XSS）攻击时阻止页面加载的功能。
+在已定义安全 Content Security Policy 的前提下，使用现代浏览器时该头已过时。
+"""
+recommendation = """
+* 禁止网页被嵌入 frame 中。为此可设置 `X-Frame-Options: DENY`；也可以使用 `X-Frame-Options: SAMEORIGIN` 将其限制为同源。
+* 显式设置 `X-XSS-Protection` 头为 `X-XSS-Protection: 1; mode=block`。
+* 防止浏览器根据资源内容猜测 MIME 类型。设置带 `nosniff` 选项的 `X-Content-Type-Options` 头。
+* 限制 `referrer policy`，防止潜在敏感信息暴露给第三方站点。建议按如下方式定义该头：`Referrer-Policy: strict-origin-when-cross-origin`。
+* 配置 `Strict-Transport-Security` 头，确保 Web 应用仅能通过安全的 HTTPS 连接访问。建议按如下方式设置该头：`Strict-Transport-Security: max-age=63072000; includeSubDomains; preload`。
+* 尽可能为 Web 应用定义 Content Security Policy（CSP）。CSP 是一项额外的安全措施，可显著增加客户端漏洞被利用的难度。安全配置的详细方法请参阅参考资料。
+* 使用 'Permissions Policy' 头限制摄像头、麦克风或扬声器等敏感浏览器功能的使用。
+"""
+short_recommendation = "遵循 HTTP 安全响应头配置的最佳实践建议，并尽可能在 Web 应用中加以落实。"
+references = [
+    "https://infosec.mozilla.org/guidelines/web_security#content-security-policy",
+]
+affected_components = []

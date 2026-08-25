@@ -52,3 +52,50 @@ recommendation = """
 short_recommendation = "Make sure that the configuration of all sensitive cookies is hardened and thus important cookie attributes like HttpOnly or Secure are set."
 references = []
 affected_components = []
+
+[[translations]]
+id = "1efb6dfe-5eb7-4a80-a318-13650ab70a3a"
+is_main = false
+language = "zh-CN"
+status = "finished"
+
+[translations.data]
+title = "不安全的 HTTP Cookie"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N"
+summary = """
+该 Web 应用下发的 HTTP Cookie 未设置 _HttpOnly_ 和/或 _Secure_ Cookie 属性。
+若未设置 _HttpOnly_ 属性，受影响的 Cookie 可能被 JavaScript 在客户端读取或篡改。
+若未设置 _Secure_ 属性，浏览器在未加密的 HTTP 连接上也会发送该 Cookie。
+会话 Cookie 等配置不安全的 Cookie 会扩大 Web 应用的潜在攻击面。
+这使攻击者更容易利用跨站脚本（XSS）等客户端漏洞，或通过轻易窃听 Cookie 来危害会话。
+"""
+description = """
+HTTP 是一种无状态协议，在没有额外机制的情况下无法区分来自不同用户的请求。
+为解决该问题，需要引入会话机制。
+浏览器中最常用的 HTTP 会话管理机制是 Cookie 存储。
+HTTP Cookie 是服务器发送给用户 Web 浏览器的一小段数据记录。
+浏览器可以存储该 Cookie，并在后续请求中将其发回同一服务器。
+借此可为无状态的 HTTP 协议实现会话功能。
+HTTP Cookie 可用于区分来自不同用户的请求，并保持用户的登录状态。
+
+因此，Cookie 是攻击者的常见目标。
+Web 应用应对所有敏感 Cookie 的配置进行加固。
+这可以通过设置 _Secure_ 和 _HttpOnly_ Cookie 属性来实现。
+设置了 _Secure_ 属性的 Cookie 仅通过 HTTPS 连接发送到服务器，绝不会通过不安全的 HTTP 连接发送。
+设置了 _HttpOnly_ 属性的 Cookie 无法被 JavaScript 访问，从而有助于缓解跨站脚本（XSS）攻击。
+如果攻击者能够窃取会话 Cookie 等敏感 Cookie，便可接管用户账户，并以受影响用户的身份执行操作。
+若被接管的是具有特权访问权限的账户，攻击者还可能完全控制 Web 应用的所有功能和数据。
+
+我们审查了该 Web 应用敏感 HTTP Cookie 的属性设置情况。下表概述了相关属性的设置：
+
+| Cookie | Secure | HttpOnly |
+|:---:|:---:|:---:|
+| TODO | - |
+"""
+recommendation = """
+* 为敏感 Cookie 设置 _Secure_ 属性。该属性指示浏览器仅通过加密的 HTTPS 连接发送 Cookie，以防会话 ID 因中间人攻击而泄露。
+* 尽可能同时为敏感 Cookie 设置 _HttpOnly_ 属性。该属性可防止 Cookie 在客户端被 JavaScript 访问，从而加大通过 XSS 攻击实施会话劫持的难度。
+"""
+short_recommendation = "确保所有敏感 Cookie 的配置均已加固，即正确设置 HttpOnly、Secure 等重要 Cookie 属性。"
+references = []
+affected_components = []

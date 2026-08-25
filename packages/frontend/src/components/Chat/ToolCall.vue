@@ -2,80 +2,80 @@
   <div class="text-body-medium text-disabled mt-2">
     <template v-if="props.value.name === 'read_file' && props.project && projectFileRef">
       <chat-tool-call-status :status="props.value.status" />
-      Read
+      {{ $t('Read') }}
       <template v-if="projectFileRef.type === 'finding'">
-        finding
+        {{ $t('finding') }}
         <nuxt-link :to="`/projects/${props.project.id}/reporting/findings/${projectFileRef.id}/`">
           {{ getFindingTitle(projectFileRef.id) }}
         </nuxt-link>
       </template>
       <template v-else-if="projectFileRef.type === 'section'">
-        section
+        {{ $t('section') }}
         <nuxt-link :to="`/projects/${props.project.id}/reporting/sections/${projectFileRef.id}/`">
           {{ getSectionTitle(projectFileRef.id) }}
         </nuxt-link>
       </template>
       <template v-else-if="projectFileRef.type === 'note'">
-        note
+        {{ $t('note') }}
         <nuxt-link :to="`/projects/${props.project.id}/notes/${projectFileRef.id}/`">
           {{ getNoteTitle(projectFileRef.id) }}
         </nuxt-link>
       </template>
       <template v-else>
-        project overview
+        {{ $t('project overview') }}
       </template>
     </template>
     <template v-else-if="props.value.name === 'read_template'">
       <chat-tool-call-status :status="props.value.status" />
-      Read template
+      {{ $t('Read template') }}
       <nuxt-link :to="`/templates/${props.value.args.template_id}/`">
         {{ props.value.output?.title || props.value.args.template_id }}
       </nuxt-link>
     </template>
     <template v-else-if="['update_field_value', 'update_markdown_field'].includes(props.value.name) && props.project">
       <chat-tool-call-status :status="props.value.status" />
-      Update
+      {{ $t('Update') }}
       <template v-if="projectFileRef?.type === 'finding'">
-        finding
+        {{ $t('finding') }}
         <nuxt-link :to="`/projects/${props.project.id}/reporting/findings/${projectFileRef.id}/history/${props.value.timestamp}/`">
           {{ getFindingTitle(projectFileRef.id) }}
         </nuxt-link>
       </template>
       <template v-else-if="projectFileRef?.type === 'section'">
-        section
+        {{ $t('section') }}
         <nuxt-link :to="`/projects/${props.project.id}/reporting/sections/${projectFileRef.id}/history/${props.value.timestamp}/`">
           {{ getSectionTitle(projectFileRef.id) }}
         </nuxt-link>
       </template>
       <template v-else-if="projectFileRef?.type === 'note'">
-        note
+        {{ $t('note') }}
         <nuxt-link :to="`/projects/${props.project.id}/notes/${projectFileRef.id}/history/${props.value.timestamp}/`">
           {{ getNoteTitle(projectFileRef.id) }}
         </nuxt-link>
       </template>
       <template v-else>
-        Update {{ props.value.args.file_path || props.value.args.path }}
+        {{ $t('Update {path}', { path: props.value.args.file_path || props.value.args.path }) }}
       </template>
     </template>
     <template v-else-if="props.value.name === 'list_notes'">
       <chat-tool-call-status :status="props.value.status" />
-      List notes
+      {{ $t('List notes') }}
     </template>
     <template v-else-if="props.value.name === 'list_templates'">
       <chat-tool-call-status :status="props.value.status" />
-      List finding templates
-      <span v-if="props.value.args.search_terms">matching "{{ props.value.args.search_terms }}"</span>
+      {{ $t('List finding templates') }}
+      <span v-if="props.value.args.search_terms">{{ $t('matching "{terms}"', { terms: props.value.args.search_terms }) }}</span>
     </template>
     <template v-else-if="props.value.name === 'create_finding' && props.project">
       <chat-tool-call-status :status="props.value.status" />
-      Create finding
+      {{ $t('Create finding') }}
       <nuxt-link :to="`/projects/${props.project.id}/reporting/findings/${props.value.output?.id}/`">
         {{ getFindingTitle(props.value.output?.id, props.value.output?.title) }}
       </nuxt-link>
     </template>
     <template v-else-if="props.value.name === 'create_note' && props.project">
       <chat-tool-call-status :status="props.value.status" />
-      Create note
+      {{ $t('Create note') }}
       <nuxt-link :to="`/projects/${props.project.id}/notes/${props.value.output?.id}/`">
         {{ getNoteTitle(props.value.output?.id, props.value.output?.title) }}
       </nuxt-link>
@@ -83,7 +83,7 @@
     <template v-else-if="props.value.name === 'ask_user'">
       <template v-if="props.value.status === ToolCallStatus.PENDING">
         <chat-tool-call-status :status="props.value.status" />
-        Asking user
+        {{ $t('Asking user') }}
       </template>
       <s-card
         v-else
@@ -100,7 +100,7 @@
     </template>
     <template v-else-if="props.value.name === 'write_todos'">
       <chat-tool-call-status :status="props.value.status" />
-      Update TODO list
+      {{ $t('Update TODO list') }}
       <v-list 
         v-if="writeTodosList.length" 
         density="compact" 
@@ -128,7 +128,7 @@
         <template #title>
           <v-expansion-panel-title class="text-body-medium text-disabled">
             <chat-tool-call-status :status="props.value.status" class="mr-1" />
-            Running subagent {{ props.value.args.subagent_type }}
+            {{ $t('Running subagent {type}', { type: props.value.args.subagent_type }) }}
           </v-expansion-panel-title>
         </template>
         <template #default>

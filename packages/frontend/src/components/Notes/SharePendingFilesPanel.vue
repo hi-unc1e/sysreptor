@@ -49,7 +49,7 @@
             </div>
             <div v-else class="preview-container bg-surface-container d-flex align-center justify-center pa-8">
               <v-chip color="warning" prepend-icon="mdi-alert-outline">
-                File unavailable ({{ item.fileId.slice(0, 8) }}…)
+                {{ $t('File unavailable ({id}…)', { id: item.fileId.slice(0, 8) }) }}
               </v-chip>
             </div>
 
@@ -68,7 +68,7 @@
                   download
                   density="comfortable"
                   variant="text"
-                  v-tooltip="'Download'"
+                  v-tooltip="$t('Download')"
                 />
                 <s-btn-icon
                   v-if="isImageFile(item.file)"
@@ -77,7 +77,7 @@
                   target="_blank"
                   density="comfortable"
                   variant="text"
-                  v-tooltip="'Open in new tab'"
+                  v-tooltip="$t('Open in new tab')"
                 />
               </template>
               <v-spacer />
@@ -86,7 +86,7 @@
                 :disabled="props.readonly || props.approving"
                 :loading="props.approving"
                 :confirm="false"
-                button-text="Approve"
+                :button-text="$t('Approve')"
                 button-icon="mdi-check"
                 button-color="primary-bg"
               />
@@ -96,9 +96,9 @@
                 :disabled="props.readonly || props.approving"
                 :loading="props.approving"
                 :confirm="true"
-                :dialog-title="'Approve all shared files?'"
-                :dialog-text="`Visitors will be able to see and download all ${pendingItems.length} shared files on this share link.`"
-                :button-text="`Approve all (${pendingItems.length})`"
+                :dialog-title="$t('Approve all shared files?')"
+                :dialog-text="$t('Visitors will be able to see and download all {count} shared files on this share link.', { count: pendingItems.length })"
+                :button-text="$t('Approve all ({count})', { count: pendingItems.length })"
                 button-icon="mdi-check-all"
                 button-color="primary-bg"
               />
@@ -107,7 +107,7 @@
         </v-window-item>
       </v-window>
       <p class="text-body-medium text-medium-emphasis mb-4">
-        Visitors cannot see or download these files until you approve them.
+        {{ $t('Visitors cannot see or download these files until you approve them.') }}
       </p>
     </template>
   </div>

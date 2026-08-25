@@ -1,5 +1,5 @@
 <template>
-  <v-list-item to="/license/" title="License">
+  <v-list-item to="/license/" :title="$t('License')">
     <template #prepend>
       <v-badge :color="licenseError ? 'error' : licenseWarning ? 'warning' : 'transparent'" dot>
         <v-icon icon="mdi-check-decagram" />

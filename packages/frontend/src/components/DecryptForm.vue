@@ -5,11 +5,11 @@
     </p>
     <p class="mt-2">
       <s-code>{{ gpgCommand }}</s-code>
-      <s-btn-icon 
+      <s-btn-icon
         @click="copyToClipboard(gpgCommand)"
         icon="mdi-content-copy"
-        v-tooltip.top="'Copy to clipboard'"
-        size="small" 
+        v-tooltip.top="$t('Copy to clipboard')"
+        size="small"
         density="compact"
         class="ml-1"
       />
@@ -19,17 +19,17 @@
       readonly
     >
       <template #append-inner>
-        <s-btn-icon 
+        <s-btn-icon
           @click="copyToClipboard(props.encryptedData)"
           icon="mdi-content-copy"
-          v-tooltip.top="'Copy to clipboard'"
+          v-tooltip.top="$t('Copy to clipboard')"
           size="small"
           density="compact"
         />
-        <s-btn-icon 
+        <s-btn-icon
           @click="fileDownload(props.encryptedData, filename, 'text/plain')"
           icon="mdi-download"
-          v-tooltip.top="`Download ${filename}`"
+          v-tooltip.top="$t('Download {filename}', { filename })"
           size="small"
           density="compact"
           class="mt-2"
@@ -39,7 +39,7 @@
 
     <s-text-field
       v-model="modelValue"
-      label="Decrypted data"
+      :label="$t('Decrypted data')"
       :error-messages="props.errorMessages || []"
       spellcheck="false"
       class="mt-4"

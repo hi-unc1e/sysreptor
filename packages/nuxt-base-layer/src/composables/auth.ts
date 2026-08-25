@@ -103,7 +103,7 @@ export function useAuth() {
 
   async function finishLogin(response: LoginResponse) {
     if (response.status !== LoginResponseStatus.SUCCESS) {
-      throw new Error('Login failed');
+      throw new Error(t('Login failed'));
     }
     // Refresh settings to include authenticated settings
     const apiSettings = useApiSettings();
@@ -126,7 +126,7 @@ export function useAuth() {
         await finishLogin(res);
         await redirect();
       } catch (error) {
-        requestErrorToast({ error, message: 'Login failed' });
+        requestErrorToast({ error, message: t('Login failed') });
       }
     } else if (authProvider.type === AuthProviderType.OIDC) {
       const url = new URL(`/api/v1/auth/login/oidc/${authProvider.id}/begin/`, window.location.href);

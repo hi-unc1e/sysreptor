@@ -172,7 +172,7 @@ export function useMarkdownEditorBase(options: {
   
     try {
       fileUploadInProgress.value = true;
-      const results = await bulkAction(Array.from(files), options.props.value.uploadFile!, f => `Failed to upload ${f.name}`);
+      const results = await bulkAction(Array.from(files), options.props.value.uploadFile!, f => t('Failed to upload {name}', { name: f.name }));
   
       const mdFileText = results.filter(u => u).join('\n');
       if (pos === undefined || pos === null) {
@@ -484,9 +484,9 @@ export function useMarkdownEditorBase(options: {
       .map(c => ({
         client_id: c.client_id,
         color: c.client_color,
-        name: c.user ? 
+        name: c.user ?
             (c.user.username + (c.user.name ? ` (${c.user.name})` : '')) :
-            (`${c.client_id} (Anonymous User)`),
+            (t('{clientId} (Anonymous User)', { clientId: c.client_id })),
         selection: c.selection!,
       }));
   });

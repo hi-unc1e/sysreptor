@@ -5,15 +5,15 @@
       url="/api/v1/findingtemplates/"
       v-model:ordering="localSettings.templateListOrdering"
       :ordering-options="[
-        {id: 'risk', title: 'Severity', value: '-risk'},
-        {id: 'created', title: 'Created', value: '-created'},
-        {id: 'updated', title: 'Updated', value: '-updated'},
+        {id: 'risk', title: $t('Severity'), value: '-risk'},
+        {id: 'created', title: $t('Created'), value: '-created'},
+        {id: 'updated', title: $t('Updated'), value: '-updated'},
       ]"
       v-model:pinned-filters="localSettings.templateListPinnedFilters"
       :filter-properties="filterProperties"
       :selectable="true"
     >
-      <template #title>Templates</template>
+      <template #title>{{ $t('Templates') }}</template>
       <template #actions="{ selectedItems }: { selectedItems: FindingTemplate[] }">
         <v-divider vertical />
         <permission-info :value="auth.permissions.value.template_editor" permission-name="Template Editor">
@@ -39,7 +39,7 @@
               :options="{ids: selectedItems.map(p => p.id)}"
               name="templates"
               extension=".tar.gz"
-              tooltip-text="Export selected"
+              :tooltip-text="$t('Export selected')"
               button-variant="icon"
               variant="flat"
               density="comfortable"
@@ -49,14 +49,14 @@
             <btn-delete
               :delete="() => performDeleteSelected(selectedItems)"
               :disabled="!auth.permissions.value.template_editor"
-              :confirm-input="`delete ${selectedItems.length} templates`"
-              tooltip-text="Delete selected"
+              :confirm-input="$t('delete {count} templates', { count: selectedItems.length })"
+              :tooltip-text="$t('Delete selected')"
               icon="mdi-delete"
               density="comfortable"
             >
             <template #dialog-text>
                 <p class="mt-0">
-                  Do you really want to delete {{ selectedItems.length }} templates?
+                  {{ $t('Do you really want to delete {count} templates?', { count: selectedItems.length }) }}
                 </p>
                 <ul class="mt-0">
                   <li v-for="t in selectedItems" :key="t.id">
@@ -123,7 +123,7 @@ async function performCreate() {
         language: apiSettings.settings!.languages?.[0]?.code || 'en-US',
         status: ReviewStatus.IN_PROGRESS,
         data: {
-          title: 'TODO: New Template Title',
+          title: t('TODO: New Template Title'),
         },
       }],
     });
@@ -137,19 +137,19 @@ async function performCreate() {
 
 const statusOptions = computed(() => apiSettings.settings?.statuses?.map(status => ({title: status.label, value: status.id, icon: status.icon})) || []);
 const languageOptions = computed(() => apiSettings.settings!.languages.map(l => ({title: l.name, value: l.code, icon: 'mdi-translate'})));
-const riskLevelOptions = computed(() => Object.values(RiskLevel).map(l => ({title: capitalize(l), value: l})));
+const riskLevelOptions = computed(() => Object.values(RiskLevel).map(l => ({title: t(capitalize(l)), value: l})));
 const suggestedTags = useFindingTemplateTags();
 const filterProperties = computed((): FilterProperties[] => [
-  { id: 'status', name: 'Status', icon: 'mdi-flag', type: 'select', options: statusOptions.value, allow_exclude: true, allow_regex: false, default: '', multiple: true },
-  { id: 'risk_level', name: 'Risk Level', icon: 'mdi-alert', type: 'select', options: riskLevelOptions.value, allow_exclude: true, allow_regex: false, default: '', multiple: true },
-  { id: 'tag', name: 'Tag', icon: 'mdi-tag', type: 'combobox', options: suggestedTags.getTags, allow_exclude: true, allow_regex: false, default: '', multiple: true },
-  { id: 'timerange', name: 'Time Created', icon: 'mdi-calendar', type: 'daterange', options: [], allow_exclude: true, default: '', multiple: true },
-  { id: 'language', name: 'Language', icon: 'mdi-translate', type: 'select', options: languageOptions.value, allow_exclude: true, default: '', multiple: true },
-  { id: 'title', name: 'Title', type: 'text', options: [], allow_exclude: true, allow_regex: false, default: '', multiple: true },
+  { id: 'status', name: t('Status'), icon: 'mdi-flag', type: 'select', options: statusOptions.value, allow_exclude: true, allow_regex: false, default: '', multiple: true },
+  { id: 'risk_level', name: t('Risk Level'), icon: 'mdi-alert', type: 'select', options: riskLevelOptions.value, allow_exclude: true, allow_regex: false, default: '', multiple: true },
+  { id: 'tag', name: t('Tag'), icon: 'mdi-tag', type: 'combobox', options: suggestedTags.getTags, allow_exclude: true, allow_regex: false, default: '', multiple: true },
+  { id: 'timerange', name: t('Time Created'), icon: 'mdi-calendar', type: 'daterange', options: [], allow_exclude: true, default: '', multiple: true },
+  { id: 'language', name: t('Language'), icon: 'mdi-translate', type: 'select', options: languageOptions.value, allow_exclude: true, default: '', multiple: true },
+  { id: 'title', name: t('Title'), type: 'text', options: [], allow_exclude: true, allow_regex: false, default: '', multiple: true },
 ]);
 
 async function performDeleteSelected(templates: FindingTemplate[]) {
-  await bulkAction(templates, templateStore.delete, t => `Failed to delete template "${t.translations.find(tr => tr.is_main)?.data.title}"`);
+  await bulkAction(templates, templateStore.delete, tmpl => t('Failed to delete template "{name}"', { name: tmpl.translations.find(tr => tr.is_main)?.data.title }));
   await listViewRef.value?.refresh();
 }
 </script>

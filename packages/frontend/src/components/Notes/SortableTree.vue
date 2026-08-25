@@ -78,7 +78,7 @@
               <v-tooltip
                 v-if="note.has_pending_share_files"
                 activator="parent"
-                text="Shared files need approval"
+                :text="$t('Shared files need approval')"
               />
             </span>
             {{ note.title }}

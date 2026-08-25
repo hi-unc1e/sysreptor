@@ -10,81 +10,81 @@
     <!-- Shape tools -->
     <markdown-toolbar-button
       @click="setTool(ImageEditorTool.SELECT)"
-      title="Select and Move [V]"
+      :title="$t('Select and Move [V]')"
       icon="mdi-cursor-default"
       :active="activeTool === ImageEditorTool.SELECT"
     />
     <span class="separator" />
-    
+
     <markdown-toolbar-button
       @click="setTool(ImageEditorTool.RECTANGLE_OUTLINED)"
-      title="Rectangle (Outline) [R]"
+      :title="$t('Rectangle (Outline) [R]')"
       icon="mdi-rectangle-outline"
       :active="activeTool === ImageEditorTool.RECTANGLE_OUTLINED"
     />
     <markdown-toolbar-button
       @click="setTool(ImageEditorTool.RECTANGLE_FILLED)"
-      title="Rectangle (Filled) [Shift+R]"
+      :title="$t('Rectangle (Filled) [Shift+R]')"
       icon="mdi-rectangle"
       :active="activeTool === ImageEditorTool.RECTANGLE_FILLED"
     />
     <markdown-toolbar-button
       @click="setTool(ImageEditorTool.PIXELATE)"
-      title="Pixelate [P]"
+      :title="$t('Pixelate [P]')"
       icon="mdi-blur"
       :active="activeTool === ImageEditorTool.PIXELATE"
     />
     <markdown-toolbar-button
       @click="setTool(ImageEditorTool.ELLIPSE)"
-      title="Ellipse (Outline) [O]"
+      :title="$t('Ellipse (Outline) [O]')"
       icon="mdi-ellipse-outline"
       :active="activeTool === ImageEditorTool.ELLIPSE"
     />
     <markdown-toolbar-button
       @click="setTool(ImageEditorTool.LINE)"
-      title="Line [L]"
+      :title="$t('Line [L]')"
       icon="mdi-vector-line"
       :active="activeTool === ImageEditorTool.LINE"
     />
     <markdown-toolbar-button
       @click="setTool(ImageEditorTool.TEXT)"
-      title="Text [T]"
+      :title="$t('Text [T]')"
       icon="mdi-format-text"
       :active="activeTool === ImageEditorTool.TEXT"
     />
     <markdown-toolbar-button
       @click="setTool(ImageEditorTool.MARKER)"
-      title="Numbered Marker [M]"
+      :title="$t('Numbered Marker [M]')"
       icon="mdi-numeric-1-circle"
       :active="activeTool === ImageEditorTool.MARKER"
     />
     <s-number-input
       v-if="activeTool === ImageEditorTool.MARKER"
       v-model="markerNumber"
-      v-tooltip.top="'Marker number (auto-increments after placing)'"
+      v-tooltip.top="$t('Marker number (auto-increments after placing)')"
       :min="1"
       density="compact"
       class="marker-number-input"
     />
-    
+
     <span class="separator" />
-    
+
     <markdown-toolbar-button
       @click="setTool(ImageEditorTool.CROP)"
-      title="Crop"
+      :title="$t('Crop')"
       icon="mdi-crop"
       :active="activeTool === ImageEditorTool.CROP"
     />
     <template v-if="activeTool === ImageEditorTool.CROP">
       <markdown-toolbar-button
         @click="setTool(ImageEditorTool.SELECT)"
-        title="Apply Crop"
+        :title="$t('Apply Crop')"
         icon="mdi-check"
         color="success"
       />
       <markdown-toolbar-button
         @click="emit('cancelCrop')"
-        title="Cancel Crop"
+        :title="$t('Cancel Crop')"
         icon="mdi-close"
         color="error"
       />
@@ -103,7 +103,7 @@
           v-bind="colorPickerProps"
           size="small"
           density="comfortable"
-          v-tooltip.top="'Color'"
+          v-tooltip.top="$t('Color')"
         >
           <v-badge
             :color="localSettings.imageEditorSettings.color"
@@ -121,7 +121,7 @@
       v-model="localSettings.imageEditorSettings.strokeWidth"
       :min="1"
       @wheel="onWheel"
-      v-tooltip.top="'Stroke width'"
+      v-tooltip.top="$t('Stroke width')"
     >
       <template #prepend>
         <v-icon size="small" icon="mdi-format-vertical-align-center" />

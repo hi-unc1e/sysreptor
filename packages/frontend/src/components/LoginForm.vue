@@ -3,8 +3,8 @@
     <v-toolbar color="header" flat>
       <v-toolbar-title>
         <slot name="title">
-          <template v-if="step === LoginStep.CHANGE_PASSWORD">Change Password</template>
-          <template v-else>Login</template>
+          <template v-if="step === LoginStep.CHANGE_PASSWORD">{{ $t('Change Password') }}</template>
+          <template v-else>{{ $t('Login') }}</template>
         </slot>
       </v-toolbar-title>
     </v-toolbar>
@@ -16,7 +16,7 @@
             v-model="formUsername.username"
             type="text"
             name="username"
-            label="Username"
+            :label="$t('Username')"
             prepend-icon="mdi-account"
             spellcheck="false"
             autocomplete="username"
@@ -28,7 +28,7 @@
             v-model="formUsername.password"
             type="password"
             name="password"
-            label="Password"
+            :label="$t('Password')"
             prepend-icon="mdi-lock"
             spellcheck="false"
             autocomplete="current-password"
@@ -48,7 +48,7 @@
           <s-btn-primary
             type="submit"
             data-testid="login-submit"
-            text="Login"
+            :text="$t('Login')"
           />
         </v-card-actions>
       </v-form>
@@ -63,7 +63,7 @@
           </v-card-title>
 
           <template v-if="currentMfaMethod!.method_type === MfaMethodType.FIDO2">
-            <p>Use your security key to log in.</p>
+            <p>{{ $t('Use your security key to log in.') }}</p>
           </template>
           <template v-else-if="currentMfaMethod!.method_type === MfaMethodType.TOTP">
             <v-otp-input
@@ -103,17 +103,17 @@
           <s-btn-other
             v-if="mfaMethods!.length > 1"
             @click="step = LoginStep.MFA_SELECT"
-            text="Try another MFA method"
+            :text="$t('Try another MFA method')"
           />
           <s-btn-primary
             v-if="[MfaMethodType.TOTP, MfaMethodType.BACKUP].includes(currentMfaMethod!.method_type as any)"
             type="submit"
-            text="Login"
+            :text="$t('Login')"
           />
           <s-btn-primary
             v-else-if="currentMfaMethod?.method_type === MfaMethodType.FIDO2"
             @click="beginMfaLogin(currentMfaMethod)"
-            text="Try again"
+            :text="$t('Try again')"
           />
         </v-card-actions>
       </v-form>
@@ -121,7 +121,7 @@
 
     <template v-else-if="step === LoginStep.MFA_SELECT">
       <v-card-text>
-        <h2 class="text-title-large font-weight-bold ma-0">Choose MFA method</h2>
+        <h2 class="text-title-large font-weight-bold ma-0">{{ $t('Choose MFA method') }}</h2>
 
         <v-list>
           <v-list-item v-for="mfaMethod in mfaMethods" :key="mfaMethod.id" link @click="beginMfaLogin(mfaMethod)">
@@ -140,7 +140,7 @@
           <s-password-field
             v-model="formChangePassword.password"
             confirm show-strength generate
-            label="New Password"
+            :label="$t('New Password')"
             spellcheck="false"
             autocomplete="new-password"
           />
@@ -153,7 +153,7 @@
           <v-spacer />
           <s-btn-primary
             type="submit"
-            text="Change Password"
+            :text="$t('Change Password')"
           />
         </v-card-actions>
       </v-form>
@@ -233,7 +233,7 @@ async function loginStep(fn: () => Promise<LoginResponse|null>) {
     } else if (error instanceof DOMException) {
       errorMessage.value = error.message;
     } else {
-      requestErrorToast({ error, message: 'Login failed' });
+      requestErrorToast({ error, message: t('Login failed') });
     }
   } finally {
     actionInProgress.value = false;
@@ -243,7 +243,7 @@ async function loginStep(fn: () => Promise<LoginResponse|null>) {
 async function loginUsername() {
   await loginStep(async () => {
     if (!formUsername.value.username || !formUsername.value.password) {
-      errorMessage.value = 'Username and password are required';
+      errorMessage.value = t('Username and password are required');
       return null;
     }
     return await $fetch('/api/v1/auth/login/', { method: 'POST', body: formUsername.value });

@@ -95,8 +95,8 @@ const inputFieldAttrs = computed(() => ({
 }));
 const toolbarAttrs = computed(() => ({
   data: note.value,
-  errorMessage: 
-    ((shareInfo.value?.permissions_write && !notesCollab.hasLock.value) ? 'This note is locked by another user. Upgrade to SysReptor Professional for lock-free collaborative editing.' : null),
+  errorMessage:
+    ((shareInfo.value?.permissions_write && !notesCollab.hasLock.value) ? t('This note is locked by another user. Upgrade to SysReptor Professional for lock-free collaborative editing.') : null),
   canDelete: shareInfo.value?.permissions_write && note.value?.id !== shareInfo.value?.note_id,
   delete: async (note: NoteBase) => {
     await shareInfoStore.deleteNote(shareInfo.value!, note);

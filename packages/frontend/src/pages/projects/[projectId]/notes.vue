@@ -7,7 +7,7 @@
   >
     <template #menu>
       <notes-menu
-        title="Notes"
+        :title="$t('Notes')"
         v-model:search="notesCollab.search.value"
         :create-note="createNote"
         :perform-import="performImport"
@@ -96,7 +96,7 @@ function collabAwarenessSendNavigate() {
 async function createNote(data?: Partial<NoteBase>) {
   const currentNote = projectStore.notes(project.value.id).find(n => n.id === route.params.noteId);
   const obj = await projectStore.createNote(project.value, {
-    title: 'New Note',
+    title: t('New Note'),
     // Insert new note after the currently selected note, or at the end of the list
     parent: currentNote?.parent || null,
     order: (currentNote ? currentNote.order + 1 : undefined),

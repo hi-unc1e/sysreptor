@@ -2,20 +2,20 @@
   <v-container class="pt-0">
     <v-form ref="formRef" @submit.prevent="performCreate">
       <edit-toolbar :form="formRef">
-        <template #title>Create new Project</template>
+        <template #title>{{ $t('Create new Project') }}</template>
         <template #default>
-          <s-btn-primary 
+          <s-btn-primary
             data-testid="submit-project"
             type="submit"
-            text="Create"
+            :text="$t('Create')"
             prepend-icon="mdi-content-save"
           />
         </template>
       </edit-toolbar>
 
-      <s-text-field 
-        v-model="projectForm.name" 
-        label="Name" 
+      <s-text-field
+        v-model="projectForm.name"
+        :label="$t('Name')"
         :error-messages="serverErrors?.name || []"
         spellcheck="false" 
         class="mt-4" 
@@ -48,9 +48,9 @@
 import type { VForm } from "vuetify/lib/components/index.mjs";
 
 useHead({
-  title: 'Projects',
+  title: t('Projects'),
 });
-useAppBar({ breadcrumbs: projectListBreadcrumbs().concat([{ title: 'New', to: '/projects/new/' }]) });
+useAppBar({ breadcrumbs: projectListBreadcrumbs().concat([{ title: t('New'), to: '/projects/new/' }]) });
 
 const auth = useAuth();
 const apiSettings = useApiSettings();

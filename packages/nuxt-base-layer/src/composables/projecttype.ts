@@ -70,14 +70,14 @@ export function formatProjectTypeTitle(pt?: ProjectType) {
 
   let out = pt.name;
   if (pt?.source === SourceEnum.CUSTOMIZED) {
-    out += ' (customized)';
+    out += t(' (customized)');
   } else if (pt?.source === SourceEnum.SNAPSHOT) {
-    out += ` (from ${formatISO9075(parseISO(pt.created))})`;
+    out += t(' (from {date})', { date: formatISO9075(parseISO(pt.created)) });
   } else if (pt?.source === SourceEnum.IMPORTED_DEPENDENCY) {
-    out += ` (from ${formatISO9075(parseISO(pt.created))})`;
+    out += t(' (from {date})', { date: formatISO9075(parseISO(pt.created)) });
   }
   if (pt?.scope === ProjectTypeScope.PRIVATE) {
-    out += ' (private design)';
+    out += t(' (private design)');
   }
   return out;
 }

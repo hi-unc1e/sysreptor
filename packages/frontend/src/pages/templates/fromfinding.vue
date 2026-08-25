@@ -14,20 +14,21 @@
         />
 
         <s-dialog v-model="saveWarningDialogVisible">
-          <template #title>Remove customer data</template>
+          <template #title>{{ $t('Remove customer data') }}</template>
           <template #default>
             <v-card-text>
               <v-alert type="warning">
-                Ensure that no customer specific data is left in the template before saving.
+                {{ $t('Ensure that no customer specific data is left in the template before saving.') }}
               </v-alert>
               <div class="mt-4">
                 <p>
-                  Make sure that the following data is removed and replaced with <s-code>TODO</s-code> markers:
+                  {{ $t('Make sure that the following data is removed and replaced with') }}
+                  <s-code>TODO</s-code>{{ $t('markers:') }}
                 </p>
                 <ul class="ml-6">
-                  <li>Customer specific descriptions</li>
-                  <li>URLs, hostnames, system identifiers</li>
-                  <li>Screenshots</li>
+                  <li>{{ $t('Customer specific descriptions') }}</li>
+                  <li>{{ $t('URLs, hostnames, system identifiers') }}</li>
+                  <li>{{ $t('Screenshots') }}</li>
                 </ul>
               </div>
             </v-card-text>
@@ -36,12 +37,12 @@
               <v-spacer />
               <s-btn-other
                 @click="saveWarningDialogVisible = false"
-                text="Cancel"
+                :text="$t('Cancel')"
               />
               <btn-confirm
                 :action="() => performCreate()"
                 :confirm="false"
-                button-text="Save"
+                :button-text="$t('Save')"
                 button-icon="mdi-content-save"
                 button-color="primary-bg"
                 class="ml-1"
@@ -62,9 +63,9 @@ const projectTypeStore = useProjectTypeStore();
 const templateStore = useTemplateStore();
 
 useHead({
-  title: 'Templates',
+  title: t('Templates'),
 });
-useAppBar({ breadcrumbs: () => templateListBreadcrumbs().concat([{ title: 'New', to: route.fullPath }]) });
+useAppBar({ breadcrumbs: () => templateListBreadcrumbs().concat([{ title: t('New'), to: route.fullPath }]) });
 
 if (!route.query.project || !route.query.finding) {
   throw createError('No project or finding found.');

@@ -13,7 +13,7 @@
         size="x-small"
         class="time-refresh-btn ml-1"
         @click.stop="applyTimePreset(timePreset)"
-        :title="'Update to current time'"
+        :title="$t('Update to current time')"
       />
     </template>
     <s-select
@@ -29,11 +29,11 @@
     />
 
     <v-divider class="my-2"></v-divider>
-    <p class="text-title-small mb-2">Custom Range:</p>
+    <p class="text-title-small mb-2">{{ $t('Custom Range:') }}</p>
 
     <s-text-field
       v-model="filter.value[0]"
-      label="Start Time"
+      :label="$t('Start Time')"
       density="compact"
       clearable
       type="datetime-local"
@@ -42,7 +42,7 @@
 
     <s-text-field
       v-model="filter.value[1]"
-      label="End Time"
+      :label="$t('End Time')"
       density="compact"
       clearable
       type="datetime-local"
@@ -61,13 +61,13 @@ const displayValue = computed(() => {
   const from = filter.value.value[0]
   const to = filter.value.value[1]
   if (from && to) {
-    return `${from} until ${to}`
+    return t('{from} until {to}', { from, to })
   } else if (from) {
-    return `From ${from}`
+    return t('From {from}', { from })
   } else if (to) {
-    return `Until ${to}`
+    return t('Until {to}', { to })
   }
-  return 'Any'
+  return t('Any')
 })
 
 const timePreset = ref<TimeRange>('last15Min')
@@ -123,15 +123,15 @@ function formatDateForInput(date: Date): string {
   return `${year}-${month}-${day}T${hours}:${minutes}`
 }
 
-const timePresets = [
-  { text: 'Last 15 Minutes', value: 'last15Min' },
-  { text: 'Last Hour', value: 'lastHour' },
-  { text: 'Last 3 Hours', value: 'last3Hours' },
-  { text: 'Last 12 Hours', value: 'last12Hours' },
-  { text: 'Last 24 Hours', value: 'last24Hours' },
-  { text: 'Last 7 Days', value: 'last7Days' },
-  { text: 'Last 30 Days', value: 'last30Days' }
-]
+const timePresets = computed(() => [
+  { text: t('Last 15 Minutes'), value: 'last15Min' },
+  { text: t('Last Hour'), value: 'lastHour' },
+  { text: t('Last 3 Hours'), value: 'last3Hours' },
+  { text: t('Last 12 Hours'), value: 'last12Hours' },
+  { text: t('Last 24 Hours'), value: 'last24Hours' },
+  { text: t('Last 7 Days'), value: 'last7Days' },
+  { text: t('Last 30 Days'), value: 'last30Days' }
+])
 
 // Apply default time preset on component mount
 onMounted(() => {

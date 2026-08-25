@@ -7,31 +7,31 @@
         <v-list-item
           :to="`/users/${user.id}/`" exact
           prepend-icon="mdi-account"
-          title="User Information"
+          :title="$t('User Information')"
         />
         <v-list-item
           :disabled="!apiSettings.isLocalUserAuthEnabled"
           :to="`/users/${user.id}/reset-password/`"
           prepend-icon="mdi-form-textbox-password"
-          title="Reset Password"
+          :title="$t('Reset Password')"
         />
         <v-list-item
           :disabled="!apiSettings.isLocalUserAuthEnabled"
           :to="`/users/${user.id}/mfa/`"
           prepend-icon="mdi-lock"
-          title="Multi Factor Authentication"
+          :title="$t('Multi Factor Authentication')"
         />
         <v-list-item
           :disabled="!apiSettings.isSsoEnabled"
           :to="`/users/${user.id}/identities/`"
           prepend-icon="mdi-card-account-details"
         >
-          <v-list-item-title><pro-info>SSO Identities</pro-info></v-list-item-title>
+          <v-list-item-title><pro-info>{{ $t('SSO Identities') }}</pro-info></v-list-item-title>
         </v-list-item>
         <v-list-item
           :to="`/users/${user.id}/apitokens/`"
           prepend-icon="mdi-key-variant"
-          title="API Tokens"
+          :title="$t('API Tokens')"
         />
       </v-list>
     </template>

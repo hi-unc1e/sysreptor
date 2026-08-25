@@ -50,8 +50,8 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer />
-              <s-btn-other @click="addDialog.visible = false" text="Cancel" />
-              <s-btn-primary @click="addPredefinedComponent" text="Add" />
+              <s-btn-other @click="addDialog.visible = false" :text="$t('Cancel')" />
+              <s-btn-primary @click="addPredefinedComponent" :text="$t('Add')" />
             </v-card-actions>
           </template>
         </s-dialog>

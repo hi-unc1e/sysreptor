@@ -3,7 +3,7 @@
     <div class="sidebar-header">
       <v-list-item class="pt-0 pb-0">
         <v-list-item-title class="text-title-large">
-          <pro-info>Comments</pro-info>
+          <pro-info>{{ $t('Comments') }}</pro-info>
         </v-list-item-title>
         <template #append>
           <s-btn-icon density="compact">
@@ -14,12 +14,12 @@
                 @update:selected="statusFilter = $event?.[0] || 'all'"
                 mandatory
               >
-                <v-list-item 
-                  title="All"
+                <v-list-item
+                  :title="$t('All')"
                   :value="'all'"
                 />
                 <v-list-item
-                  title="Open"
+                  :title="$t('Open')"
                   :value="CommentStatus.OPEN"
                 />
               </v-list>
@@ -35,13 +35,12 @@
     </div>
 
     <v-list-item v-if="!apiSettings.isProfessionalLicense">
-      Comments are available<br>
-      in SysReptor Professional.<br><br>
-      See <a href="https://sysreptor.com/pricing" target="_blank" class="text-primary">https://sysreptor.com/pricing</a>
+      {{ $t('Comments are available in SysReptor Professional.') }}<br><br>
+      {{ $t('See') }} <a href="https://sysreptor.com/pricing" target="_blank" class="text-primary">https://sysreptor.com/pricing</a>
     </v-list-item>
     <v-list-item v-else-if="commentsVisible.length === 0">
-      <v-list-item-title v-if="statusFilter === CommentStatus.OPEN">No open comments</v-list-item-title>
-      <v-list-item-title v-else>No comments found</v-list-item-title>
+      <v-list-item-title v-if="statusFilter === CommentStatus.OPEN">{{ $t('No open comments') }}</v-list-item-title>
+      <v-list-item-title v-else>{{ $t('No comments found') }}</v-list-item-title>
     </v-list-item>
     <v-list-item v-else v-for="locationGroup in commentDisplayGroups" :key="locationGroup.locationKey" class="pl-0 pr-0 pt-0">
       <v-list-subheader
@@ -60,7 +59,7 @@
             @click.stop="onCommentEvent({ type: 'create', comment: { path: fieldGroup.path } })"
             :disabled="readonly"
             icon="mdi-plus"
-            v-tooltip.top="'Add Comment'"
+            v-tooltip.top="$t('Add Comment')"
             size="small"
             variant="flat"
             color="secondary"

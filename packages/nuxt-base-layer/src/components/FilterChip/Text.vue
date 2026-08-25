@@ -16,7 +16,7 @@
       <s-checkbox
         v-if="props.filterProperties.allow_regex"
         v-model="filter.regex"
-        label="Regex"
+        :label="$t('Regex')"
         density="compact"
         class="mt-2"
       />
@@ -35,7 +35,7 @@ const displayValue = computed(() => {
   if (typeof filter.value.value === 'string' && filter.value.value.length) {
     return filter.value.value
   } else {
-    return 'Any'
+    return t('Any')
   }
 })
 </script>

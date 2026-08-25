@@ -2,7 +2,7 @@
   <s-autocomplete
     :model-value="props.modelValue"
     @update:model-value="emit('update:modelValue', $event)"
-    :label="props.label"
+    :label="$t(props.label)"
     :items="allItems"
     :item-title="formatProjectTypeTitle"
     item-value="id"
@@ -27,7 +27,7 @@
         :to="`/designs/${returnObject ? (props.modelValue as ProjectType|null)?.id : props.modelValue}/pdfdesigner/`"
         target="_blank"
         icon="mdi-chevron-right-circle-outline"
-        v-tooltip="'Open Design'"
+        v-tooltip="$t('Open Design')"
         :disabled="!props.modelValue"
         class="mr-2"
       />
@@ -72,7 +72,7 @@ const items = useSearchableCursorPaginationFetcher<ProjectType>({
 });
 
 const rules = [
-  (v: any) => !props.required || Boolean(v) || 'Item is required',
+  (v: any) => !props.required || Boolean(v) || t('Item is required'),
 ]
 
 const projectTypeStore = useProjectTypeStore();

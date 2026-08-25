@@ -50,6 +50,16 @@ watch(themeName, () => {
 }, { immediate: true });
 
 
+const localeStore = useLocaleStore();
+const nuxtApp = useNuxtApp();
+watch(() => localeStore.locale, (locale) => {
+  document.documentElement.lang = locale;
+  try {
+    nuxtApp.$vuetify.locale.current.value = locale === 'zh-CN' ? 'zhHans' : 'en';
+  } catch { /* vuetify locale adapter not ready yet */ }
+}, { immediate: true });
+
+
 const router = useRouter();
 watch(router.currentRoute, () => {
   // Reset browser-based spellcheck on navigation

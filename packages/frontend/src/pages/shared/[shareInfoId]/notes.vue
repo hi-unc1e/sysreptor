@@ -2,7 +2,7 @@
   <split-menu v-if="shareInfo && notesCollab" v-model="localSettings.notebookInputMenuSizePx" :content-props="{ class: 'pa-0 h-100' }">
     <template #menu>
       <notes-menu
-        title="Notes"
+        :title="$t('Notes')"
         v-model:search="notesCollab.search.value"
         :create-note="createNote"
         :readonly="notesCollab.readonly.value"
@@ -99,7 +99,7 @@ async function createNote(data?: Partial<NoteBase>) {
     currentNote = shareInfoStore.noteGroups[0]!.children.at(-1)?.note || null;
   }
   const obj = await shareInfoStore.createNote(shareInfo.value!, {
-    title: 'New Note',
+    title: t('New Note'),
     // Insert new note after the currently selected note, or at the end of the list
     parent: parentNoteId,
     order: (currentNote ? currentNote.order + 1 : undefined),

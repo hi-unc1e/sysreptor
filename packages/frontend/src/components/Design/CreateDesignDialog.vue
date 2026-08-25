@@ -9,13 +9,13 @@
         />
       </permission-info>
     </template>
-    <template #title>New Design</template>
+    <template #title>{{ $t('New Design') }}</template>
 
     <template #default>
       <v-card-text>
         <s-project-type-selection
           v-model="currentDesign"
-          label="Copy Existing Design (optional)"
+          :label="$t('Copy Existing Design (optional)')"
           data-testid="copy-existing-design"
           return-object
           :required="false"
@@ -27,20 +27,20 @@
         <v-spacer />
         <s-btn-other
           @click="dialogVisible = false"
-          text="Cancel"
+          :text="$t('Cancel')"
         />
         <s-btn-primary
           v-if="currentDesign"
           @click="copyDesign"
           :loading="actionInProgress"
-          text="Copy Existing Design"
+          :text="$t('Copy Existing Design')"
         />
         <s-btn-primary
           v-else
           @click="createEmptyDesign"
           :loading="actionInProgress"
           data-testid="submit-design"
-          text="Create Empty Design"
+          :text="$t('Create Empty Design')"
         />
       </v-card-actions>
     </template>
@@ -78,7 +78,7 @@ async function actionWrapper(action: () => Promise<ProjectType>) {
   actionInProgress.value = true;
   try {
     const obj = await action();
-    successToast('Created new design');
+    successToast(t('Created new design'));
     await navigateTo(`/designs/${obj.id}`)
   } catch (error) {
     requestErrorToast({ error });
@@ -91,7 +91,7 @@ async function createEmptyDesign() {
   return await actionWrapper(async () => {
     return await projectTypeStore.create({
       scope: props.projectTypeScope,
-      name: 'New Design',
+      name: t('New Design'),
     } as ProjectType);
   })
 }

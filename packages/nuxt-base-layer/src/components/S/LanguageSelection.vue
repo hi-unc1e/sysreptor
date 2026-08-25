@@ -5,7 +5,7 @@
     :items="languageInfos"
     item-value="code"
     item-title="name"
-    label="Language"
+    :label="$t('Language')"
     spellcheck="false"
   >
     <template #prepend-inner>

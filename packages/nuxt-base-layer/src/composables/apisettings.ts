@@ -37,9 +37,9 @@ export const useApiSettings = defineStore('apisettings', () => {
     return (status?: string | null): ReviewStatusDefinition => {
       let out = settings.data.value?.statuses.find(s => s.id === status);
       if (!out && status === ReviewStatus.DEPRECATED) {
-        out = {id: ReviewStatus.DEPRECATED, label: 'Deprecated', icon: 'mdi-close-octagon-outline'};
+        out = {id: ReviewStatus.DEPRECATED, label: t('Deprecated'), icon: 'mdi-close-octagon-outline'};
       }
-      return out || {id: status || 'unknown', label: status || 'Unknown'};
+      return out || {id: status || 'unknown', label: status ? (status as string) : t('Unknown')};
     }
   });
   

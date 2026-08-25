@@ -26,9 +26,9 @@
             v-bind="fieldAttrs"
           >
             <template #markdown-context-menu="{value, definition, disabled}">
-              <btn-confirm 
+              <btn-confirm
                 :action="() => setFieldDefinitionDefault(definition, value)"
-                button-text="Save as default value"
+                :button-text="$t('Save as default value')"
                 button-icon="mdi-content-save"
                 button-variant="list-item"
                 :confirm="false"
@@ -36,7 +36,7 @@
               />
               <btn-confirm
                 :action="() => updateSectionField(fieldDefinition.id, definition.default)"
-                button-text="Reset to default value"
+                :button-text="$t('Reset to default value')"
                 button-icon="mdi-undo-variant"
                 button-variant="list-item"
                 :confirm="false"
@@ -57,9 +57,9 @@
             v-bind="fieldAttrs"
           >
             <template #markdown-context-menu="{value, definition, disabled}">
-              <btn-confirm 
+              <btn-confirm
                 :action="() => setFieldDefinitionDefault(definition, value)"
-                button-text="Save as default value"
+                :button-text="$t('Save as default value')"
                 button-icon="mdi-content-save"
                 button-variant="list-item"
                 :confirm="false"
@@ -67,7 +67,7 @@
               />
               <btn-confirm
                 :action="() => updateFindingField(fieldDefinition.id, definition.default)"
-                button-text="Reset to default value"
+                :button-text="$t('Reset to default value')"
                 button-icon="mdi-undo-variant"
                 button-variant="list-item"
                 :confirm="false"
@@ -174,7 +174,7 @@ function createFinding(data?: any) {
     id: uuidv4(),
     order: Math.max(0, ...findings.value.map(f => f.order || 0)) + 1,
     created: new Date().toISOString(),
-    title: findingData.title || data?.data?.title || 'New Demo Finding',
+    title: findingData.title || data?.data?.title || t('New Demo Finding'),
   };
 
   emit('update:modelValue', {

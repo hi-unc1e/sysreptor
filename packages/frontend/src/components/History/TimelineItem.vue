@@ -20,8 +20,8 @@
 
       <slot name="title" >
         <span v-if="props.value.history_change_reason" :data-testid="`timeline-item-${props.value.history_title}`">{{ props.value.history_change_reason }}</span>
-        <span v-else-if="props.value.history_type === '+'" :data-testid="`timeline-item-${props.value.history_title}`">Created</span>
-        <span v-else-if="props.value.history_type === '-'" :data-testid="`timeline-item-${props.value.history_title}`">Deleted</span>
+        <span v-else-if="props.value.history_type === '+'" :data-testid="`timeline-item-${props.value.history_title}`">{{ $t('Created') }}</span>
+        <span v-else-if="props.value.history_type === '-'" :data-testid="`timeline-item-${props.value.history_title}`">{{ $t('Deleted') }}</span>
       </slot>
     </v-timeline-item>
   </component>
