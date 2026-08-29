@@ -166,7 +166,7 @@ async function createBackup() {
 
 const importFile = ref<File|null>(null);
 async function exportAllData() {
-  const response = await $fetch.raw('/api/v1/utils/export-all/', {
+  const response = await $fetch.raw('/api/v1/utils/export_all/', {
     method: 'POST',
   });
   const blob = response._data as Blob;
@@ -185,7 +185,7 @@ async function importAllData() {
   }
   const formData = new FormData();
   formData.append('file', file);
-  const result = await $fetch<{ designs: number, templates: number, projects: number }>('/api/v1/utils/import-all/', {
+  const result = await $fetch<{ designs: number, templates: number, projects: number }>('/api/v1/utils/import_all/', {
     method: 'POST',
     body: formData,
   });

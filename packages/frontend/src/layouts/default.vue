@@ -112,7 +112,7 @@
           prepend-icon="mdi-tools"
           :disabled="!auth.permissions.value.view_backup"
         >
-          <template #title><pro-info><permission-info :value="auth.permissions.value.view_backup || !apiSettings.isProfessionalLicense" :permission-name="$t('Superuser')">{{ $t('Backups') }}</permission-info></pro-info></template>
+          <template #title><permission-info :value="auth.permissions.value.view_backup" :permission-name="$t('Superuser')">{{ $t('Backups') }}</permission-info></template>
         </v-list-item>
         <license-info-menu-item />
       </v-list>

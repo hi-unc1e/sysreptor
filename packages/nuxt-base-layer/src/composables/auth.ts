@@ -26,7 +26,8 @@ export const useAuthStore = defineStore('auth', {
         share_project_notes: (apiSettings.settings?.features.sharing && state.user && (!state.user.is_guest || state.user.scope.includes('project_admin') || (state.user.is_guest && apiSettings.settings?.permissions.guest_users_can_share_notes))) || false,
         share_user_notes: (apiSettings.settings?.features.sharing && state.user && (!state.user.is_guest || state.user.scope.includes('admin') || (state.user.is_guest && apiSettings.settings?.permissions.guest_users_can_share_notes))) || false,
         archive_projects: (apiSettings.settings?.features.archiving && state.user && (state.user.scope.includes('project_admin') || state.user.is_global_archiver || (apiSettings.settings?.permissions.project_members_can_archive_projects && !state.user.is_guest) || (apiSettings.settings?.permissions.project_members_can_archive_projects && state.user.is_guest && apiSettings.settings?.permissions.guest_users_can_update_project_settings))) || false,
-        view_backup: (apiSettings.isProfessionalLicense && state.user?.scope.includes('admin')) || false,
+        // Community edition: backups page hosts our export/import; admin/superuser can open it without PRO
+        view_backup: (state.user?.scope.includes('admin') || state.user?.is_superuser) || false,
       };
     },
   },
