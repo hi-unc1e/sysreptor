@@ -43,5 +43,51 @@ recommendation = """
 - 在 API 网关或框架层统一实现对象级访问控制中间件，避免逐接口遗漏。
 """
 short_recommendation = "后端接口必须校验资源归属（对象级授权），不信任请求参数中的用户/资源标识。"
-references = []
+	references = [
+	    "https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/",
+	    "https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html",
+	]
+	affected_components = []
+
+[[translations]]
+id = "d74feb81-6d98-4f6d-89ad-8f24c6de4183"
+is_main = false
+language = "en-US"
+status = "finished"
+
+[translations.data]
+title = "Insecure Direct Object Reference (IDOR / Horizontal Privilege Escalation)"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N"
+summary = """
+The application does not verify resource ownership when processing user requests. Authenticated users can access or manipulate other users' data by changing object identifiers in the request (such as user IDs, order numbers, or document IDs). This can lead to cross-user sensitive data disclosure, business data tampering, and in severe cases bulk export of all user data.
+"""
+description = """
+We identified an Insecure Direct Object Reference (IDOR) vulnerability in the application. After authentication, changing resource identifier parameters in the request allows access to data that does not belong to the current account.
+
+**TODO: technical description**
+
+Typical IDOR scenarios:
+
+- Resources identified by sequential numeric IDs: `GET /api/v1/orders/1001` — changing to 1002 or 1003 reveals other users' orders;
+- Profile lookups keyed by user ID: `GET /api/v1/users/42/profile` allows enumerating arbitrary user profiles;
+- Write/delete operations without ownership checks: `DELETE /api/v1/documents/88` can delete another user's documents;
+- Download endpoints that concatenate paths: `/download?file=report_2024.pdf` can fetch other users' reports;
+- Hidden fields or non-UI endpoints remain callable (hiding in the frontend is not authorization).
+
+Root cause: the application only authenticates *who you are*, but does not authorize *whether you may access that resource* — i.e. missing object-level access control (Broken Object Level Authorization, the top item in the OWASP API Security Top 10).
+
+Because resource identifiers are often predictable (auto-increment IDs, timestamps, phone numbers), attackers can script bulk enumeration and exfiltrate large volumes of data.
+"""
+recommendation = """
+- Verify resource ownership on every backend endpoint that accesses resources: derive the current user from the session, and do not trust user identifiers supplied in the request;
+- Prefer unpredictable random identifiers (UUID) over auto-increment IDs to raise the cost of enumeration (this does not replace authorization checks);
+- Extra ownership and permission checks for write operations (modify/delete), following least privilege;
+- Automate tests for privilege-escalation scenarios (user A's credentials accessing user B's resources must return 403/404);
+- Implement object-level access control middleware at the API gateway or framework layer so individual endpoints are not overlooked.
+"""
+short_recommendation = "Backend endpoints must enforce object-level authorization and must not trust user/resource identifiers supplied in the request."
+references = [
+    "https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/",
+    "https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html",
+]
 affected_components = []

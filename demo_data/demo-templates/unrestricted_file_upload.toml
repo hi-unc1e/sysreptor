@@ -40,5 +40,49 @@ recommendation = """
 - 对服务器进行最小化权限配置（运行账户、目录权限），即使失陷也限制影响范围。
 """
 short_recommendation = "白名单校验类型与内容，重命名并隔离存储上传文件，禁止 Web 目录执行脚本权限。"
-references = []
+	references = [
+	    "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html",
+	    "https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload",
+	]
+	affected_components = []
+
+[[translations]]
+id = "ea22b077-8447-45b7-9151-6afe019605fc"
+is_main = false
+language = "en-US"
+status = "finished"
+
+[translations.data]
+title = "Unrestricted File Upload"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+summary = """
+The application's upload feature does not strictly validate file type, content, or storage path. An attacker can upload a webshell (e.g. .php, .jsp, .aspx scripts) or other malicious files and then access them directly via the web to execute arbitrary code, ultimately gaining control of the server.
+"""
+description = """
+We identified an unrestricted file upload vulnerability in the application and successfully uploaded an executable script that yielded code execution on the server.
+
+**TODO: technical description**
+
+Common validation bypasses include:
+
+- Frontend-only JavaScript extension checks: disable JS or craft the request directly to bypass;
+- Content-Type or extension blacklist only: spoof `Content-Type: image/jpeg`, use case variants (`.PhP`), double extensions (`shell.php.jpg`), `%00` truncation, `.htaccess`/`.user.ini` parse tricks, etc.;
+- No content validation: embed PHP in an image (image webshell) and combine with parse or include flaws;
+- Controllable storage path: path traversal (`../../`) writing outside the intended directory or into sensitive locations.
+
+After a successful upload, visiting `http://target/uploads/shell.php` executes arbitrary commands, enabling database credential theft, lateral movement, persistent backdoors, and full server compromise.
+"""
+recommendation = """
+- Whitelist allowed extensions and MIME types; permit only business-required types (e.g. jpg/png/pdf);
+- Validate file content (magic numbers) against the declared extension; re-encode images via an independent image decoder;
+- Rename uploaded files (UUID/random name + fixed safe extension); never keep the original user-supplied filename;
+- Separate upload storage from web-executable directories: store in object storage or a directory where script execution is disabled;
+- Limit upload size and rate; inspect archive contents (Zip Bomb defense);
+- Harden the server with least privilege (runtime account, directory permissions) to limit blast radius if compromised.
+"""
+short_recommendation = "Whitelist type and content, rename and isolate uploaded files, and disable script execution in the upload directory."
+references = [
+    "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html",
+    "https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload",
+]
 affected_components = []

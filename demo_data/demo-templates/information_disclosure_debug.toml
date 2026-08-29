@@ -1,0 +1,94 @@
+format = "templates/v2"
+id = "37b9bf7a-8abb-4148-9272-fb5080790a94"
+tags = [
+    "web",
+    "common",
+    "config",
+]
+images = []
+
+[[translations]]
+id = "14ad237a-b604-4a52-9daa-2e916781dfa8"
+is_main = true
+language = "en-US"
+status = "finished"
+
+[translations.data]
+title = "Debug / Actuator / Swagger Endpoints Exposed"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N"
+summary = """
+Production (or internet-facing) environments expose debug, monitoring, or API documentation endpoints without adequate authentication. Examples include Spring Boot Actuator, phpinfo, Django debug pages, Swagger/OpenAPI UI, heap dumps, and health endpoints that leak configuration, environment variables, credentials, or internal topology — enabling reconnaissance and often direct compromise.
+"""
+description = """
+We discovered that debug or management endpoints were reachable without proper access control and disclosed sensitive runtime information.
+
+**TODO: technical description**
+
+Commonly exposed surfaces:
+
+- Spring Boot Actuator (`/actuator/env`, `/actuator/heapdump`, `/actuator/mappings`, `/actuator/gateway`);
+- Java/Node/Python debug consoles, interactive shells, or Werkzeug/Django debug tracebacks;
+- Swagger UI / OpenAPI / GraphQL playground without auth, revealing full API surface and sometimes “Try it out” against live backends;
+- `phpinfo()`, server-status, server-info, and similar server diagnostic pages;
+- Application health/metrics endpoints that embed secrets, connection strings, or internal hostnames;
+- Profiling or tracing UIs (e.g. `/debug/pprof`) exposing memory and stack data.
+
+Attackers use these endpoints to harvest credentials (from env dumps), map routes for further attacks, download heap dumps containing secrets in memory, or invoke dangerous actuator operations when write endpoints are enabled.
+"""
+recommendation = """
+* Disable debug mode and developer tooling in production builds.
+* Do not expose Actuator/management ports on the public network; bind to localhost or a management network and require strong authentication (and network ACL).
+* Restrict or remove Swagger/OpenAPI UI in production; if retained, require authentication and disable “try it out” against production data where appropriate.
+* Strip sensitive values from health/metrics responses; never return raw environment maps to unauthenticated clients.
+* Block common diagnostic paths at the reverse proxy/WAF layer as defense in depth.
+* Include exposure checks for `/actuator`, `/swagger`, `/phpinfo`, `/debug` in release and continuous monitoring.
+"""
+short_recommendation = "Disable production debug tooling; authenticate and network-restrict Actuator/Swagger/diagnostic endpoints; never expose env or heap dumps."
+references = [
+    "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/README",
+    "https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html",
+]
+affected_components = []
+
+[[translations]]
+id = "cbe7428b-6d01-4e20-9941-3c9fb69fd5c8"
+is_main = false
+language = "zh-CN"
+status = "finished"
+
+[translations.data]
+title = "调试 / Actuator / Swagger 接口暴露"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N"
+summary = """
+生产（或可从互联网访问的）环境在未充分认证的情况下暴露了调试、监控或 API 文档接口。例如 Spring Boot Actuator、phpinfo、Django 调试页、Swagger/OpenAPI UI、堆转储以及会泄露配置、环境变量、凭证或内部拓扑的健康检查接口——便于侦察，并常常直接导致系统失陷。
+"""
+description = """
+我们发现调试或管理接口在缺乏适当访问控制的情况下可被访问，并泄露了敏感的运行时信息。
+
+**TODO：技术描述补充**
+
+常见暴露面包括：
+
+- Spring Boot Actuator（`/actuator/env`、`/actuator/heapdump`、`/actuator/mappings`、`/actuator/gateway`）；
+- Java/Node/Python 调试控制台、交互式 Shell，或 Werkzeug/Django 调试回溯页；
+- 未鉴权的 Swagger UI / OpenAPI / GraphQL Playground，暴露完整 API 面，有时还可对生产后端执行 “Try it out”；
+- `phpinfo()`、server-status、server-info 等服务器诊断页；
+- 健康检查/指标接口中嵌入密钥、连接串或内部主机名；
+- 性能分析或链路追踪界面（如 `/debug/pprof`）暴露内存与堆栈数据。
+
+攻击者利用这些接口收集凭证（环境变量转储）、绘制后续攻击的路由图、下载内存中含有密钥的堆转储，或在写操作接口启用时直接调用危险的 Actuator 操作。
+"""
+recommendation = """
+* 在生产构建中关闭调试模式与开发者工具。
+* 勿将 Actuator/管理端口暴露于公网；绑定至 localhost 或管理网段，并要求强认证（同时配置网络 ACL）。
+* 生产环境限制或移除 Swagger/OpenAPI UI；若需保留，应要求认证，并视情况禁用对生产数据的 “Try it out”。
+* 从健康检查/指标响应中剔除敏感值；切勿向未认证客户端返回原始环境变量映射。
+* 在反向代理/WAF 层拦截常见诊断路径，作为纵深防御。
+* 将 `/actuator`、`/swagger`、`/phpinfo`、`/debug` 等暴露检查纳入发布与持续监控流程。
+"""
+short_recommendation = "关闭生产调试工具；对 Actuator/Swagger/诊断接口进行认证与网络隔离；切勿暴露环境变量或堆转储。"
+references = [
+    "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/README",
+    "https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html",
+]
+affected_components = []

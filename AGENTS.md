@@ -126,6 +126,8 @@ ssh us 'docker compose -f /opt/sysreptor/deploy/sysreptor/docker-compose.yml exe
 ### Phase 4：中文渗透测试模板（进行中）
 - [ ] `margherita-zh-cn.toml`（新 UUID，language=zh-CN，全量翻译 + assets 复制）【agent 进行中】
 - [x] 10 个查找模板 TOML 追加 zh-CN 翻译块（sqli/stored_xss/csrf/xxe/http_security_headers/insecure_http_cookies/sensitive_data_in_url_parameters/session_management_weaknesses/untrusted_tls_certificates/user_enumeration）
+- [x] 5 个中文主语言模板补齐 en-US 副翻译（idor/ssrf/unrestricted_file_upload/weak_passwords/sensitive_information_disclosure）
+- [x] 新增 5 个双语查找模板：reflected_xss / command_injection_rce / broken_access_control / authentication_bypass / information_disclosure_debug（共 20 个，全部 en+zh）（sqli/stored_xss/csrf/xxe/http_security_headers/insecure_http_cookies/sensitive_data_in_url_parameters/session_management_weaknesses/untrusted_tls_certificates/user_enumeration）
 - [x] `reptor packarchive` 验证：demo-templates 打包含 10 个 zh-CN 翻译
 - [ ] 延伸：matrix-zh-cn + 常见中文漏洞模板扩充
 
@@ -173,6 +175,10 @@ colima start --cpu 4 --memory 8
 3. 插件 iframe UI（jira、cyberchef 等 14 个）保持英文，功能不受影响。
 4. Excalidraw `langCode` 跟随 locale 为延伸项（其官方支持 zh-CN）。
 5. zh-CN 无拼写检查（LanguageTool 不支持中文，如实标注）。
+
+## 七点五、查找模板双语库
+
+`demo_data/demo-templates/` 现共 **20** 个模板，全部含 `en-US` + `zh-CN` 翻译块（含 SQL 注入 / XSS / SSRF / RCE / 越权等）。导入：`reptor packarchive demo_data/demo-templates -o demo-templates.tar.gz` 后 `manage.py importdemodata --type=template`。
 
 ## 八、社区版备份功能（自实现）
 

@@ -43,5 +43,51 @@ recommendation = """
 - 统一封装出站请求组件，集中实施校验与日志审计。
 """
 short_recommendation = "严格校验服务端请求目标地址，禁止访问内网与云元数据接口，限制重定向。"
-references = []
+	references = [
+	    "https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html",
+	    "https://owasp.org/www-community/attacks/Server_Side_Request_Forgery",
+	]
+	affected_components = []
+
+[[translations]]
+id = "20c23a85-6cea-43af-9268-d9ffb618390b"
+is_main = false
+language = "en-US"
+status = "finished"
+
+[translations.data]
+title = "Server-Side Request Forgery (SSRF)"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:L/A:N"
+summary = """
+The application is vulnerable to Server-Side Request Forgery (SSRF). An attacker can coerce the server into issuing requests to arbitrary internal or external addresses. SSRF is commonly abused to probe internal ports and services and to reach systems that are only accessible from the internal network (such as cloud metadata endpoints or admin consoles), leading to sensitive data disclosure or further internal compromise.
+"""
+description = """
+We found that a feature of the application initiates server-side requests based on a user-supplied URL without adequately restricting the destination, resulting in an SSRF vulnerability.
+
+**TODO: technical description**
+
+Common SSRF scenarios:
+
+- Webhook/callback URL configuration: the user specifies a callback URL that the server fetches;
+- Remote file loading: avatar/image/document import via URL;
+- URL preview, webpage screenshot, PDF generation, and similar third-party content fetchers;
+- XML parsers that allow external entities (combined with XXE).
+
+Attackers can submit URLs pointing to internal addresses (e.g. `http://192.168.1.1:8080/`, `http://169.254.169.254/latest/meta-data/`) to scan internal ports and fingerprint services. In cloud environments, metadata endpoints may yield temporary credentials (AccessKey/Token) and thus control of cloud resources.
+
+Common bypasses include decimal/hex/octal IP encodings, `@` authority tricks, DNS rebinding, 302 redirects, alternate addresses such as `0.0.0.0`/`[::]`, and wildcard DNS services like `xip.io`.
+"""
+recommendation = """
+- Validate target URLs: allow only http/https; block resolution to private ranges (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, 127.0.0.0/8, 169.254.0.0/16, IPv6 link-local, etc.); resolve DNS first and validate the resolved address (to mitigate DNS rebinding);
+- Restrict destinations with a domain allowlist where feasible;
+- Use a dedicated low-privilege egress network for server-side requests, with network ACLs blocking internal management segments and cloud metadata endpoints;
+- Disable unnecessary redirect following, or re-validate the target on every hop;
+- Enable cloud metadata service v2 (IMDSv2, token-required) where applicable;
+- Centralize outbound request logic so validation and audit logging are applied consistently.
+"""
+short_recommendation = "Strictly validate server-side request destinations, block access to internal networks and cloud metadata endpoints, and restrict redirects."
+references = [
+    "https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html",
+    "https://owasp.org/www-community/attacks/Server_Side_Request_Forgery",
+]
 affected_components = []

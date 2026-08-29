@@ -1,0 +1,110 @@
+format = "templates/v2"
+id = "81365cc1-5a1f-4e30-84f0-e507373fa644"
+tags = [
+    "web",
+]
+images = []
+
+[[translations]]
+id = "44a4155e-769b-4426-a8fa-e8ec08f3e87f"
+is_main = true
+language = "en-US"
+status = "finished"
+
+[translations.data]
+title = "Reflected Cross-Site Scripting (XSS)"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+summary = """
+The web application reflected user-controlled input in HTTP responses without adequate validation or contextual encoding. It was thus vulnerable to reflected cross-site scripting (XSS). An attacker can craft a malicious URL that, when opened by a victim, executes attacker-controlled JavaScript in the victim's browser context and may steal session tokens, modify page content, or perform actions as the victim.
+"""
+description = """
+We identified a reflected XSS vulnerability in the web application. User input was echoed into the response without proper encoding, allowing injection of script code.
+
+**TODO: technical description**
+
+Reflected XSS (also called non-persistent XSS) occurs when an application includes request data in the immediate response without sufficient validation or encoding. Unlike stored XSS, the payload is not persisted; the victim must be induced to visit a crafted URL (phishing, social media, ads, or an open redirect).
+
+Typical injection points include:
+
+- Search, error, and filter parameters reflected in the page;
+- Query strings reflected into HTML attributes, JavaScript contexts, or event handlers;
+- Custom headers or path segments echoed into error pages.
+
+Successful exploitation can:
+
+- Steal session cookies or tokens (if not HttpOnly) and hijack the account;
+- Perform CSRF-like actions in the victim's authenticated session;
+- Rewrite the DOM for phishing or malware delivery;
+- Bypass weaker CSP policies when unsafe-inline or overly broad sources are allowed.
+
+Reflected XSS generally requires user interaction (clicking a link), which is reflected in the CVSS UI:R rating, but remains a high-impact finding for privileged or high-value user populations.
+"""
+recommendation = """
+* Validate and filter all user input based on expected and valid values for each parameter.
+* Contextually encode data before including it in HTTP responses (HTML body, attribute, JavaScript, URL, CSS contexts each need the appropriate encoder).
+* Set `Content-Type` appropriately and add `X-Content-Type-Options: nosniff` for non-HTML responses.
+* Deploy a strict Content Security Policy (CSP) that disallows unsafe-inline and unsafe-eval where feasible.
+* Prefer framework auto-escaping templates; avoid concatenating untrusted data into HTML or script blocks.
+* Detailed guidance: OWASP Cross-Site Scripting Prevention Cheat Sheet.
+"""
+short_recommendation = """\
+Validate user input and contextually encode it before reflecting it in HTTP responses. \
+Use a strict Content Security Policy as defense in depth.\
+"""
+references = [
+    "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html",
+    "https://owasp.org/www-community/attacks/xss/",
+]
+affected_components = []
+
+[[translations]]
+id = "214b7b76-2305-4bbd-b6c1-7b7624f09b57"
+is_main = false
+language = "zh-CN"
+status = "finished"
+
+[translations.data]
+title = "反射型跨站脚本（Reflected XSS）"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+summary = """
+该 Web 应用在 HTTP 响应中回显用户可控输入时，未进行充分校验或上下文编码，因此存在反射型跨站脚本（Reflected XSS）漏洞。攻击者可构造恶意 URL，诱使受害者访问后，在受害者浏览器上下文中执行攻击者控制的 JavaScript，进而窃取会话令牌、篡改页面内容，或以受害者身份执行操作。
+"""
+description = """
+我们在该 Web 应用中发现了反射型 XSS 漏洞。用户输入未经正确编码即被回显至响应中，从而允许注入脚本代码。
+
+**TODO：技术描述补充**
+
+反射型 XSS（又称非持久型 XSS）发生在应用将请求数据未经充分校验或编码即包含在即时响应中时。与存储型 XSS 不同，载荷不会被持久化；受害者必须被诱导访问精心构造的 URL（钓鱼邮件、社交媒体、广告或开放重定向等）。
+
+典型注入点包括：
+
+- 搜索、错误与过滤参数在页面中的回显；
+- 查询字符串被反射到 HTML 属性、JavaScript 上下文或事件处理程序中；
+- 自定义请求头或路径段被回显到错误页面中。
+
+成功利用可能导致：
+
+- 窃取会话 Cookie 或令牌（若未设置 HttpOnly）并劫持账户；
+- 在受害者已认证会话中执行类似 CSRF 的操作；
+- 改写 DOM 以实施钓鱼或恶意软件投递；
+- 在 CSP 策略较弱（允许 unsafe-inline 或过宽来源）时绕过防护。
+
+反射型 XSS 通常需要用户交互（点击链接），这体现在 CVSS 的 UI:R 评分中，但对特权或高价值用户群体仍属高影响问题。
+"""
+recommendation = """
+* 基于各参数的预期合法值对所有用户输入进行校验与过滤。
+* 在将数据包含进 HTTP 响应前进行上下文编码（HTML 正文、属性、JavaScript、URL、CSS 等上下文需使用对应编码器）。
+* 为非 HTML 响应正确设置 `Content-Type`，并添加 `X-Content-Type-Options: nosniff`。
+* 部署严格的内容安全策略（CSP），在可行时禁止 unsafe-inline 与 unsafe-eval。
+* 优先使用框架自带的自动转义模板，避免将不可信数据拼接到 HTML 或脚本块中。
+* 详细指导见 OWASP 跨站脚本防范速查表（Cross-Site Scripting Prevention Cheat Sheet）。
+"""
+short_recommendation = """\
+对用户输入进行校验，并在回显到 HTTP 响应前进行上下文编码。\
+同时部署严格的内容安全策略（CSP）作为纵深防御。\
+"""
+references = [
+    "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html",
+    "https://owasp.org/www-community/attacks/xss/",
+]
+affected_components = []

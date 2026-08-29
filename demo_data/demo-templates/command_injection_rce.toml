@@ -1,0 +1,95 @@
+format = "templates/v2"
+id = "99d2f94a-d07a-4284-a2ed-ada3d64f3b12"
+tags = [
+    "web",
+    "server",
+]
+images = []
+
+[[translations]]
+id = "f262a713-050c-4897-8792-2733ceb579f5"
+is_main = true
+language = "en-US"
+status = "finished"
+
+[translations.data]
+title = "OS Command Injection / Remote Code Execution (RCE)"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
+summary = """
+The application concatenated untrusted input into operating-system commands or otherwise allowed remote code execution. An attacker can inject shell metacharacters or crafted payloads to run arbitrary commands on the server, leading to full compromise of confidentiality, integrity, and availability, and potentially pivoting into the internal network.
+"""
+description = """
+We identified an OS command injection / remote code execution vulnerability in the application and were able to execute arbitrary system commands in the server context.
+
+**TODO: technical description**
+
+Command injection occurs when user-controlled data is passed to a shell or OS API (e.g. `system()`, `exec()`, `popen()`, `Runtime.exec`, `ProcessBuilder` with a shell, backticks, or `os.system`) without strict validation and without separating arguments from the command. Classic payloads use metacharacters such as `;`, `|`, `&&`, `$()`, backticks, and newlines to append additional commands.
+
+Common high-risk surfaces:
+
+- Diagnostics and admin tools (ping, traceroute, nslookup wrappers);
+- File conversion, image/video processing, or archive utilities invoked via shell;
+- Job schedulers or scripting features that accept user parameters;
+- Template engines or expression languages that allow code evaluation (SSTI leading to RCE);
+- Deserialization of untrusted data into executable objects.
+
+Impact typically includes reading secrets (config, keys, credentials), writing webshells, establishing reverse shells, and lateral movement. Because the process often runs with elevated application privileges, blast radius is high; the CVSS scope may be Changed when adjacent systems are reachable.
+"""
+recommendation = """
+* Avoid invoking a shell. Prefer language APIs that take argument arrays (no shell interpretation), e.g. `subprocess.run([...], shell=False)`, `ProcessBuilder` with discrete args.
+* If external programs are required, use a strict allowlist of commands and arguments; never concatenate user input into the command string.
+* Validate input against a narrow allowlist (e.g. IPv4/IPv6 for ping) rather than attempting to sanitize metacharacters.
+* Run the application with least privilege; isolate command-executing components (containers, separate users, seccomp/AppArmor).
+* Disable dangerous template/expression evaluation and untrusted deserialization.
+* Detailed guidance: OWASP Command Injection and OS Command Injection Defense Cheat Sheet.
+"""
+short_recommendation = "Do not pass untrusted input to a shell; use argument arrays, strict allowlists, and least-privilege process isolation."
+references = [
+    "https://cheatsheetseries.owasp.org/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.html",
+    "https://owasp.org/www-community/attacks/Command_Injection",
+]
+affected_components = []
+
+[[translations]]
+id = "ba4ecf9c-b079-438d-b12a-5787cf9d263a"
+is_main = false
+language = "zh-CN"
+status = "finished"
+
+[translations.data]
+title = "操作系统命令注入 / 远程代码执行（RCE）"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
+summary = """
+应用将不可信输入拼接到操作系统命令中，或以其他方式允许远程代码执行。攻击者可注入 Shell 元字符或精心构造的载荷，在服务器上执行任意命令，导致机密性、完整性与可用性全面受损，并可能进一步渗透内网。
+"""
+description = """
+我们在应用中发现了操作系统命令注入 / 远程代码执行漏洞，并能够以服务器进程权限执行任意系统命令。
+
+**TODO：技术描述补充**
+
+当用户可控数据未经严格校验、且未将参数与命令分离，就被传递给 Shell 或操作系统 API（如 `system()`、`exec()`、`popen()`、`Runtime.exec`、带 Shell 的 `ProcessBuilder`、反引号或 `os.system`）时，就会发生命令注入。经典载荷利用 `;`、`|`、`&&`、`$()`、反引号与换行等元字符追加额外命令。
+
+常见高风险场景：
+
+- 诊断与运维工具（ping、traceroute、nslookup 封装）；
+- 通过 Shell 调用的文件转换、图像/视频处理或解压缩工具；
+- 接受用户参数的任务调度或脚本执行功能；
+- 允许代码求值的模板引擎或表达式语言（SSTI 导致 RCE）；
+- 对不可信数据的反序列化。
+
+影响通常包括读取密钥与配置、写入 Webshell、建立反弹 Shell 以及横向移动。由于进程往往以较高应用权限运行，影响面较大；当可触达相邻系统时，CVSS Scope 可能为 Changed。
+"""
+recommendation = """
+* 避免调用 Shell。优先使用接受参数数组、不经过 Shell 解释的语言 API，例如 `subprocess.run([...], shell=False)`、按离散参数构造的 `ProcessBuilder`。
+* 若必须调用外部程序，对命令与参数实施严格白名单；切勿将用户输入拼接到命令字符串中。
+* 以窄白名单校验输入（如 ping 仅允许 IPv4/IPv6），而非尝试“净化”元字符。
+* 以最小权限运行应用；隔离会执行命令的组件（容器、独立用户、seccomp/AppArmor）。
+* 禁用危险的模板/表达式求值以及对不可信数据的反序列化。
+* 详细指导见 OWASP 操作系统命令注入防御速查表（OS Command Injection Defense Cheat Sheet）。
+"""
+short_recommendation = "不要将不可信输入传给 Shell；使用参数数组、严格白名单，并以最小权限隔离进程。"
+references = [
+    "https://cheatsheetseries.owasp.org/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.html",
+    "https://owasp.org/www-community/attacks/Command_Injection",
+]
+affected_components = []

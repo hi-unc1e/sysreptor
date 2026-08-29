@@ -1,0 +1,95 @@
+format = "templates/v2"
+id = "e17ca7da-4714-4df4-90e0-e95d48c0e8ac"
+tags = [
+    "auth",
+    "web",
+]
+images = []
+
+[[translations]]
+id = "6961e468-e9c6-4212-a6a8-c48d5183b6e2"
+is_main = true
+language = "en-US"
+status = "finished"
+
+[translations.data]
+title = "Authentication Bypass"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N"
+summary = """
+The application contains flaws that allow attackers to bypass authentication and access protected resources or assume another user's identity without valid credentials. Depending on the weakness, this may enable anonymous access to administrative functions, account takeover, or complete compromise of the authentication boundary.
+"""
+description = """
+We identified an authentication bypass that allowed access to protected functionality without presenting valid credentials (or by forging/abusing authentication artifacts).
+
+**TODO: technical description**
+
+Authentication bypass covers a range of design and implementation failures, including:
+
+- Missing authentication on “hidden” or secondary endpoints (path guessing, alternate API versions);
+- Predictable or forgeable session tokens, JWT with `alg=none` or weak HMAC secrets, unsigned cookies;
+- Password-reset / magic-link flows that accept predictable tokens or skip ownership checks;
+- Logic flaws: SQL/NoSQL injection in the login query, response manipulation, forced browsing past the login page when only the frontend enforces auth;
+- Trusting client-side flags (`authenticated=true`) or misconfigured SSO/OAuth (open redirect, token confusion, missing `state`/`nonce`);
+- Default or backdoor credentials left enabled.
+
+Once authentication is bypassed, subsequent authorization checks may still apply — or may also be absent — amplifying impact to full account or system takeover.
+"""
+recommendation = """
+* Require authentication on every protected route at the server/API gateway layer; never rely on frontend-only gates.
+* Use strong, high-entropy session tokens or properly signed JWTs with verified algorithms; reject `none` and unexpected `alg` values.
+* Harden account recovery: single-use, short-lived, unpredictable tokens bound to the account and purpose.
+* Parameterize authentication queries; treat login as a sensitive flow with rate limiting and anomaly detection.
+* Correctly implement OAuth/OIDC (validate `state`, `nonce`, audience, issuer, redirect URI allowlist).
+* Remove default/backdoor accounts; rotate secrets used to sign tokens.
+* See OWASP Authentication Cheat Sheet and A07:2021 Identification and Authentication Failures.
+"""
+short_recommendation = "Enforce server-side authentication on all protected routes; use strong tokens/JWTs and harden recovery and SSO flows."
+references = [
+    "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html",
+    "https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/",
+]
+affected_components = []
+
+[[translations]]
+id = "a2b72f63-b9b9-4b3f-9ed3-1733d99295dc"
+is_main = false
+language = "zh-CN"
+status = "finished"
+
+[translations.data]
+title = "身份认证绕过"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N"
+summary = """
+应用存在可被利用以绕过身份认证的缺陷，使攻击者无需有效凭证即可访问受保护资源，或以其他用户身份行事。视具体弱点而定，可能导致匿名访问管理功能、账户接管，或完全突破认证边界。
+"""
+description = """
+我们发现存在身份认证绕过，可在未提供有效凭证（或通过伪造/滥用认证凭据）的情况下访问受保护功能。
+
+**TODO：技术描述补充**
+
+身份认证绕过涵盖多种设计与实现问题，包括：
+
+- “隐藏”或次要接口缺少认证（路径猜测、备用 API 版本）；
+- 可预测或可伪造的会话令牌、允许 `alg=none` 或弱 HMAC 密钥的 JWT、未签名 Cookie；
+- 密码重置 / 魔术链接流程接受可预测令牌或缺少归属校验；
+- 逻辑缺陷：登录查询中的 SQL/NoSQL 注入、响应篡改、仅靠前端拦截时强制浏览绕过登录页；
+- 信任客户端标志（`authenticated=true`）或错误配置的 SSO/OAuth（开放重定向、令牌混淆、缺少 `state`/`nonce`）；
+- 默认或后门账户仍可用。
+
+一旦认证被绕过，后续授权检查可能仍然存在——也可能同样缺失——从而使影响扩大为完整的账户或系统接管。
+"""
+recommendation = """
+* 在服务器/API 网关层对每个受保护路由强制要求认证；切勿仅依赖前端拦截。
+* 使用高强度、高熵的会话令牌，或经正确签名且算法已校验的 JWT；拒绝 `none` 与非预期 `alg`。
+* 加固账户恢复流程：一次性、短时效、不可预测且绑定账户与用途的令牌。
+* 对认证查询使用参数化；将登录视为敏感流程并实施限速与异常检测。
+* 正确实现 OAuth/OIDC（校验 `state`、`nonce`、audience、issuer、redirect URI 白名单）。
+* 移除默认/后门账户；轮换用于签名令牌的密钥。
+* 参见 OWASP 身份认证速查表与 A07:2021 Identification and Authentication Failures。
+"""
+short_recommendation = "对所有受保护路由实施服务端认证；使用强令牌/JWT，并加固恢复与 SSO 流程。"
+references = [
+    "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html",
+    "https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/",
+]
+affected_components = []

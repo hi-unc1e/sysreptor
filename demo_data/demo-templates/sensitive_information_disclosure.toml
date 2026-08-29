@@ -45,5 +45,53 @@ recommendation = """
 - 将敏感文件检查纳入 CI/CD 发布流程。
 """
 short_recommendation = "关闭调试报错、清理备份与配置文件、接口返回最小化、移除版本指纹。"
-references = []
+	references = [
+	    "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/README",
+	    "https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html",
+	]
+	affected_components = []
+
+[[translations]]
+id = "7ff9e5fd-080a-4a3e-92af-a5c0c15126d0"
+is_main = false
+language = "en-US"
+status = "finished"
+
+[translations.data]
+title = "Sensitive Information Disclosure"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+summary = """
+The application or server discloses sensitive information in responses, including but not limited to: verbose error details (stack traces, SQL statements), source/config backups, directory listing, internal notes in comments, API keys/credentials, and server/component fingerprints. Attackers can use this information to map the architecture and tech stack and to craft more precise follow-on attacks (known CVEs, tailored payloads).
+"""
+description = """
+We identified multiple instances of sensitive information disclosure on the target system.
+
+**TODO: technical description**
+
+Common disclosure forms:
+
+- Verbose error pages: exception stacks expose framework versions, file paths, and SQL statements (a common stepping stone for error-based SQLi);
+- Publicly reachable backups and temp files: `.git/`, `.svn/`, `web.config.bak`, `www.zip`, `.DS_Store`, `phpinfo()` pages;
+- Source/config leaks: `application.yml`, `.env`, database connection strings, API keys;
+- Over-verbose API responses: internal fields (phone numbers, ID numbers, password hashes, internal IPs);
+- Frontend comments and debug code: TODO comments, hidden form fields, debug endpoints (`/debug`, unauthorized `/swagger`);
+- HTTP response fingerprint headers: `Server`, `X-Powered-By` revealing components and versions;
+- Directory listing enabled.
+
+For example, a leaked `.git` directory can allow full source reconstruction; a `.env` file may expose database and third-party credentials; `phpinfo()` reveals absolute paths and loaded extensions for precise exploitation.
+"""
+recommendation = """
+- Disable debug mode and verbose errors in production; return custom error pages and keep exception details only in server-side logs;
+- Remove and block deployment of backup files, `.git/`, `.env`, and similar sensitive files under the web root; configure the web server to deny access to hidden files and common backup extensions;
+- Minimize API response data: whitelist serializable fields; redact or encrypt sensitive personal data;
+- Strip `Server`, `X-Powered-By`, and similar fingerprint headers; disable directory listing;
+- Protect or disable debug/documentation endpoints (Swagger, Actuator, phpinfo) in production;
+- Do not hard-code secrets in code or the frontend; use a secrets manager and establish leak monitoring and rotation;
+- Include sensitive-file checks in the CI/CD release pipeline.
+"""
+short_recommendation = "Disable verbose errors, remove backups and config files from the web root, minimize API responses, and strip version fingerprints."
+references = [
+    "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/README",
+    "https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html",
+]
 affected_components = []
