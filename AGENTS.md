@@ -123,13 +123,11 @@ ssh us 'docker compose -f /opt/sysreptor/deploy/sysreptor/docker-compose.yml exe
 - [x] Language 枚举新增 zh-CN（`api/src/sysreptor/utils/language.py`）
 - [x] 部署 `app.env` 设置 `PREFERRED_LANGUAGES=zh-CN,en-US,...` 使中文排最前
 
-### Phase 4：中文渗透测试模板（进行中）
-- [ ] `margherita-zh-cn.toml`（新 UUID，language=zh-CN，全量翻译 + assets 复制）【agent 进行中】
-- [x] 10 个查找模板 TOML 追加 zh-CN 翻译块（sqli/stored_xss/csrf/xxe/http_security_headers/insecure_http_cookies/sensitive_data_in_url_parameters/session_management_weaknesses/untrusted_tls_certificates/user_enumeration）
-- [x] 5 个中文主语言模板补齐 en-US 副翻译（idor/ssrf/unrestricted_file_upload/weak_passwords/sensitive_information_disclosure）
-- [x] 新增 5 个双语查找模板：reflected_xss / command_injection_rce / broken_access_control / authentication_bypass / information_disclosure_debug（共 20 个，全部 en+zh）（sqli/stored_xss/csrf/xxe/http_security_headers/insecure_http_cookies/sensitive_data_in_url_parameters/session_management_weaknesses/untrusted_tls_certificates/user_enumeration）
-- [x] `reptor packarchive` 验证：demo-templates 打包含 10 个 zh-CN 翻译
-- [ ] 延伸：matrix-zh-cn + 常见中文漏洞模板扩充
+### Phase 4：中文渗透测试模板 ✅
+- [x] `margherita-zh-cn.toml` / `matrix-zh-cn.toml`（zh-CN 设计 + assets）
+- [x] 20 个查找模板全部双语（en-US + zh-CN），含 SQLi / XSS / CSRF / XXE / SSRF / RCE / IDOR 等
+- [x] 中文演示项目 `margherita-report-demo-zh-cn.toml`：10 条 finding 细节全文中文
+- [x] 本地库去重后保持 20 条双语模板（无单语残留）
 
 ### Phase 5：部署与验证 ✅（服务器 `us`）
 - [x] 镜像构建 `yingdao/sysreptor:latest`（约 20 分钟，2 核 3.8G + 2G swap）
