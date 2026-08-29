@@ -25,3 +25,18 @@ cp "$OUT/index.html" "$DST/index.html"
 # 校验 entry 与资源对齐
 entry="$(grep -o '/static/_nuxt/[^"]*\.js' "$DST/index.html" | head -1)"
 [ -f "$DST/static${entry#/static}" ] && echo "✓ frontend rebuilt, entry ok: $entry" || { echo "✗ entry missing: $entry"; exit 1; }
+
+# Whitenoise 从 STATIC_ROOT(=api/src/static) 提供 /static/；同步 collectstatic
+cd "$REPO/api"
+# shellcheck disable=SC1091
+. .venv/bin/activate
+export SECRET_KEY="${SECRET_KEY:-localdev-only-not-secret}"
+export DEBUG="${DEBUG:-off}"
+export ALLOWED_HOSTS="${ALLOWED_HOSTS:-localhost,127.0.0.1}"
+export DATABASE_NAME="${DATABASE_NAME:-sysreptor}"
+export DATABASE_USER="${DATABASE_USER:-$(whoami)}"
+export DATABASE_HOST="${DATABASE_HOST:-localhost}"
+export DATABASE_PASSWORD="${DATABASE_PASSWORD:-}"
+export REDIS_URL="${REDIS_URL:-redis://localhost:6379/0}"
+( cd src && python manage.py collectstatic --noinput ) >/dev/null
+[ -f "$REPO/api/src/static${entry#/static}" ] && echo "✓ collectstatic ok" || { echo "✗ STATIC_ROOT missing $entry"; exit 1; }
