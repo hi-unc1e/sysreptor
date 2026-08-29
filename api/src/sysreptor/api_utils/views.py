@@ -129,7 +129,7 @@ class UtilsViewSet(viewsets.GenericViewSet, ViewSetAsync):
         log.info('Community import finished: %s', counts)
         return Response(counts)
 
-    @action(detail=False, methods=['get'], permission_classes=api_settings.DEFAULT_PERMISSION_CLASSES + [IsAdminOrSystem], pagination_class=api_settings.DEFAULT_PAGINATION_CLASS)
+    @action(detail=False, methods=['get'], permission_classes=api_settings.DEFAULT_PERMISSION_CLASSES + [IsUserManagerOrSuperuserOrSystem], pagination_class=api_settings.DEFAULT_PAGINATION_CLASS)
     def backuplogs(self, request, *args, **kwargs):
         qs = self.paginate_queryset(BackupLog.objects.all())
         serializer = self.get_serializer(instance=qs, many=True)

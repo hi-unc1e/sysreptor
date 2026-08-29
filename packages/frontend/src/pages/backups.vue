@@ -1,46 +1,11 @@
 <template>
   <v-container class="h-100 overflow-y-auto">
     <h1 class="text-headline-large font-weight-bold mb-0">{{ $t('Backup') }}</h1>
-
-    <p v-if="!apiSettings.settings!.features.backup">
-      {{ $t('No backup key configured.') }} <br><br>
-      {{ $t('You need to configure a') }} <v-code tag="span">BACKUP_KEY</v-code> {{ $t('as environment variable. This backup key has to be at least 20 characters long. If no') }} <v-code tag="span">BACKUP_KEY</v-code> {{ $t('is configured, the backup API endpoint is disabled.') }}
-    </p>
-    <p v-else>
-      {{ $t('Enter the configured') }} <v-code tag="span">BACKUP_KEY</v-code> {{ $t('to create a backup of this SysReptor instance (see') }}
-      <a href="https://docs.sysreptor.com/setup/configuration/#backup-key" target="_blank" class="text-primary">https://docs.sysreptor.com/setup/configuration/#backup-key</a>{{ $t(').') }}
+    <p class="text-body-medium text-medium-emphasis mt-2 mb-6">
+      {{ $t('Download or restore your report designs, finding templates and projects without a Professional license or BACKUP_KEY.') }}
     </p>
 
-    <s-password-field
-      v-model="backupKey"
-      :label="$t('Backup Key')"
-      :rules="rules.backupKey"
-      :error-messages="backupKeyError"
-      :hide-details="false"
-      :disabled="!apiSettings.settings!.features.backup"
-      class="mt-4"
-    />
-    <btn-confirm
-      :action="createBackup"
-      :confirm="false"
-      :button-text="$t('Download Backup')"
-      button-icon="mdi-download"
-      button-color="primary-bg"
-      :disabled="!apiSettings.settings!.features.backup"
-      class="mt-2"
-    />
-    <form 
-      v-if="renderDownloadForm" 
-      ref="downloadForm"
-      action="/api/v1/utils/backup/"
-      method="POST"
-      target="_blank"
-    >
-      <input type="hidden" name="key" :value="backupKey" />
-      <input type="hidden" name="csrfmiddlewaretoken" :value="csrftoken" />
-    </form>
-
-    <s-card :title="$t('Community Data Backup')" class="mt-8">
+    <s-card :title="$t('Community Data Backup')">
       <template #text>
         <p>
           {{ $t('Export all report designs, finding templates and projects as a single .tar.gz file, or restore them from such a file. Imports always create new copies and never overwrite existing data.') }}
@@ -100,6 +65,53 @@
         <page-loader :items="backupLogs" />
       </template>
     </s-card>
+
+    <v-expansion-panels class="mt-8" variant="accordion">
+      <v-expansion-panel>
+        <v-expansion-panel-title>
+          {{ $t('Advanced: full instance backup (requires BACKUP_KEY)') }}
+        </v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <p v-if="!apiSettings.settings!.features.backup">
+            {{ $t('No backup key configured.') }} <br><br>
+            {{ $t('You need to configure a') }} <v-code tag="span">BACKUP_KEY</v-code> {{ $t('as environment variable. This backup key has to be at least 20 characters long. If no') }} <v-code tag="span">BACKUP_KEY</v-code> {{ $t('is configured, the backup API endpoint is disabled.') }}
+          </p>
+          <p v-else>
+            {{ $t('Enter the configured') }} <v-code tag="span">BACKUP_KEY</v-code> {{ $t('to create a backup of this SysReptor instance (see') }}
+            <a href="https://docs.sysreptor.com/setup/configuration/#backup-key" target="_blank" class="text-primary">https://docs.sysreptor.com/setup/configuration/#backup-key</a>{{ $t(').') }}
+          </p>
+
+          <s-password-field
+            v-model="backupKey"
+            :label="$t('Backup Key')"
+            :rules="rules.backupKey"
+            :error-messages="backupKeyError"
+            :hide-details="false"
+            :disabled="!apiSettings.settings!.features.backup"
+            class="mt-4"
+          />
+          <btn-confirm
+            :action="createBackup"
+            :confirm="false"
+            :button-text="$t('Download Backup')"
+            button-icon="mdi-download"
+            button-color="primary-bg"
+            :disabled="!apiSettings.settings!.features.backup"
+            class="mt-2"
+          />
+          <form
+            v-if="renderDownloadForm"
+            ref="downloadForm"
+            action="/api/v1/utils/backup/"
+            method="POST"
+            target="_blank"
+          >
+            <input type="hidden" name="key" :value="backupKey" />
+            <input type="hidden" name="csrfmiddlewaretoken" :value="csrftoken" />
+          </form>
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+    </v-expansion-panels>
   </v-container>
 </template>
 
@@ -144,12 +156,12 @@ async function createBackup() {
     backupKeyError.value = null;
     await $fetch.raw('/api/v1/utils/backup/', {
       method: 'POST',
-      body: { 
+      body: {
         key: backupKey.value,
         check: true,
       },
     });
-    
+
     // Download backup via native browser mechanisms
     renderDownloadForm.value = true;
     await nextTick();

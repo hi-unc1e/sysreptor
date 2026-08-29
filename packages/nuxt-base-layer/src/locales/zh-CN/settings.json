@@ -55,10 +55,12 @@
   "User Manager": "用户管理",
   "Superuser": "超级用户",
   "Logo": "徽标",
-  "Community Data Backup": "社区版数据备份",
+  "Community Data Backup": "数据备份（推荐）",
+  "Download or restore your report designs, finding templates and projects without a Professional license or BACKUP_KEY.": "无需 Professional 许可证或 BACKUP_KEY，即可下载或恢复报告设计、查找模板和项目。",
   "Export all report designs, finding templates and projects as a single .tar.gz file, or restore them from such a file. Imports always create new copies and never overwrite existing data.": "将全部报告设计、查找模板和项目导出为单个 .tar.gz 文件，或从该文件恢复。导入始终创建新副本，不会覆盖现有数据。",
   "Export All Data": "导出全部数据",
   "Import backup file": "导入备份文件",
   "Import Data": "导入数据",
-  "Imported {designs} designs, {templates} templates, {projects} projects": "已导入 {designs} 个设计、{templates} 个模板、{projects} 个项目"
+  "Imported {designs} designs, {templates} templates, {projects} projects": "已导入 {designs} 个设计、{templates} 个模板、{projects} 个项目",
+  "Advanced: full instance backup (requires BACKUP_KEY)": "高级：整机备份（需要 BACKUP_KEY）"
 }
