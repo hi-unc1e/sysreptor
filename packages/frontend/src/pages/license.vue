@@ -13,7 +13,7 @@
       <tbody>
         <tr>
           <td>{{ $t('License Type:') }}</td>
-          <td>{{ license.type }}</td>
+          <td>{{ licenseTypeLabel }}</td>
         </tr>
         <tr v-if="license.name">
           <td>{{ $t('Licensed to:') }}</td>
@@ -67,6 +67,12 @@ definePageMeta({
 useAppBar({ breadcrumbs: [{ title: t('License'), to: '/license/' }] });
 
 const license = await useFetchE<LicenseInfoDetails>('/api/v1/utils/license/', { method: 'GET' });
+const licenseTypeLabel = computed(() => {
+  if (license.value?.type === 'community') {
+    return t('community (RTV, red team verified)');
+  }
+  return license.value?.type || '';
+});
 const licenseWarning = computed(() => {
   if (!license.value || !license.value.valid_until) {
     return false;
