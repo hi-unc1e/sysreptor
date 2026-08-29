@@ -6,7 +6,13 @@
 <h4 align="center">An easy and customizable pentest reporting platform designed to simplify pentest report creation for security professionals.</h4>
 
 <div align="center">
-    
+
+<img width="3024" height="1888" alt="image" src="https://github.com/user-attachments/assets/dbe328f3-643f-45a7-bd67-cc2ae1a34039" />
+
+<img width="3024" height="1888" alt="image" src="https://github.com/user-attachments/assets/a0fe34fd-2c65-47ce-ab62-f84e427173db" />
+
+
+
 [![GitHub stars](https://img.shields.io/github/stars/Syslifters/sysreptor?color=yellow&style=flat-square)](https://github.com/syslifters/sysreptor/)
 [![Release](https://img.shields.io/github/v/release/syslifters/sysreptor?color=green&style=flat-square)](https://github.com/syslifters/sysreptor/releases/latest)
 [![Release date](https://img.shields.io/github/release-date/syslifters/sysreptor?color=blue&style=flat-square)](https://github.com/syslifters/sysreptor/releases/latest)
