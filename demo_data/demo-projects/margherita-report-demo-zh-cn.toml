@@ -1,0 +1,688 @@
+format = "projects/v2"
+id = "35fa2455-d3c9-48c1-b5d9-59295dd319da"
+name = "Margherita 报告演示（中文）"
+language = "zh-CN"
+tags = [
+  "demo",
+  "zh-CN",
+]
+members = []
+
+[[notes]]
+title = "漏洞 X"
+id = "5b4176c1-4496-4daa-97f5-5c417cd95794"
+created = "2026-05-22T11:12:36.300000Z"
+updated = "2026-07-23T13:36:11.477817Z"
+type = "text"
+text = ""
+checked = false
+order = 1
+parent = "89bdfd94-f26a-4fa4-b2ef-8e4eab790b3a"
+
+[[notes]]
+title = "待办 X"
+id = "504de85e-ae21-4e39-8076-e7726caa15a3"
+created = "2026-05-22T11:12:36.299000Z"
+updated = "2026-07-23T13:36:11.477812Z"
+type = "text"
+text = ""
+checked = false
+order = 1
+parent = "a2a81951-c507-43a6-b147-31efe22095be"
+
+[[notes]]
+title = "问答"
+id = "bf2acaaa-23cc-494c-8658-3ae75c57caa8"
+created = "2026-05-22T11:12:36.298000Z"
+updated = "2026-07-23T13:36:11.477830Z"
+type = "text"
+text = """
+收集渗透测试过程中需要向客户确认的问题……
+
+"""
+icon_emoji = "❓"
+order = 2
+
+[[notes]]
+title = "清理事项"
+id = "da2eb485-bedc-48b6-b9ae-1ee788eb31cc"
+created = "2026-05-22T11:12:36.298000Z"
+updated = "2026-07-23T13:36:11.477828Z"
+type = "text"
+text = """
+记录渗透测试结束后需要清理的事项……
+
+"""
+icon_emoji = "🧹"
+order = 3
+
+[[notes]]
+title = "待办事项"
+id = "a2a81951-c507-43a6-b147-31efe22095be"
+created = "2026-05-22T11:12:36.299000Z"
+updated = "2026-07-23T13:36:11.477825Z"
+type = "text"
+text = ""
+icon_emoji = "✔️"
+order = 4
+
+[[notes]]
+title = "漏洞"
+id = "89bdfd94-f26a-4fa4-b2ef-8e4eab790b3a"
+created = "2026-05-22T11:12:36.299000Z"
+updated = "2026-07-23T13:36:11.477822Z"
+type = "text"
+text = ""
+icon_emoji = "🔥"
+order = 5
+
+[[notes]]
+title = "范围确认"
+id = "ede94ae5-3ece-41c3-9a97-7188ceee6cdb"
+created = "2026-05-22T11:12:36.298000Z"
+updated = "2026-07-23T13:36:11.477820Z"
+type = "text"
+text = """
+# 会议纪要
+在此添加会议纪要……
+
+# 联系人
+在此添加联系人信息……
+
+"""
+icon_emoji = "🧐"
+order = 1
+
+[[sections]]
+id = "scope"
+status = "in-progress"
+
+[[sections]]
+id = "customer"
+status = "in-progress"
+
+[[sections]]
+id = "executive_summary"
+status = "in-progress"
+
+[[sections]]
+id = "other"
+status = "in-progress"
+
+[report_data]
+title = "示例 Web 应用渗透测试报告"
+scope = """
+本次测试采用黑盒与灰盒相结合的方式，参考 OWASP Testing Guide 与 PTES 方法论对目标系统开展渗透测试。
+
+![测试方法论示意](/images/name/image.png)
+
+* 对身份认证、会话管理、输入处理与权限控制等关键控制进行安全验证。
+* 对核心业务功能开展漏洞挖掘与利用验证，评估潜在业务影响。
+* 对发现的问题按严重程度分级，并给出可落地的修复建议。
+
+| 系统 | 描述 |
+|:---|:---|
+| 10.0.0.1 | 系统1 |
+| 10.0.0.2 | 系统2 |
+| 10.0.0.3 | 系统3 |
+| 10.0.0.4 | 系统3 |
+"""
+customer = "示例科技有限公司"
+duration = "5 人天"
+end_date = "2022-04-22"
+start_date = "2022-04-18"
+report_date = "2022-04-25"
+executive_summary = """
+本次受示例科技有限公司委托，对其 Web 应用开展渗透测试。测试范围覆盖身份认证、会话管理、权限控制以及核心业务流程。测试过程中共发现多个安全漏洞，其中包括一处可导致数据库敏感信息泄露的 SQL 注入漏洞。总体来看，应用的安全状况有待改进，建议按照严重程度由高到低尽快完成修复，并在修复完成后安排复测。
+
+严重级别较高的漏洞一旦被攻击者利用，可能直接威胁业务系统的机密性与完整性，应作为最高优先级处理。中低危漏洞单独利用风险有限，但若被攻击者组合利用，同样可能形成完整攻击链，建议纳入常态化安全运维流程一并整改。
+
+本报告后续章节详细记录了每个漏洞的技术细节、影响分析与修复建议，请结合漏洞总览章节的统计图表阅读。
+"""
+
+[report_data.lead_pentester]
+name = "张三"
+email = "zhangsan@example-sec.com"
+phone = "+86 138 0013 8000"
+
+[[report_data.document_history]]
+description = "初稿"
+date = "2022-04-22"
+authors = [
+    "张三",
+]
+version = "0.1"
+
+[[report_data.document_history]]
+description = "评审"
+date = "2022-04-22"
+authors = [
+    "李四",
+]
+version = "0.9"
+
+[[report_data.document_history]]
+description = "最终报告"
+date = "2022-04-25"
+authors = [
+    "张三",
+]
+version = "1.0"
+
+[[findings]]
+id = "1c7326fe-d21e-476d-abeb-829cf82db82d"
+status = "in-progress"
+
+[findings.data]
+title = "SQL 注入（SQLi）"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+summary = """
+该 Web 应用以不安全的方式处理用户输入，因此存在 SQL 注入漏洞。
+在 SQL 注入攻击中，攻击者通过在 Web 应用中提交特殊的输入值，来影响应用发往数据库的 SQL 语句。
+视所使用的数据库及应用设计而定，攻击者可能借此读取和修改数据库中存储的数据、执行管理操作（例如关闭 DBMS），在某些情况下甚至能够获取代码执行能力，进而完全控制存在漏洞的服务器。
+"""
+description = """
+我们在该 Web 应用中发现了一个 SQL 注入漏洞，并据此成功访问了数据库中存储的数据。
+
+SQL 注入是 Web 应用中常见的服务端漏洞。
+当软件开发人员构建包含用户输入的动态数据库查询时，便可能引入该漏洞。
+在攻击中，攻击者通过精心构造用户输入，改变 SQL 语句原本预期的执行逻辑。
+SQL 注入漏洞的根源在于应用未能安全地构建动态数据库查询，也未能正确校验用户输入。
+其根本原因在于 SQL 语言本身并不区分控制字符与数据字符。
+若要在 SQL 语句的数据部分使用控制字符，必须事先对其进行恰当的编码或转义。
+
+因此，SQL 注入攻击的本质是向用户输入中插入诸如 `'`（单引号）之类的控制字符，从而注入原始 SQL 语句中并不存在的新命令。
+下面通过一个简单的示例演示这一过程。
+以下 SELECT 语句包含变量 userId，其目的是从 Users 表中获取指定用户 ID 的用户数据。
+
+```python
+sqlStmnt = 'SELECT * FROM Users WHERE UserId = ' + userId;
+```
+
+攻击者此时可以利用特殊的用户输入，改变该 SQL 语句的原始意图。
+例如，攻击者可以提交字符串 `' or 1=1` 作为用户输入。
+此时，应用将构造出如下 SQL 语句：
+
+```python
+sqlStmnt = 'SELECT * FROM Users WHERE UserId = ' + ' or 1=1;
+```
+
+执行该语句后，返回给攻击者的不再是具有特定用户 ID 的用户数据，而是表中所有用户的数据。
+这使攻击者能够按照自身意图控制 SQL 语句。
+
+SQL 注入漏洞、攻击和技术存在多种变体，出现于不同的场景，并依赖于所使用的数据库系统。
+但它们的共同点在于：如上例所示，用户输入总是被用于动态构造 SQL 语句。
+成功的 SQL 注入攻击可能造成深远的影响。
+其后果之一是存储数据的机密性和完整性受损。
+攻击者可能获得对数据库中敏感数据的读取权限，甚至是写入权限。
+SQL 注入还可能破坏 Web 应用的身份认证与授权机制，使攻击者得以绕过既有的访问控制。
+在某些情况下，SQL 注入还可用于获取代码执行能力，使攻击者完全控制存在漏洞的服务器。
+"""
+recommendation = """
+* 在整个应用中统一使用预编译语句（Prepared Statements），以有效避免 SQL 注入漏洞。预编译语句是参数化查询语句，即使输入值被篡改，攻击者也无法改变 SQL 语句的原始意图。
+* 尽可能默认使用现成的存储过程（Stored Procedures）。通常，存储过程以安全的参数化查询方式实现，从而能够防御 SQL 注入。
+* 始终对所有用户输入进行校验，确保应用仅接受符合预期且合法的输入。不应尝试对潜在的恶意输入进行“净化”处理。
+* 为降低 SQL 注入攻击成功后可能造成的损害，应遵循最小权限原则，尽量收缩所用数据库账户的权限。
+* 有关防范 SQL 注入漏洞的详细信息和指导，请参阅 OWASP 的 SQL 注入防范速查表（SQL Injection Prevention Cheat Sheet）。
+"""
+references = [
+    "https://www.owasp.org/index.php/SQL_Injection_Prevention_Cheat_Sheet",
+]
+affected_components = [
+    "example.com",
+]
+short_recommendation = """确保在整个应用中使用预编译语句（Prepared Statements），并在可能的情况下使用存储过程（Stored Procedures）。这样可以防止攻击者篡改 SQL 语句原本预期的执行逻辑。"""
+
+[[findings]]
+id = "c20f89e8-a8c9-4f18-ac70-58cd9b5ab61e"
+status = "in-progress"
+
+[findings.data]
+title = "会话管理缺陷"
+cvss = "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:N"
+summary = """
+我们在该 Web 应用的会话管理中发现了缺陷。
+用户的会话可以不受时间限制地使用，因此在任何时候都无需重新认证。
+如果其他用户事先未显式退出应用，能够访问该计算机系统的人员就可能利用这一情况。
+"""
+description = """
+我们发现用户会话可以不受时间限制地使用。
+这使攻击者可能接管事先未显式退出的用户会话。
+
+例如，若允许第三人操作仍保有活动会话的用户计算机，就可能出现这种情况。
+此外，攻击者还可能在获知会话令牌（Session Token）后对其进行重用（例如通过日志文件：本地或代理服务器上的日志等）。
+"""
+recommendation = """
+* Web 应用中的用户会话应在一定的非活动时间后自动超时。
+* 根据用户权限及应用的关键程度，超时时间可大致设置在一小时到一天之间。
+"""
+references = []
+affected_components = [
+    "example.com",
+]
+short_recommendation = "用户应在一定的非活动时间后被自动注销。"
+
+[[findings]]
+id = "8a05c4ce-b853-483d-b44e-19c90ee47f27"
+status = "in-progress"
+
+[findings.data]
+title = "不受信任的 TLS 证书"
+cvss = "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N"
+summary = """
+由于 TLS 证书不受信任，应用在传输层级别的通信未得到充分保护。
+TLS 被众多协议用于保障两个端点之间通信的机密性与完整性。
+如果 Web 浏览器不信任应用的 TLS 证书，该应用可能容易受到中间人（man-in-the-middle）攻击，
+从而导致流量被窃听或篡改。
+传输层保护不足可能使双方之间的通信被不受信任的第三方劫持。
+攻击者从而可能在必要时获取敏感数据（如登录凭据）。
+一旦攻击成功，攻击者还可通过攻陷特权用户账户，获得对应用全部功能和数据的完全控制。
+"""
+description = """
+传输层安全（Transport Layer Security，TLS）是现已过时且不安全的安全套接字层（Secure Sockets Layer，SSL）协议的继任者。
+TLS 是一种为两方或多方之间安全、加密通信而开发的密码学协议。
+该协议被应用于众多领域，包括电子邮件、即时消息和网络电话（VoIP）。
+TLS 最广为人知的用途是在 Web 上通过 HTTPS 保障安全通信。
+TLS 的首要目标是在两方或多方之间，借助证书来确保通信的机密性、完整性以及身份真实性。
+
+TLS 建立安全连接的过程分为多个步骤。
+第一步，客户端与服务器约定使用 TLS。
+这要么通过选用特定端口实现（例如 HTTP 使用 443 端口），要么通过向服务器发送协议特定的请求实现（例如 SMTP 的 STARTTLS）。
+随后开始握手过程，客户端与服务器就通信链路安全的各项参数进行协商。
+握手开始时，客户端与服务器先就双方均支持的密码套件（cipher suite）达成一致，该套件由对称密码和哈希函数组成。
+然后服务器出示数字证书。
+证书中包含服务器名称、签发证书的证书颁发机构（CA）以及服务器的非对称公钥等信息。
+客户端验证证书有效后，便为安全连接生成一个对称会话密钥。
+具体方式可以是客户端从一个随机数派生出密钥：
+客户端用服务器的公钥加密该随机数，并将结果发送给服务器。
+服务器使用私钥即可读取该结果，同样派生出会话密钥。
+此外，客户端与服务器也可以使用 Diffie-Hellman 算法安全地协商出一个随机会话密钥。
+Diffie-Hellman 还具备完美前向保密（Perfect Forward Secrecy，PFS）的优势。
+即使服务器的私钥日后泄露，PFS 也能防止通信被事后解密。
+会话密钥不会被交换，因而无法被重建。
+
+TLS 保护下通信的安全性主要建立在数字证书的可信性之上。
+如果可信性不成立，例如证书已过期、包含错误的主机名或是自签名证书，
+从一开始就无法保证两个端点之间的安全密钥交换。
+在某些情况下，双方之间的通信可能在中间人攻击过程中被不受信任的第三方劫持。
+例如，攻击者可能获取敏感数据，或向加密数据流中注入恶意数据，以攻陷客户端或服务器。
+
+我们审查了测试范围内各应用的 TLS 证书，并在以下应用中发现了不受信任的证书：
+
+| 主机 | 已过期 | 即将过期 | 主机名不正确 | 证书链不完整 | 自签名证书 |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| example.com:443 | X | - | - | - | |
+"""
+recommendation = """
+* 为没有受信任 TLS 证书的服务获取新证书。
+* 为证书生成至少 2048 位的足够强度的非对称密钥，并妥善保护私钥。
+* 仅使用现代密码学哈希算法，如 SHA-256。
+* 确保证书包含服务器的完全限定域名（FQDN）。创建证书时还应考虑以下几点：
+    * 考虑是否将 “www” 子域名一并纳入。
+    * 不要在证书中包含非限定的主机名（unqualified host name）。
+    * 不要包含 IP 地址。
+    * 不要包含内部域名。
+* 仅在确有需要时才创建和使用通配符证书，不要为了图方便而使用通配符证书。
+* 选择受所有主流浏览器信任的合适证书颁发机构。对于内部应用，可以使用内部 CA，但要确保所有用户均已导入该内部 CA 的证书，从而信任其签发的证书。
+* 定期检查 TLS 配置（包括证书），并按需调整。有多种在线工具（如 SSLabs、sslyze 等）可用于快速完成检查。
+* 有关 TLS 证书的更多信息和帮助，请参阅 OWASP 的 Transport Layer Protection Cheat Sheet（见参考资料）。
+"""
+references = [
+    """https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html""",
+]
+affected_components = [
+    "example.com",
+]
+short_recommendation = "确保所使用的 TLS 证书普遍有效且受信任；必要时为受影响的服务获取新证书，并遵循安全 TLS 服务器配置的最佳实践建议。"
+
+[[findings]]
+id = "45c61306-ff7c-4a41-90ea-eefc78cf0474"
+status = "in-progress"
+
+[findings.data]
+title = "用户枚举"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N"
+summary = """
+该 Web 应用存在用户枚举（User Enumeration）漏洞。
+用户枚举是 Web 应用中的一类常见漏洞，当攻击者能够借助暴力破解技术确定系统中的有效用户账户时，就会发生此类问题。
+尽管用户枚举本身风险较低，但它仍会为攻击者提供有价值的信息，可被用于后续攻击，例如暴力破解和凭证填充（credential stuffing）攻击，或社会工程活动。
+"""
+description = """
+我们在该 Web 应用中发现了用户枚举漏洞，使我们能够利用暴力破解技术确定有效用户账户。
+
+通常，由于错误的配置或设计决策，Web 应用会提示某个用户是否已存在于系统中。
+最常出现此类问题的两个位置是 Web 应用的登录页面或“忘记密码”功能。
+例如，当用户输入错误的凭据时，会收到其所输入密码不正确的提示。
+攻击者可以利用这一信息判断某个用户名是否已经存在。
+通过反复尝试，攻击者可以据此获得一份有效用户名列表。
+
+一旦攻击者拿到这样的列表，便可以在新的攻击中针对这些用户账户获取有效凭据。
+最简单的形式是实施暴力破解攻击：
+攻击者通过自动遍历密码来尝试猜出某个用户账户的凭据。
+此类攻击通常会使用包含常用密码的超大字典（word list）。
+攻击者还可以利用确定的用户名在历史数据泄露中检索密码。
+数据泄露中的凭据由用户名和密码对组成，攻击者可以在自动化攻击中重用这些凭据。
+这种特殊形式的暴力破解攻击也被称为凭证填充（credential stuffing）。
+此外，攻击者还可以在社会工程活动中利用用户名直接联系相关用户。
+"""
+recommendation = """
+* 确保当输入无效的用户名、密码或其他凭据时，Web 应用始终返回统一的通用错误消息。为此，应识别应用所有相关的攻击面。
+* 如果应用自行定义用户名，则可以有效防止用户枚举。前提是用户名随机生成、不可猜测。
+* 应用也可以使用电子邮件地址作为用户名。如果该用户名尚未注册，邮件中会包含一个用于完成注册流程的唯一 URL；如果该用户名已存在，用户则会收到一封包含密码重置 URL 的邮件。无论哪种情况，攻击者都无法据此推断出有效的用户账户。
+* 作为额外的安全措施，在系统投入生产环境之前，可以删除默认系统账户和测试账户，或对其进行重命名。
+"""
+references = []
+affected_components = [
+    "example.com",
+]
+short_recommendation = "识别应用中所有与用户枚举相关的攻击面，并确保当输入无效凭据时，Web 应用始终返回统一的通用错误消息。"
+
+[[findings]]
+id = "ba863afd-9343-4dc0-839d-a87c0282d83e"
+status = "in-progress"
+
+[findings.data]
+title = "HTTP 安全响应头配置不当"
+cvss = "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:L/I:L/A:N"
+summary = """
+该 Web 应用未设置重要的 HTTP 安全响应头，或相关配置不安全。
+HTTP 安全响应头是提升 Web 应用安全性的有效手段。
+它们可以加大跨站脚本（XSS）、点击劫持、信息泄露等漏洞的利用难度，甚至能够完全阻止此类攻击。
+缺乏正确的 HTTP 安全响应头会扩大 Web 应用的潜在攻击面，使攻击者更容易利用客户端漏洞。
+"""
+description = """
+我们对所检测 Web 应用的 HTTP 安全响应头进行了检查。下表概述了哪些响应头已正确设置、哪些未正确设置：
+
+| Host | Content-Security-Policy (CSP) | Referrer-Policy | HTTP-Strict-Transport-Security (HSTS) | X-Content-Type-Options | X-Frame-Options | Permissions-Policy | X-XSS-Protection |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| example.com | - | - | X | - | - | - | - |
+
+现代浏览器支持多种 HTTP 安全响应头，可用于增强 Web 应用针对点击劫持、跨站脚本及其他常见客户端漏洞攻击的防护能力。
+HTTP 安全响应头属于 HTTP 响应头，用于指定在 Web 浏览器中启用或禁用哪些安全措施。
+这些 HTTP 头在浏览器与服务器之间交换，规定 HTTP 通信中与安全相关的细节。
+以下是对当前最重要 HTTP 安全响应头的简要说明与概述：
+
+* **Content Security Policy**。
+Content Security Policy（CSP）HTTP 头允许对浏览器可获取的资源进行细粒度控制。
+CSP 头是防止跨站脚本（XSS）漏洞被利用的一项非常有效的措施。
+
+* **Referrer Policy**。
+`Referrer-Policy` 头决定浏览器在何种情况下以及如何传输 HTTP Referer（sic）头。
+浏览器通过 Referer 头告知目标页面某个 HTTP 请求的来源，例如用户通过链接跳转到特定页面，或加载外部资源时。
+
+* **HTTP Strict Transport Security (HSTS)**。
+网页可通过 HSTS 头指示浏览器仅通过 HTTPS 建立连接。
+在此过程中，所有未加密的 HTTP 请求都会被透明地重定向。
+同时，TLS 及证书相关错误的处理也更加严格，用户将无法绕过错误页面。
+
+* **X-Content-Type-Options**。
+`X-Content-Type-Options` 头规定，只有在服务器指定了正确 MIME 类型的情况下，浏览器才会加载脚本和样式表。
+若缺少该头，则存在 MIME 嗅探风险。
+即浏览器可能将文件误识别为脚本和样式表，进而导致 XSS 攻击。
+
+* **X-Frame-Options**
+`X-Frame-Options` 用于确定网页能否以及以何种形式被嵌入 iframe。
+点击劫持正是利用此类 `iframe` 嵌入的一种可行攻击。
+在此类攻击中，攻击者会覆盖合法页面的渲染内容，诱使用户执行看似无害的交互操作（如鼠标点击和/或键盘输入）。
+
+* **Permissions policy**
+Permissions Policy 允许 Web 开发者有选择地启用、禁用或修改浏览器中某些特性与 API 的行为。
+`Permissions-Policy` 与 Content Security Policy 类似，但它控制的是浏览器的特定功能，而非安全行为。
+
+* **X-XSS-Protection**
+`X-XSS-Protection` 是一项在浏览器检测到反射型跨站脚本（XSS）攻击时阻止页面加载的功能。
+在已定义安全 Content Security Policy 的前提下，使用现代浏览器时该头已过时。
+"""
+recommendation = """
+* 禁止网页被嵌入 frame 中。为此可设置 `X-Frame-Options: DENY`；也可以使用 `X-Frame-Options: SAMEORIGIN` 将其限制为同源。
+* 显式设置 `X-XSS-Protection` 头为 `X-XSS-Protection: 1; mode=block`。
+* 防止浏览器根据资源内容猜测 MIME 类型。设置带 `nosniff` 选项的 `X-Content-Type-Options` 头。
+* 限制 `referrer policy`，防止潜在敏感信息暴露给第三方站点。建议按如下方式定义该头：`Referrer-Policy: strict-origin-when-cross-origin`。
+* 配置 `Strict-Transport-Security` 头，确保 Web 应用仅能通过安全的 HTTPS 连接访问。建议按如下方式设置该头：`Strict-Transport-Security: max-age=63072000; includeSubDomains; preload`。
+* 尽可能为 Web 应用定义 Content Security Policy（CSP）。CSP 是一项额外的安全措施，可显著增加客户端漏洞被利用的难度。安全配置的详细方法请参阅参考资料。
+* 使用 'Permissions Policy' 头限制摄像头、麦克风或扬声器等敏感浏览器功能的使用。
+"""
+references = [
+    "https://infosec.mozilla.org/guidelines/web_security#content-security-policy",
+]
+affected_components = [
+    "example.com",
+]
+short_recommendation = "遵循 HTTP 安全响应头配置的最佳实践建议，并尽可能在 Web 应用中加以落实。"
+
+[[findings]]
+id = "c68dcab2-0c11-483c-b2fd-dd9c7d8e7a06"
+status = "in-progress"
+
+[findings.data]
+title = "URL 参数中泄露敏感数据"
+cvss = "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N"
+summary = """
+该 Web 应用在 HTTP 请求中以 URL 参数的形式发送敏感数据。
+以 URL 参数发送的数据会存储在浏览器缓存中，并可能出现在 Web 服务器日志、Referer 头、共享系统等诸多其他位置。
+第三方可能由此获取这些敏感数据。
+"""
+description = """
+该应用在 URL 参数 "motiondata" 中发送了敏感数据。
+这可能导致数据在以下位置暴露：
+* Referer Header
+* Web Logs
+* Shared Systems
+* Browser History
+* Browser Cache
+* Shoulder Surfing
+"""
+recommendation = """
+* 应用应将所有敏感数据放在 HTTP 报文主体中发送，例如放在 POST 请求的主体中。
+* 此外，应通过 HTTPS 加密通信来保护数据传输。
+"""
+references = []
+affected_components = [
+    "example.com",
+]
+short_recommendation = "为防止敏感数据被第三方访问，应将敏感数据放在 HTTP 报文主体中发送，例如通过 POST 请求发送。"
+
+[[findings]]
+id = "f86bf000-65fb-4146-baca-d09c53e22822"
+status = "in-progress"
+
+[findings.data]
+title = "跨站请求伪造（CSRF）"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N"
+summary = """
+该 Web 应用存在跨站请求伪造（CSRF）漏洞。
+CSRF 是一种诱使用户在不知情的情况下，向其当前已通过身份认证的 Web 应用发送 HTTP 请求的攻击方式。
+攻击者可借此部分绕过浏览器的同源策略，以受影响用户的身份执行会改变状态的操作。
+视操作性质而定，攻击者可能借此完全接管用户的账户。
+若受影响账户为管理员账户，CSRF 还可能导致整个 Web 应用被攻陷。
+"""
+description = """
+我们在该 Web 应用中发现了一个 CSRF 漏洞，攻击者可借此以其他用户的身份执行操作。
+
+跨站请求伪造（CSRF）是一种 Web 安全漏洞，攻击者可以诱骗已认证的用户在不知情的情况下，向存在漏洞的 Web 应用发送会改变状态的 HTTP 请求。
+在 CSRF 攻击中，攻击者冒用受害者的身份及其访问权限，代替其执行非预期操作（例如更改电子邮件地址）。
+若缺乏相应的 CSRF 防护，Web 应用将无法区分攻击者构造的请求与受害者发起的合法请求。
+
+CSRF 攻击的发生需要满足若干前提条件。
+首先，Web 应用中必须存在对攻击者有价值、值得利用的操作。
+例如，这类操作可以是特权操作，如更改用户的访问权限或修改密码。
+另一个前提是，除基于 Cookie 的身份认证之外，不存在其他可用于区分不同用户 HTTP 请求的机制。
+当用户已通过认证并持有有效的会话 Cookie 时，Web 应用便无法区分来自攻击者的恶意伪造请求与来自受害者的合法请求。
+最后，还需确保相关操作不要求攻击者无法确定或预测其值的特定参数。
+例如，若修改密码功能要求提供当前密码，则该功能不存在 CSRF 漏洞，因为攻击者必须知道原密码的值。
+
+利用 CSRF 漏洞的常见方式是钓鱼邮件。
+攻击者事先构造恶意链接，意图将改变状态的请求强加给受害者。
+随后，攻击者通过电子邮件将恶意链接分发给受害者。
+当用户在浏览器中打开该链接且正处于已认证状态时，请求便会被发送至存在漏洞的 Web 应用。
+攻击一旦成功，就会以受害者的身份及其权限级别执行相应的操作。
+"""
+recommendation = """
+* 检查所用框架是否内置 CSRF 防护机制并加以启用。若无，须确保所有会改变状态的请求均包含随机生成的高熵 CSRF 令牌，并确保在后端对 CSRF 令牌进行正确校验。
+* 考虑采取多种额外的安全措施：
+    * 例如，为会话 Cookie 设置 SameSite 属性。浏览器将依据该属性决定是否在跨站请求中携带 Cookie。
+    * 使用自定义请求头（Custom Request Headers）。默认情况下，浏览器的同源策略会限制 JavaScript 发起携带自定义请求头的跨站请求。
+    * 对于高度敏感的操作，还可以考虑将 CAPTCHA 验证码、一次性令牌、重新认证等用户交互方式作为额外的 CSRF 防护。
+* 有关防范 CSRF 漏洞的详细信息和指导，请参阅 OWASP 的跨站请求伪造防范速查表（Cross-Site Request Forgery Prevention Cheat Sheet）。
+"""
+references = [
+    """https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html""",
+]
+affected_components = [
+    "example.com",
+]
+short_recommendation = "确保所有会改变状态的 HTTP 请求均包含随机生成的高熵 CSRF 令牌，并在后端对其进行校验。"
+
+[[findings]]
+id = "9d63ad73-470f-4867-a0f3-f6592b94783d"
+status = "in-progress"
+
+[findings.data]
+title = "存储型跨站脚本（Stored XSS）"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N"
+summary = """
+测试期间，该 Web 应用对用户输入未做校验即予以存储，随后又以不安全的方式将其包含在 HTTP 响应中。
+因此，该应用存在存储型跨站脚本（Stored XSS）漏洞。
+存储型 XSS 漏洞的利用无需用户交互，因而比反射型 XSS 漏洞更加危险。
+"""
+description = """
+我们在测试期间发现该 Web 应用存在一个存储型 XSS 漏洞。
+由于数据校验与编码处理不正确，我们得以向 Web 应用注入恶意脚本并将其持久化存储。
+
+跨站脚本（XSS）是一种常见的 Web 安全漏洞，由于对数据缺乏充分的校验或编码，攻击者可以向 Web 应用注入恶意脚本。
+在 XSS 攻击中，攻击者将 JavaScript 代码嵌入存在漏洞的 Web 应用所返回的内容之中。
+
+存储型 XSS 攻击的目标是将脚本代码植入其他用户会访问的页面上。
+受害者只需访问受影响的子页面，脚本代码便会在其浏览器中执行。
+
+发起攻击时，攻击者向 Web 应用注入恶意脚本，这些脚本被应用存储，并被包含在应用后续的 HTTP 响应中。
+恶意脚本最终会在受害者的浏览器中执行，并可能访问 Cookie、会话令牌或其他敏感信息。
+
+攻击一旦成功，攻击者便能在受害者的上下文中控制 Web 应用的功能与数据。
+若受影响的用户拥有特权访问权限，攻击者甚至可能完全控制该 Web 应用。
+"""
+recommendation = """
+* 确保对所有经处理的数据进行尽可能严格的过滤。过滤与校验应基于预期且合法的输入进行。
+* 在 Web 应用将数据包含进 HTTP 响应之前，应对数据进行编码。编码应结合上下文进行，即根据 Web 应用将数据插入 HTML 文档的位置，选用相应的编码语法。
+* 对于不包含 HTML 和 JavaScript 的 HTTP 响应，可以设置 HTTP 头 `Content-Type`（例如 `text/plain`）和 `X-Content-Type-Options: nosniff`。
+* 建议额外使用内容安全策略（CSP），以控制允许和禁止执行哪些客户端脚本。
+* 有关防范 XSS 的详细信息和帮助，请参阅 OWASP 的跨站脚本防范速查表（Cross-Site Scripting Prevention Cheat Sheet）。
+"""
+references = [
+    """https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html""",
+]
+affected_components = [
+    "example.com",
+]
+short_recommendation = "应基于预期或合法的输入对用户输入进行校验和过滤。并确保数据在被包含进 HTTP 响应之前，已结合上下文进行了正确的编码。"
+
+[[findings]]
+id = "80bf613d-666c-4908-80b2-b0f44627bb68"
+status = "in-progress"
+
+[findings.data]
+title = "XML 外部实体注入（XXE）"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+summary = """
+该 Web 应用以不安全的方式处理 XML 文档，因而存在 XML 外部实体（XXE）注入漏洞。
+XXE 注入是 Web 应用中的一类漏洞，允许攻击者干扰 XML 解析器对 XML 文档的处理。
+此类攻击可能导致机密数据泄露、拒绝服务、服务器端请求伪造（SSRF），以及对底层系统或其他后端系统造成其他严重影响。
+"""
+description = """
+我们在该 Web 应用中发现了一个 XXE 注入漏洞。
+该应用的 XML 解析器允许定义 XXE，因此可以构造恶意的 XML 文档。
+该 XXE 包含一个指向外部域名的 URL。
+解析器解引用该 XXE 后，Web 应用便与该域名发生了交互，这一点可由 DNS 请求得到证实。
+
+可扩展标记语言（XML）是一种标准化的标记语言和文件格式，用于存储、传输和重建任意数据。
+该语言以人类和机器均可读取的格式对数据进行编码。
+XML 文档的结构由 XML 标准定义。
+该标准引入了称为“实体（Entity）”的概念。
+实体提供了一种引用内容的能力，这些内容既可以由服务器远程提供，也可以驻留在服务器本地。
+XML 解析器在解析 XML 文档时，会将其中包含的实体替换为被引用的值。
+实体定义在所谓的文档类型定义（DTD）之中。
+
+DTD 定义了 XML 文档的结构和组成。
+DTD 既可以完全包含在 XML 文档自身中（即所谓的内部 DTD），也可以从其他位置加载（即所谓的外部 DTD）。
+两种方式的组合也是可能的。
+XML 外部实体（XXE）是 XML 实体的一种特殊形式，其内容从声明它的 DTD 之外的位置加载。
+
+XXE 在 DTD 中使用 SYSTEM 关键字以及一个指定内容加载来源的 URI 进行声明。
+例如：
+
+`<!DOCTYPE dtd [ <!ENTITY xxe SYSTEM "http://syslifters.com" > ]>`
+
+该 URI 还可以使用 `file://` 协议方案。
+这样便可以从本地文件加载内容。
+例如：
+
+`<!DOCTYPE dtd [ <!ENTITY xxe SYSTEM "file:///path/to/local/file" > ]>`
+
+XML 解析器在解析 XML 文档时，会通过解引用所定义的 URI，将文档中出现的 XXE 替换为其内容。
+若 URI 中包含被篡改的数据，可能造成严重后果。
+攻击者可利用这一点发起服务器端请求伪造（SSRF）攻击，进而攻陷底层服务器或其他后端基础设施。
+XXE 注入漏洞还可被用于造成服务/应用不可用（拒绝服务），或泄露本地系统文件等敏感数据。
+"""
+recommendation = """
+* 应将 XML 解析器配置为使用本地静态 DTD，并禁止解析 XML 文档中声明的外部 DTD。
+* 建议将 XML 解析库的功能限制在所需的最低范围内（参见所用库的文档）。
+* 如有可能，应在解析之前对用户输入进行校验。
+* 有关防范 XXE 注入的详细信息和帮助，请参阅 OWASP 的 XML 外部实体防范速查表（XML External Entity Prevention Cheat Sheet）。
+"""
+references = [
+    """https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html""",
+]
+affected_components = [
+    "example.com",
+]
+short_recommendation = "在 XML 解析库中禁用对外部 DTD 的支持。"
+
+[[findings]]
+id = "6000af80-94f3-4429-b6d1-7c5c6ffef18a"
+status = "in-progress"
+
+[findings.data]
+title = "不安全的 HTTP Cookie"
+cvss = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N"
+summary = """
+该 Web 应用下发的 HTTP Cookie 未设置 _HttpOnly_ 和/或 _Secure_ Cookie 属性。
+若未设置 _HttpOnly_ 属性，受影响的 Cookie 可能被 JavaScript 在客户端读取或篡改。
+若未设置 _Secure_ 属性，浏览器在未加密的 HTTP 连接上也会发送该 Cookie。
+会话 Cookie 等配置不安全的 Cookie 会扩大 Web 应用的潜在攻击面。
+这使攻击者更容易利用跨站脚本（XSS）等客户端漏洞，或通过轻易窃听 Cookie 来危害会话。
+"""
+description = """
+HTTP 是一种无状态协议，在没有额外机制的情况下无法区分来自不同用户的请求。
+为解决该问题，需要引入会话机制。
+浏览器中最常用的 HTTP 会话管理机制是 Cookie 存储。
+HTTP Cookie 是服务器发送给用户 Web 浏览器的一小段数据记录。
+浏览器可以存储该 Cookie，并在后续请求中将其发回同一服务器。
+借此可为无状态的 HTTP 协议实现会话功能。
+HTTP Cookie 可用于区分来自不同用户的请求，并保持用户的登录状态。
+
+因此，Cookie 是攻击者的常见目标。
+Web 应用应对所有敏感 Cookie 的配置进行加固。
+这可以通过设置 _Secure_ 和 _HttpOnly_ Cookie 属性来实现。
+设置了 _Secure_ 属性的 Cookie 仅通过 HTTPS 连接发送到服务器，绝不会通过不安全的 HTTP 连接发送。
+设置了 _HttpOnly_ 属性的 Cookie 无法被 JavaScript 访问，从而有助于缓解跨站脚本（XSS）攻击。
+如果攻击者能够窃取会话 Cookie 等敏感 Cookie，便可接管用户账户，并以受影响用户的身份执行操作。
+若被接管的是具有特权访问权限的账户，攻击者还可能完全控制 Web 应用的所有功能和数据。
+
+审计人员检查了该 Web 应用敏感 HTTP Cookie 所设置的属性。下表概述了已设置的属性：
+
+| Cookie | Secure | HttpOnly |
+|:---:|:---:|:---:|
+| PHPSESSID | - | - |
+"""
+recommendation = """
+* 为敏感 Cookie 设置 _Secure_ 属性。该属性指示浏览器仅通过加密的 HTTPS 连接发送 Cookie，以防会话 ID 因中间人攻击而泄露。
+* 尽可能同时为敏感 Cookie 设置 _HttpOnly_ 属性。该属性可防止 Cookie 在客户端被 JavaScript 访问，从而加大通过 XSS 攻击实施会话劫持的难度。
+"""
+references = []
+affected_components = [
+    "example.com",
+]
+short_recommendation = "确保所有敏感 Cookie 的配置均已加固，即正确设置 HttpOnly、Secure 等重要 Cookie 属性。"
+
+[project_type]
+file = "../demo-designs/margherita-zh-cn.toml"
