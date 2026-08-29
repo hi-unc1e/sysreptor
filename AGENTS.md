@@ -174,6 +174,43 @@ colima start --cpu 4 --memory 8
 4. Excalidraw `langCode` 跟随 locale 为延伸项（其官方支持 zh-CN）。
 5. zh-CN 无拼写检查（LanguageTool 不支持中文，如实标注）。
 
+## 八、社区版备份功能（自实现）
+
+官方"备份"为 PRO + BACKUP_KEY 双门槛。社区版自实现（复用 import/export 格式，未加密）：
+
+- **导出**：`POST /api/v1/utils/export_all/`（admin/superuser）→ 全部设计 + 查找模板 + 项目打包为一个 .tar.gz（浏览器下载）
+- **导入**：`POST /api/v1/utils/import_all/`（multipart file）→ 按 format 标记分组还原；**总是创建新副本**（新 UUID），不覆盖现有数据
+- 前端：备份页新增"社区版数据备份"卡片（导出按钮 + 导入文件选择）
+- 已知限制：备份未加密（个人使用可接受）；导入为复制语义而非覆盖
+- 入口代码：`pentests/import_export/import_export.py`（export_all_archive / import_all_archive）+ `api_utils/views.py`（UtilsViewSet.export_all / import_all）
+
+## 九、社区版 Version History（刚需，已解锁）
+
+官方 Version History 依赖 Professional license。本 fork 社区版直接启用：
+
+- `SIMPLE_HISTORY_ENABLED = True`（`conf/settings.py`，不再走 `LicenseCheckBooleanProxy`）
+- `history_timeline` API 去掉 `license.is_professional()` 门禁（`pentests/views.py`）
+- 前端 `history.vue` / `History/Timeline.vue` 去掉 Pro 升级 UI，始终加载时间线
+- 自测：`GET /api/v1/pentestprojects/{id}/history-timeline/?mode=medium` → 200，有历史记录
+
+**Concurrent Editing（评论 / 协作）仍为可选 TODO**：相关 view 仍挂 `ProfessionalLicenseRequired`，暂未解锁。
+
+## 十、本机原生运行（无 Docker）
+
+本机禁止安装 Docker；服务器 `us` 负责镜像。本机：
+
+```bash
+# API（Postgres/Redis 本地 + uvicorn :8001）
+./api/run_local.sh
+
+# 重建前端静态并拷到 Django 期望层级（避免黑屏）
+./api/rebuild_frontend.sh
+# 正确布局：api/src/frontend/index.html + api/src/frontend/static/_nuxt/...
+# 切勿把 .output/public 整树嵌进 static/ 造成 static/static/_nuxt
+```
+
+浏览器：http://localhost:8001 （admin / 见本地凭证文件）
+
 ## 七、术语表（保证译文一致性）
 
 | 英文 | 中文 |
