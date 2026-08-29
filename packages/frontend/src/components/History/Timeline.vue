@@ -11,7 +11,7 @@
     <div class="history-timeline-header">
       <v-list-item class="pt-0 pb-0">
         <v-list-item-title class="text-title-large">
-          <pro-info>{{ $t('Version History') }}</pro-info>
+          {{ $t('Version History') }}
         </v-list-item-title>
         <template #append>
           <s-btn-icon @click="modelValue = false">
@@ -22,11 +22,7 @@
       <v-divider />
     </div>
 
-    <v-list-item v-if="!apiSettings.isProfessionalLicense">
-      {{ $t('Version history is available in SysReptor Professional.') }}<br><br>
-      {{ $t('See') }} <a href="https://sysreptor.com/pricing" target="_blank" class="text-primary">https://sysreptor.com/pricing</a>
-    </v-list-item>
-    <div v-else>
+    <div>
       <v-timeline
         direction="vertical"
         side="end"

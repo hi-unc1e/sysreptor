@@ -1,7 +1,7 @@
 <template>
-  <list-view :url="apiSettings.isProfessionalLicense ? `/api/v1/pentestprojects/${project.id}/history-timeline/?mode=medium` : null">
+  <list-view :url="`/api/v1/pentestprojects/${project.id}/history-timeline/?mode=medium`">
     <template #title>
-      <pro-info>{{ $t('Version History') }}</pro-info>
+      {{ $t('Version History') }}
     </template>
     <template #searchbar>
       <!-- hide searchbar -->
@@ -9,7 +9,6 @@
     </template>
     <template #items="{ items }">
       <v-timeline
-        v-if="apiSettings.isProfessionalLicense"
         direction="vertical"
         side="end"
         align="start"
@@ -31,17 +30,12 @@
           :details="true"
         />
       </v-timeline>
-      <v-list-item v-else>
-        {{ $t('Version history is available in SysReptor Professional.') }}<br><br>
-        {{ $t('See') }} <a href="https://sysreptor.com/pricing" target="_blank" class="text-primary">https://sysreptor.com/pricing</a>
-      </v-list-item>
     </template>
   </list-view>
 </template>
 
 <script setup lang="ts">
 const route = useRoute();
-const apiSettings = useApiSettings();
 const projectStore = useProjectStore();
 
 const project = await useAsyncDataE(() => projectStore.getById(route.params.projectId as string));
