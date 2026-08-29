@@ -54,5 +54,11 @@
   "Enable Superuser Permissions": "启用超级用户权限",
   "User Manager": "用户管理",
   "Superuser": "超级用户",
-  "Logo": "徽标"
+  "Logo": "徽标",
+  "Community Data Backup": "社区版数据备份",
+  "Export all report designs, finding templates and projects as a single .tar.gz file, or restore them from such a file. Imports always create new copies and never overwrite existing data.": "将全部报告设计、查找模板和项目导出为单个 .tar.gz 文件，或从该文件恢复。导入始终创建新副本，不会覆盖现有数据。",
+  "Export All Data": "导出全部数据",
+  "Import backup file": "导入备份文件",
+  "Import Data": "导入数据",
+  "Imported {designs} designs, {templates} templates, {projects} projects": "已导入 {designs} 个设计、{templates} 个模板、{projects} 个项目"
 }

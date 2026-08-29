@@ -40,6 +40,39 @@
       <input type="hidden" name="csrfmiddlewaretoken" :value="csrftoken" />
     </form>
 
+    <s-card :title="$t('Community Data Backup')" class="mt-8">
+      <template #text>
+        <p>
+          {{ $t('Export all report designs, finding templates and projects as a single .tar.gz file, or restore them from such a file. Imports always create new copies and never overwrite existing data.') }}
+        </p>
+        <div class="d-flex align-center ga-4 flex-wrap">
+          <btn-confirm
+            :action="exportAllData"
+            :confirm="false"
+            :button-text="$t('Export All Data')"
+            button-icon="mdi-download"
+            button-color="primary-bg"
+          />
+          <v-file-input
+            v-model="importFile"
+            accept=".tar.gz,.tgz,.gz,.tar"
+            :label="$t('Import backup file')"
+            hide-details
+            density="compact"
+            class="import-file-input"
+          />
+          <btn-confirm
+            :action="importAllData"
+            :confirm="false"
+            :button-text="$t('Import Data')"
+            button-icon="mdi-upload"
+            button-color="primary-bg"
+            :disabled="!importFile"
+          />
+        </div>
+      </template>
+    </s-card>
+
     <s-card :title="$t('Backup History')" class="mt-8">
       <template #text>
         <v-table>
@@ -130,4 +163,39 @@ async function createBackup() {
     }
   }
 }
+
+const importFile = ref<File|null>(null);
+async function exportAllData() {
+  const response = await $fetch.raw('/api/v1/utils/export-all/', {
+    method: 'POST',
+  });
+  const blob = response._data as Blob;
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `sysreptor-backup-${new Date().toISOString().slice(0, 19).replace(/[T:]/g, '-')}.tar.gz`;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+async function importAllData() {
+  const file = importFile.value;
+  if (!file) {
+    return;
+  }
+  const formData = new FormData();
+  formData.append('file', file);
+  const result = await $fetch<{ designs: number, templates: number, projects: number }>('/api/v1/utils/import-all/', {
+    method: 'POST',
+    body: formData,
+  });
+  successToast(t('Imported {designs} designs, {templates} templates, {projects} projects', result));
+  importFile.value = null;
+}
 </script>
+
+<style scoped>
+.import-file-input {
+  max-width: 320px;
+}
+</style>

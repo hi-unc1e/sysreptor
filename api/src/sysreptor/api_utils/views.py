@@ -5,6 +5,7 @@ from inspect import cleandoc
 from adrf.views import APIView as APIViewAsync
 from asgiref.sync import sync_to_async
 from django.conf import settings
+from django.http import HttpResponse
 from django.utils import timezone
 from drf_spectacular.utils import OpenApiTypes, extend_schema
 from rest_framework import routers, views, viewsets
@@ -16,7 +17,7 @@ from rest_framework.settings import api_settings
 from sysreptor.api_utils import backup_utils
 from sysreptor.api_utils.healthchecks import run_healthchecks
 from sysreptor.api_utils.models import BackupLog
-from sysreptor.api_utils.permissions import IsAdmin, IsAdminOrSystem
+from sysreptor.api_utils.permissions import IsAdmin, IsAdminOrSystem, IsUserManagerOrSuperuserOrSystem
 from sysreptor.api_utils.serializers import (
     BackupLogSerializer,
     BackupSerializer,
@@ -106,6 +107,27 @@ class UtilsViewSet(viewsets.GenericViewSet, ViewSetAsync):
             response['Content-Disposition'] = f"attachment; filename={filename}"
             log.info('Sending Backup')
             return response
+
+    @extend_schema(responses={(200, 'application/gzip'): OpenApiTypes.BINARY})
+    @action(detail=False, methods=['post'], permission_classes=api_settings.DEFAULT_PERMISSION_CLASSES + [IsUserManagerOrSuperuserOrSystem])
+    def export_all(self, request, *args, **kwargs):
+        """Community backup: export all designs, templates and projects as .tar.gz (browser download)."""
+        from sysreptor.pentests.import_export.import_export import export_all_archive
+        data = export_all_archive()
+        response = HttpResponse(data, content_type='application/gzip')
+        response['Content-Disposition'] = f"attachment; filename=sysreptor-backup-{timezone.now().strftime('%Y%m%d-%H%M%S')}.tar.gz"
+        return response
+
+    @action(detail=False, methods=['post'], permission_classes=api_settings.DEFAULT_PERMISSION_CLASSES + [IsUserManagerOrSuperuserOrSystem])
+    def import_all(self, request, *args, **kwargs):
+        """Community restore: import designs/templates/projects from an exported .tar.gz."""
+        from sysreptor.pentests.import_export.import_export import import_all_archive
+        upload = request.FILES.get('file')
+        if not upload:
+            return Response({'error': 'No file uploaded'}, status=400)
+        counts = import_all_archive(upload.file)
+        log.info('Community import finished: %s', counts)
+        return Response(counts)
 
     @action(detail=False, methods=['get'], permission_classes=api_settings.DEFAULT_PERMISSION_CLASSES + [IsAdminOrSystem], pagination_class=api_settings.DEFAULT_PAGINATION_CLASS)
     def backuplogs(self, request, *args, **kwargs):

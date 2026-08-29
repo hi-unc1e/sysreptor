@@ -219,7 +219,7 @@ if not DISABLE_WEBSOCKETS:
                     'socket_timeout': None,
                     'socket_keepalive': True,
                     'socket_keepalive_options': {
-                        socket.TCP_KEEPIDLE: 2,
+                        getattr(socket, 'TCP_KEEPIDLE', getattr(socket, 'TCP_KEEPALIVE', 0)): 2,
                         socket.TCP_KEEPINTVL: 3,
                         socket.TCP_KEEPCNT: 5,
                     },
